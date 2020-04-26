@@ -27,6 +27,14 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""interactions"": """"
                 },
                 {
+                    ""name"": ""Jump"",
+                    ""type"": ""Button"",
+                    ""id"": ""7d28205b-2ccb-43f5-9c92-965c4013b88f"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
                     ""name"": ""RotateCam"",
                     ""type"": ""PassThrough"",
                     ""id"": ""83304b5d-9412-4df0-8a63-fc50d33d4079"",
@@ -167,6 +175,28 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""action"": ""RotateCam"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""86c60bc5-9304-4ae5-b1cd-74430eb1b05c"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""96a436b6-9487-4288-a39a-61cbac76ea9d"",
+                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Jump"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -199,6 +229,7 @@ public class @InputControl : IInputActionCollection, IDisposable
         // PlayerControl
         m_PlayerControl = asset.FindActionMap("PlayerControl", throwIfNotFound: true);
         m_PlayerControl_Move = m_PlayerControl.FindAction("Move", throwIfNotFound: true);
+        m_PlayerControl_Jump = m_PlayerControl.FindAction("Jump", throwIfNotFound: true);
         m_PlayerControl_RotateCam = m_PlayerControl.FindAction("RotateCam", throwIfNotFound: true);
     }
 
@@ -250,12 +281,14 @@ public class @InputControl : IInputActionCollection, IDisposable
     private readonly InputActionMap m_PlayerControl;
     private IPlayerControlActions m_PlayerControlActionsCallbackInterface;
     private readonly InputAction m_PlayerControl_Move;
+    private readonly InputAction m_PlayerControl_Jump;
     private readonly InputAction m_PlayerControl_RotateCam;
     public struct PlayerControlActions
     {
         private @InputControl m_Wrapper;
         public PlayerControlActions(@InputControl wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_PlayerControl_Move;
+        public InputAction @Jump => m_Wrapper.m_PlayerControl_Jump;
         public InputAction @RotateCam => m_Wrapper.m_PlayerControl_RotateCam;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControl; }
         public void Enable() { Get().Enable(); }
@@ -269,6 +302,9 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @Move.started -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnMove;
+                @Jump.started -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnJump;
+                @Jump.performed -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnJump;
+                @Jump.canceled -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnJump;
                 @RotateCam.started -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnRotateCam;
                 @RotateCam.performed -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnRotateCam;
                 @RotateCam.canceled -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnRotateCam;
@@ -279,6 +315,9 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @Jump.started += instance.OnJump;
+                @Jump.performed += instance.OnJump;
+                @Jump.canceled += instance.OnJump;
                 @RotateCam.started += instance.OnRotateCam;
                 @RotateCam.performed += instance.OnRotateCam;
                 @RotateCam.canceled += instance.OnRotateCam;
@@ -307,6 +346,7 @@ public class @InputControl : IInputActionCollection, IDisposable
     public interface IPlayerControlActions
     {
         void OnMove(InputAction.CallbackContext context);
+        void OnJump(InputAction.CallbackContext context);
         void OnRotateCam(InputAction.CallbackContext context);
     }
 }
