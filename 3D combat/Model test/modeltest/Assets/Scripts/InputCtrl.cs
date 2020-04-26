@@ -12,6 +12,7 @@ public class InputCtrl : MonoBehaviour
     [Header("Movement")]
     [SerializeField] private CameraFocus _camFocus;
     [SerializeField] private CharacterController _characterController;
+    [SerializeField] private Rigidbody _rigidbody;
 
     [Tooltip("Speed of character turn around(degree)")]
     public float maxTurningSpeed = 3.0f;
@@ -23,13 +24,21 @@ public class InputCtrl : MonoBehaviour
     //speed
     public float maxMoveSpeed = 3.0f;
     public float acceleration = 1.0f;
-    public float currHorizonSpeed = 0.0f;//current speed on X-Z plane
-    public Vector3 currHorizonVelocity;//velocity on X-Z plane, used by animator
-    public bool isMoving = false;
+    public float currHorizonSpeed = 0.0f;//current speed on local X-Z plane
+    public Vector3 currHorizonVelocity;//velocity on local X-Z plane, used by animator
+    public float curVerticalSpeed = 0.0f;//current speed on world Y
+    //public Vector3 currVerticalVelocity;//velocity on world Y, used to compute jump/gravity
+
+    public bool isUserMoveInput = false;
 
     //jump
     public float jumpForce = 8.0f;
     public float gravityMag = 9.8f;
+    public bool isGrounded = false;
+    [SerializeField] private Transform groundCheckPos;
+    [SerializeField] private float groundCheckDist = 0.6f;
+    [SerializeField] private LayerMask groundCheckLayer;
+
 
     [Header("Animation")]
     [SerializeField] private Animator _animator;
@@ -66,7 +75,8 @@ public class InputCtrl : MonoBehaviour
         _inputActions.PlayerControl.Jump.performed += _jump => Jump();
         //animator
         _animator.GetComponentInChildren<Animator>();
-
+        //rb
+        _rigidbody = GetComponent<Rigidbody>();
 
     }
     void Start()
@@ -78,7 +88,7 @@ public class InputCtrl : MonoBehaviour
     #region Updates
     private void FixedUpdate()
     {
-
+        UpdateVelocity();
         MoveSlowdown();
         Falling();
 
@@ -91,7 +101,10 @@ public class InputCtrl : MonoBehaviour
     }
     private void LateUpdate()
     {
-
+        if (_readMovVal.magnitude == 0)
+        {
+            isUserMoveInput = false;
+        }
     }
 
     #endregion
@@ -101,20 +114,33 @@ public class InputCtrl : MonoBehaviour
     #region Jump
     void Jump()
     {
-     
-        _characterController.attachedRigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Force);
+        if (!isGrounded)
+        {
+            return;
+        }
+        _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Force);
+        _animator.SetTrigger("jump");
+
+        //curVerticalSpeed += Mathf.Sqrt(2.0f * gravityMag * jumpForce * Time.deltaTime);
+
     }
+
     #endregion
 
     #region Move,Speed
     void MovePlayer()
     {
+        if (!isGrounded)
+        {
+             return;
+        }
+
         Vector3 desireDir = (_camFocus.horizonLookDir * _readMovVal.y + _camFocus.horizonLookRight * _readMovVal.x).normalized;
 
 
         if (desireDir != Vector3.zero)
         {
-            isMoving = true;
+            isUserMoveInput = true;
             Accelerate();
             Quaternion dest = Quaternion.LookRotation(desireDir).normalized;
             transform.rotation = Quaternion.RotateTowards(transform.rotation, dest, maxTurningSpeed * Time.deltaTime);
@@ -126,15 +152,12 @@ public class InputCtrl : MonoBehaviour
             turningMag = Mathf.Abs(turningMag) > startTurningThreshold ? turningMag : 0.0f;
 
         }
-        else
-        {
-            isMoving = false;
-        }
+ 
 
-        currHorizonVelocity = transform.forward * currHorizonSpeed;
-
-        _characterController.Move(currHorizonVelocity * Time.deltaTime);
-
+        //currHorizonVelocity = transform.forward * currHorizonSpeed;
+        ////_characterController.Move(currHorizonVelocity * Time.deltaTime);
+        //currHorizonVelocity.y = _rigidbody.velocity.y;
+        // _rigidbody.velocity = currHorizonVelocity;
     }
 
     void Accelerate()
@@ -187,9 +210,17 @@ public class InputCtrl : MonoBehaviour
     #endregion
 
     #region UpdateData
+    void UpdateVelocity()
+    {
+        currHorizonVelocity = transform.forward * currHorizonSpeed;
+        currHorizonVelocity.y = _rigidbody.velocity.y;
+        //_characterController.Move(currHorizonVelocity * Time.deltaTime);
+        _rigidbody.velocity = currHorizonVelocity;
+
+    }
     void MoveSlowdown()
     {
-        if (!isMoving)
+        if (!isUserMoveInput)
         {
             turningMag = 0.0f;
             Deccelerate();
@@ -198,10 +229,16 @@ public class InputCtrl : MonoBehaviour
     }
     void Falling()
     {
-        if (!_characterController.isGrounded)
+        isGrounded = Physics.Raycast(groundCheckPos.position, -Vector3.up, groundCheckDist, groundCheckLayer);
+        if (isGrounded)
         {
-            _characterController.Move(Vector3.down * gravityMag * Time.deltaTime);
+
         }
+        //if (!_characterController.isGrounded)//if airborne
+        //{
+        //    curVerticalSpeed += -gravityMag * Time.deltaTime;
+        //    _characterController.Move(Vector3.down * curVerticalSpeed * Time.deltaTime);
+        //}
     }
     void UpdateAnimation()
     {
