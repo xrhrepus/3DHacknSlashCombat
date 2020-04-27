@@ -32,9 +32,14 @@ public class InputCtrl : MonoBehaviour
     public bool isUserMoveInput = false;
 
     //jump
+    [Tooltip("How many times player can jump before next time landed")]
+    public int maxJumpOpportunity = 1;
+    public int jumpOpportunity;
+
     public float jumpForce = 8.0f;
     public float gravityMag = 9.8f;
     public bool isGrounded = false;
+
     [SerializeField] private Transform groundCheckPos;
     [SerializeField] private float groundCheckDist = 0.6f;
     [SerializeField] private LayerMask groundCheckLayer;
@@ -71,7 +76,7 @@ public class InputCtrl : MonoBehaviour
         //input controller
         _characterController = GetComponent<CharacterController>();
         _inputActions = new InputControl();
-        _inputActions.PlayerControl.Move.performed += _move => { _readMovVal = _move.ReadValue<Vector2>(); MovePlayer(); };
+        _inputActions.PlayerControl.Move.performed += _move => {_readMovVal = _move.ReadValue<Vector2>(); MovePlayer(); };
         _inputActions.PlayerControl.Jump.performed += _jump => JumpPrepare();
         //animator
         _animator.GetComponentInChildren<Animator>();
@@ -81,6 +86,7 @@ public class InputCtrl : MonoBehaviour
     }
     void Start()
     {
+        
     }
 
     #endregion
@@ -118,7 +124,12 @@ public class InputCtrl : MonoBehaviour
         {
             return;
         }
-        _animator.SetTrigger("jump");
+        if (jumpOpportunity > 0)
+        {
+            jumpOpportunity--;
+            Debug.Log("jo" + jumpOpportunity);
+            _animator.SetTrigger("jump");
+        }
 
     }
     public void Jump()
@@ -142,7 +153,6 @@ public class InputCtrl : MonoBehaviour
     #region Move,Speed
     void MovePlayer()
     {
-        Debug.Log("t");
         //if (!isGrounded)
         //{
         //     return;
@@ -245,7 +255,7 @@ public class InputCtrl : MonoBehaviour
         isGrounded = Physics.Raycast(groundCheckPos.position, -Vector3.up, groundCheckDist, groundCheckLayer);
         if (isGrounded)
         {
-
+            jumpOpportunity = maxJumpOpportunity;
         }
         //if (!_characterController.isGrounded)//if airborne
         //{

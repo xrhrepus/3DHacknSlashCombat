@@ -190,7 +190,7 @@ public class @InputControl : IInputActionCollection, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""96a436b6-9487-4288-a39a-61cbac76ea9d"",
-                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Gamepad"",
