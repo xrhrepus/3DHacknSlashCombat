@@ -6,7 +6,7 @@ public class InputCtrl : MonoBehaviour
 {
     #region Fields
     private InputControl _inputActions;
-    private Vector2 _readMovVal;
+    [SerializeField] private Vector2 _readMovVal;
 
     //movement
     [Header("Movement")]
@@ -61,7 +61,7 @@ public class InputCtrl : MonoBehaviour
         //Gizmos.DrawCube(transform.position + currHorizonDir * 2.0f, Vector3.one * 0.5f);
 
         Gizmos.DrawLine(transform.position, transform.position + currHorizonVelocity);
-        Gizmos.DrawCube(transform.position + currHorizonVelocity, Vector3.one * 0.5f);
+        Gizmos.DrawCube(transform.position + currHorizonVelocity, Vector3.one * 0.2f);
     }
     #endregion
 
@@ -72,7 +72,7 @@ public class InputCtrl : MonoBehaviour
         _characterController = GetComponent<CharacterController>();
         _inputActions = new InputControl();
         _inputActions.PlayerControl.Move.performed += _move => { _readMovVal = _move.ReadValue<Vector2>(); MovePlayer(); };
-        _inputActions.PlayerControl.Jump.performed += _jump => Jump();
+        _inputActions.PlayerControl.Jump.performed += _jump => JumpPrepare();
         //animator
         _animator.GetComponentInChildren<Animator>();
         //rb
@@ -112,28 +112,36 @@ public class InputCtrl : MonoBehaviour
 
 
     #region Jump
-    void Jump()
+    void JumpPrepare()
+    {
+        if (!isGrounded)
+        {
+            return;
+        }
+        _animator.SetTrigger("jump");
+
+    }
+    public void Jump()
     {
         if (!isGrounded)
         {
             return;
         }
         _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Force);
-        _animator.SetTrigger("jump");
-
-        //curVerticalSpeed += Mathf.Sqrt(2.0f * gravityMag * jumpForce * Time.deltaTime);
-
-    }
+        //_animator.SetTrigger("jump");
+         //curVerticalSpeed += Mathf.Sqrt(2.0f * gravityMag * jumpForce * Time.deltaTime);
+     }
 
     #endregion
 
     #region Move,Speed
     void MovePlayer()
     {
-        if (!isGrounded)
-        {
-             return;
-        }
+        Debug.Log("t");
+        //if (!isGrounded)
+        //{
+        //     return;
+        //}
 
         Vector3 desireDir = (_camFocus.horizonLookDir * _readMovVal.y + _camFocus.horizonLookRight * _readMovVal.x).normalized;
 
@@ -245,6 +253,10 @@ public class InputCtrl : MonoBehaviour
         _animator.SetFloat("speed", currHorizonVelocity.magnitude);
         _animator.SetFloat("forward", currHorizonVelocity.magnitude / maxMoveSpeed);
         _animator.SetFloat("turning", turningMag);
+        _animator.SetFloat("ySpeed", _rigidbody.velocity.y);
+
+        _animator.SetBool("isGrounded", isGrounded);
+
         
     }
 

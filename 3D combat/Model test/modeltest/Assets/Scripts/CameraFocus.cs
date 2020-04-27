@@ -39,7 +39,7 @@ public class CameraFocus : MonoBehaviour
         //Gizmos.DrawLine(_cam.transform.position,  _cam.transform.position + _cam.transform.forward * 5.0f);
         //Gizmos.DrawCube(_cam.transform.position + _cam.transform.forward * 5.0f, new Vector3(1.0f, 1.0f, 1.0f));
         Gizmos.DrawLine(_cam.transform.position, _cam.transform.position + horizonLookDir * 5.0f);
-        Gizmos.DrawCube(_cam.transform.position + horizonLookDir * 5.0f, new Vector3(1.0f, 1.0f, 1.0f));
+        Gizmos.DrawCube(_cam.transform.position + horizonLookDir * 5.0f, Vector3.one * 0.2f);
 
 
     }
