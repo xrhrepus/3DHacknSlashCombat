@@ -131,7 +131,12 @@ public class InputCtrl : MonoBehaviour
         //_animator.SetTrigger("jump");
          //curVerticalSpeed += Mathf.Sqrt(2.0f * gravityMag * jumpForce * Time.deltaTime);
      }
-
+    public void JumpLanding()
+    {
+        currHorizonSpeed = 0.0f;
+        currHorizonVelocity = Vector3.zero;
+        //_rigidbody.velocity = Vector3.zero;
+    }
     #endregion
 
     #region Move,Speed
