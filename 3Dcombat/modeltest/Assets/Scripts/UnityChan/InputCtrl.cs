@@ -33,12 +33,13 @@ public class InputCtrl : MonoBehaviour
 
     //jump
     [Tooltip("How many times player can jump before next time landed")]
-    public int maxJumpOpportunity = 1;
-    public int jumpOpportunity;
+    public int maxAirJump = 1;
+    public int airJumpCount;
 
     public float jumpForce = 8.0f;
     public float gravityMag = 9.8f;
     public bool isGrounded = false;
+    private bool isReadyToJump = false;
 
     [SerializeField] private Transform groundCheckPos;
     [SerializeField] private float groundCheckDist = 0.6f;
@@ -46,8 +47,8 @@ public class InputCtrl : MonoBehaviour
 
 
     [Header("Animation")]
-    [SerializeField] private Animator _animator;
-
+    //[SerializeField] private Animator _animator;
+    [SerializeField] private UnityChanAnimationControl _UCAnimControl;
     #endregion
 
     #region Trivial
@@ -79,7 +80,7 @@ public class InputCtrl : MonoBehaviour
         _inputActions.PlayerControl.Move.performed += _move => {_readMovVal = _move.ReadValue<Vector2>(); MovePlayer(); };
         _inputActions.PlayerControl.Jump.performed += _jump => JumpPrepare();
         //animator
-        _animator.GetComponentInChildren<Animator>();
+        _UCAnimControl.GetComponentInChildren<UnityChanAnimationControl>();
         //rb
         _rigidbody = GetComponent<Rigidbody>();
 
@@ -120,18 +121,30 @@ public class InputCtrl : MonoBehaviour
     #region Jump
     void JumpPrepare()
     {
-        if (!isGrounded)
+        if (!isReadyToJump)
         {
             return;
         }
-        if (jumpOpportunity > 0)
+        //ground jump
+        if (isGrounded)
         {
-            jumpOpportunity--;
-            Debug.Log("jo" + jumpOpportunity);
-            _animator.SetTrigger("jump");
+            _UCAnimControl.SetParamTrigger("jump");
+        }
+        else // air jump
+        {
+            //TODO
         }
 
+        isReadyToJump = false;
+
     }
+
+    //triggered by animation clip event
+    public void ReadyToJump()
+    {
+        isReadyToJump = true;
+    }
+
     public void Jump()
     {
         if (!isGrounded)
@@ -255,7 +268,7 @@ public class InputCtrl : MonoBehaviour
         isGrounded = Physics.Raycast(groundCheckPos.position, -Vector3.up, groundCheckDist, groundCheckLayer);
         if (isGrounded)
         {
-            jumpOpportunity = maxJumpOpportunity;
+            airJumpCount = maxAirJump;
         }
         //if (!_characterController.isGrounded)//if airborne
         //{
@@ -265,14 +278,21 @@ public class InputCtrl : MonoBehaviour
     }
     void UpdateAnimation()
     {
-        _animator.SetFloat("speed", currHorizonVelocity.magnitude);
-        _animator.SetFloat("forward", currHorizonVelocity.magnitude / maxMoveSpeed);
-        _animator.SetFloat("turning", turningMag);
-        _animator.SetFloat("ySpeed", _rigidbody.velocity.y);
+        //_animator.SetFloat("speed", currHorizonVelocity.magnitude);
+        //_animator.SetFloat("forward", currHorizonVelocity.magnitude / maxMoveSpeed);
+        //_animator.SetFloat("turning", turningMag);
+        //_animator.SetFloat("ySpeed", _rigidbody.velocity.y);
 
-        _animator.SetBool("isGrounded", isGrounded);
+        //_animator.SetBool("isGrounded", isGrounded);
+        _UCAnimControl.SetParamFloat("speed", currHorizonVelocity.magnitude);
+        _UCAnimControl.SetParamFloat("forward", currHorizonVelocity.magnitude / maxMoveSpeed);
+        _UCAnimControl.SetParamFloat("turning", turningMag);
+        _UCAnimControl.SetParamFloat("ySpeed", _rigidbody.velocity.y);
 
+        _UCAnimControl.SetParamBool("isGrounded", isGrounded);
         
+
+
     }
 
     #endregion

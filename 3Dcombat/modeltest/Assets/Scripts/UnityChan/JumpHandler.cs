@@ -15,5 +15,8 @@ public class JumpHandler : MonoBehaviour
     {
         _inputCtrl.JumpLanding();
     }
-
+    public void ReadyToJumpEvent()
+    {
+        _inputCtrl.ReadyToJump();
+    }
 }

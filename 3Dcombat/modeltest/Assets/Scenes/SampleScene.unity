@@ -265,7 +265,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 90208588}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.64, z: 0}
+  m_LocalPosition: {x: 1.09, y: 1.91, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 518615491}
@@ -470,6 +470,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   active: 0
+  repeat: 1
   moving: 0
   goToTo: 1
   from: {fileID: 38670003}
@@ -1546,7 +1547,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 9.1837e-41, y: -1.375e-42, z: 1.02e-43, w: NaN}
+  m_BoundingSphereOverride: {x: 1.1754944e-38, y: 0, z: 0, w: 2.407486e-35}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -4614,6 +4615,7 @@ GameObject:
   - component: {fileID: 1270100969}
   - component: {fileID: 1270100968}
   - component: {fileID: 1003121699}
+  - component: {fileID: 1003121701}
   m_Layer: 0
   m_Name: unitychan_dynamic_edit
   m_TagString: Untagged
@@ -4651,6 +4653,19 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!114 &1003121701
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003121698}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a7212727392965843ae067d3c8b49163, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _animator: {fileID: 995827630}
 --- !u!1 &1003121702
 GameObject:
   m_ObjectHideFlags: 0
@@ -11007,8 +11022,8 @@ MonoBehaviour:
   currHorizonVelocity: {x: 0, y: 0, z: 0}
   curVerticalSpeed: 0
   isUserMoveInput: 0
-  maxJumpOpportunity: 1
-  jumpOpportunity: 0
+  maxAirJump: 1
+  airJumpCount: 0
   jumpForce: 300
   gravityMag: 9.8
   isGrounded: 0
@@ -11017,7 +11032,7 @@ MonoBehaviour:
   groundCheckLayer:
     serializedVersion: 2
     m_Bits: 256
-  _animator: {fileID: 995827630}
+  _UCAnimControl: {fileID: 1003121701}
 --- !u!1001 &6477181822297446095
 PrefabInstance:
   m_ObjectHideFlags: 0

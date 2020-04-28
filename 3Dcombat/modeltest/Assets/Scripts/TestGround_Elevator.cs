@@ -5,6 +5,8 @@ using UnityEngine;
 public class TestGround_Elevator : MonoBehaviour
 {
     public bool active = false;
+    public bool repeat = false;
+
     [SerializeField] private bool moving = false;
     [SerializeField] private bool goToTo = true;
 
@@ -18,13 +20,18 @@ public class TestGround_Elevator : MonoBehaviour
     {
         if (active && !moving)
         {
-
-            active = false;
+            if (!repeat)
+            {
+                active = false;
+            }
             //transform.Translate((to.position - from.position).normalized * speed * Time.unscaledDeltaTime);
             StartCoroutine(Move());
         }
     }
-
+    public void TurnOnOff()
+    {
+        active = active ? false : true;
+    }
 
     private IEnumerator Move()
     {
@@ -35,16 +42,16 @@ public class TestGround_Elevator : MonoBehaviour
             dest = to.position;
         }
 
-        while (Vector3.Distance(transform.position,dest) > 0.1f)
+        while (Vector3.Distance(transform.position,dest) > 0.01f && active)
         {
-            Debug.Log("w");
-
-            transform.Translate((dest - transform.position).normalized * speed * Time.unscaledDeltaTime);
+            transform.Translate((dest - transform.position).normalized * speed * Time.deltaTime);
             yield return null;
 
         }
+ 
 
         goToTo = goToTo ? false : true;
+        
         moving = false;
          
     }
