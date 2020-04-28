@@ -1546,8 +1546,7 @@ Light:
   m_BounceIntensity: 1
   m_ColorTemperature: 6570
   m_UseColorTemperature: 0
-  m_BoundingSphereOverride: {x: 7.9316175e+34, y: 1.8540711e+25, z: 1.8062688e+28,
-    w: 7.871983e+31}
+  m_BoundingSphereOverride: {x: 9.1837e-41, y: -1.375e-42, z: 1.02e-43, w: NaN}
   m_UseBoundingSphereOverride: 0
   m_ShadowRadius: 0
   m_ShadowAngle: 0
@@ -4614,6 +4613,7 @@ GameObject:
   - component: {fileID: 996546966}
   - component: {fileID: 1270100969}
   - component: {fileID: 1270100968}
+  - component: {fileID: 1003121699}
   m_Layer: 0
   m_Name: unitychan_dynamic_edit
   m_TagString: Untagged
@@ -4621,6 +4621,20 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!136 &1003121699
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1003121698}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  m_Radius: 0.1
+  m_Height: 1.5278893
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.7669749, z: 0}
 --- !u!1 &1003121700
 GameObject:
   m_ObjectHideFlags: 0
@@ -10077,7 +10091,7 @@ BoxCollider:
   m_GameObject: {fileID: 1003121698}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.25, y: 1.5136473, z: 0.25}
   m_Center: {x: 0, y: 0.75888216, z: 0}
@@ -10967,7 +10981,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 80
+  m_Constraints: 112
   m_CollisionDetection: 0
 --- !u!114 &4000310161508214033
 MonoBehaviour:
