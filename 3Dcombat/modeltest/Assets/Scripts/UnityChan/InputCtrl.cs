@@ -41,6 +41,11 @@ public class InputCtrl : MonoBehaviour
     public bool isGrounded = false;
     private bool isReadyToJump = false;
 
+    //adjust collider position for foot postion in jump animation
+    [SerializeField] private CapsuleCollider _characterCollider;
+    [SerializeField] private Transform jumpUpGroundCheckPos;
+    private float ground_jump_offset;//cache the y offset
+    //
     [SerializeField] private Transform groundCheckPos;
     [SerializeField] private float groundCheckDist = 0.6f;
     [SerializeField] private LayerMask groundCheckLayer;
@@ -83,6 +88,10 @@ public class InputCtrl : MonoBehaviour
         _UCAnimControl.GetComponentInChildren<UnityChanAnimationControl>();
         //rb
         _rigidbody = GetComponent<Rigidbody>();
+
+        //jump
+        ground_jump_offset = Vector3.Distance(jumpUpGroundCheckPos.position, groundCheckPos.position);
+
 
     }
     void Start()
@@ -140,9 +149,9 @@ public class InputCtrl : MonoBehaviour
     }
 
     //triggered by animation clip event
-    public void ReadyToJump()
+    public void ReadyToJump(bool ready)
     {
-        isReadyToJump = true;
+        isReadyToJump = ready;
     }
 
     public void Jump()
@@ -151,15 +160,21 @@ public class InputCtrl : MonoBehaviour
         {
             return;
         }
+        //_characterCollider.height -= ground_jump_offset;
+        //groundCheckPos.Translate(Vector3.up * ground_jump_offset);
+
         _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Force);
         //_animator.SetTrigger("jump");
          //curVerticalSpeed += Mathf.Sqrt(2.0f * gravityMag * jumpForce * Time.deltaTime);
      }
     public void JumpLanding()
     {
+ 
         currHorizonSpeed = 0.0f;
         currHorizonVelocity = Vector3.zero;
-        //_rigidbody.velocity = Vector3.zero;
+        //_characterCollider.height += ground_jump_offset;
+        //groundCheckPos.Translate(-Vector3.up * ground_jump_offset);
+        
     }
     #endregion
 
