@@ -41,6 +41,14 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""PrimaryAttack"",
+                    ""type"": ""Button"",
+                    ""id"": ""ef339742-8c81-420f-b2b4-a7107dfe1a41"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -197,6 +205,39 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""action"": ""Jump"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e4c2d3d2-3952-46a9-8151-c66455a83fbc"",
+                    ""path"": ""<Gamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""PrimaryAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f6d8955e-2071-4f64-a650-41125060c357"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""PrimaryAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c0ba5666-87e4-4884-ade6-0ff8cdc524f9"",
+                    ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""PrimaryAttack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -231,6 +272,7 @@ public class @InputControl : IInputActionCollection, IDisposable
         m_PlayerControl_Move = m_PlayerControl.FindAction("Move", throwIfNotFound: true);
         m_PlayerControl_Jump = m_PlayerControl.FindAction("Jump", throwIfNotFound: true);
         m_PlayerControl_RotateCam = m_PlayerControl.FindAction("RotateCam", throwIfNotFound: true);
+        m_PlayerControl_PrimaryAttack = m_PlayerControl.FindAction("PrimaryAttack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -283,6 +325,7 @@ public class @InputControl : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerControl_Move;
     private readonly InputAction m_PlayerControl_Jump;
     private readonly InputAction m_PlayerControl_RotateCam;
+    private readonly InputAction m_PlayerControl_PrimaryAttack;
     public struct PlayerControlActions
     {
         private @InputControl m_Wrapper;
@@ -290,6 +333,7 @@ public class @InputControl : IInputActionCollection, IDisposable
         public InputAction @Move => m_Wrapper.m_PlayerControl_Move;
         public InputAction @Jump => m_Wrapper.m_PlayerControl_Jump;
         public InputAction @RotateCam => m_Wrapper.m_PlayerControl_RotateCam;
+        public InputAction @PrimaryAttack => m_Wrapper.m_PlayerControl_PrimaryAttack;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControl; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -308,6 +352,9 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @RotateCam.started -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnRotateCam;
                 @RotateCam.performed -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnRotateCam;
                 @RotateCam.canceled -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnRotateCam;
+                @PrimaryAttack.started -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnPrimaryAttack;
+                @PrimaryAttack.performed -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnPrimaryAttack;
+                @PrimaryAttack.canceled -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnPrimaryAttack;
             }
             m_Wrapper.m_PlayerControlActionsCallbackInterface = instance;
             if (instance != null)
@@ -321,6 +368,9 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @RotateCam.started += instance.OnRotateCam;
                 @RotateCam.performed += instance.OnRotateCam;
                 @RotateCam.canceled += instance.OnRotateCam;
+                @PrimaryAttack.started += instance.OnPrimaryAttack;
+                @PrimaryAttack.performed += instance.OnPrimaryAttack;
+                @PrimaryAttack.canceled += instance.OnPrimaryAttack;
             }
         }
     }
@@ -348,5 +398,6 @@ public class @InputControl : IInputActionCollection, IDisposable
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
         void OnRotateCam(InputAction.CallbackContext context);
+        void OnPrimaryAttack(InputAction.CallbackContext context);
     }
 }
