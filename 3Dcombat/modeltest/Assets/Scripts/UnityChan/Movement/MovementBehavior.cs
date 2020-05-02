@@ -2,17 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class InputCtrl : MonoBehaviour
+public class MovementBehavior : MonoBehaviour
 {
     
     #region Fields
-    private InputControl _inputActions;
+    //private InputControl _inputActions;
     [SerializeField] private Vector2 _readMovVal;
 
     //movement
     [Header("Movement")]
     [SerializeField] private CameraFocus _camFocus;
-    [SerializeField] private CharacterController _characterController;
     [SerializeField] private Rigidbody _rigidbody;
 
     [Tooltip("Speed of character turn around(degree)")]
@@ -33,6 +32,7 @@ public class InputCtrl : MonoBehaviour
     public bool isUserMoveInput = false;
 
     //jump
+    [Header("Jump")]
     [Tooltip("How many times player can jump before next time landed")]
     public int maxAirJump = 1;
     public int airJumpCount;
@@ -46,26 +46,27 @@ public class InputCtrl : MonoBehaviour
     [SerializeField] private CapsuleCollider _characterCollider;
     [SerializeField] private Transform jumpUpGroundCheckPos;
     private float ground_jump_offset;//cache the y offset
-    //
+
+    //ground Check Position
     [SerializeField] private Transform groundCheckPos;
     [SerializeField] private float groundCheckDist = 0.6f;
     [SerializeField] private LayerMask groundCheckLayer;
 
-
+    //Animation
     [Header("Animation")]
-    //[SerializeField] private Animator _animator;
-    [SerializeField] private UnityChanAnimationControl _UCAnimControl;
+    [SerializeField] private Animator _animator;
+    //[SerializeField] private UnityChanAnimationControl _UCAnimControl;
     #endregion
 
     #region Trivial
-    private void OnEnable()
-    {
-        _inputActions.Enable();
-    }
-    private void OnDisable()
-    {
-        _inputActions.Disable();
-    }
+    //private void OnEnable()
+    //{
+    //    _inputActions.Enable();
+    //}
+    //private void OnDisable()
+    //{
+    //    _inputActions.Disable();
+    //}
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -80,25 +81,20 @@ public class InputCtrl : MonoBehaviour
     #region Inits
     private void Awake()
     {
-        //input controller
-        _characterController = GetComponent<CharacterController>();
-        _inputActions = new InputControl();
-        _inputActions.PlayerControl.Move.performed += _move => {_readMovVal = _move.ReadValue<Vector2>();  };
-        _inputActions.PlayerControl.Jump.performed += _jump => JumpPrepare();
+        ////input controller
+        //_inputActions = new InputControl();
+        //_inputActions.PlayerControl.Move.performed += _move => { ReadMoveValue(_move.ReadValue<Vector2>());  };
+        //_inputActions.PlayerControl.Jump.performed += _jump => JumpPerformed();
         //animator
-        _UCAnimControl.GetComponentInChildren<UnityChanAnimationControl>();
+        _animator.GetComponentInChildren<UnityChanAnimationControl>();
         //rb
         _rigidbody = GetComponent<Rigidbody>();
 
         //jump
         ground_jump_offset = Vector3.Distance(jumpUpGroundCheckPos.position, groundCheckPos.position);
 
-
-    }
-    void Start()
-    {
-        
-    }
+     }
+ 
 
     #endregion
 
@@ -130,6 +126,10 @@ public class InputCtrl : MonoBehaviour
 
 
     #region Jump
+    public void JumpPerformed()
+    {
+        JumpPrepare();
+    }
     void JumpPrepare()
     {
         if (!isReadyToJump)
@@ -139,7 +139,7 @@ public class InputCtrl : MonoBehaviour
         //ground jump
         if (isGrounded)
         {
-            _UCAnimControl.SetParamTrigger("jump");
+            _animator.SetTrigger("jump");
         }
         else // air jump
         {
@@ -181,6 +181,15 @@ public class InputCtrl : MonoBehaviour
     #endregion
 
     #region Move,Speed
+    public void ReadMoveValue(Vector2 val)
+    {
+        _readMovVal = val;
+    }
+    public void MovePerformed()
+    {
+
+    }
+
     void MovePlayer()
     {
         //if (!isGrounded)
@@ -296,19 +305,19 @@ public class InputCtrl : MonoBehaviour
     }
     void UpdateAnimation()
     {
-        //_animator.SetFloat("speed", currHorizonVelocity.magnitude);
-        //_animator.SetFloat("forward", currHorizonVelocity.magnitude / maxMoveSpeed);
-        //_animator.SetFloat("turning", turningMag);
-        //_animator.SetFloat("ySpeed", _rigidbody.velocity.y);
+        _animator.SetFloat("speed", currHorizonVelocity.magnitude);
+        _animator.SetFloat("forward", currHorizonVelocity.magnitude / maxMoveSpeed);
+        _animator.SetFloat("turning", turningMag);
+        _animator.SetFloat("ySpeed", _rigidbody.velocity.y);
 
-        //_animator.SetBool("isGrounded", isGrounded);
-        _UCAnimControl.SetParamFloat("speed", currHorizonVelocity.magnitude);
-        _UCAnimControl.SetParamFloat("forward", currHorizonVelocity.magnitude / maxMoveSpeed);
-        _UCAnimControl.SetParamFloat("turning", turningMag);
-        _UCAnimControl.SetParamFloat("ySpeed", _rigidbody.velocity.y);
+        _animator.SetBool("isGrounded", isGrounded);
+        //_UCAnimControl.SetParamFloat("speed", currHorizonVelocity.magnitude);
+        //_UCAnimControl.SetParamFloat("forward", currHorizonVelocity.magnitude / maxMoveSpeed);
+        //_UCAnimControl.SetParamFloat("turning", turningMag);
+        //_UCAnimControl.SetParamFloat("ySpeed", _rigidbody.velocity.y);
 
-        _UCAnimControl.SetParamBool("isGrounded", isGrounded);
-        
+        //_UCAnimControl.SetParamBool("isGrounded", isGrounded);
+
 
 
     }

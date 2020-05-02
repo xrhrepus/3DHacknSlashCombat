@@ -4,23 +4,23 @@ using UnityEngine;
 
 public class JumpHandler : MonoBehaviour
 {
-    public InputCtrl _inputCtrl;
+    public MovementBehavior _movementBehavior;
 
     public void JumpUpEvent()
     {
-        _inputCtrl.Jump();
+        _movementBehavior.Jump();
     }
 
     public void JumpLandEvent()
     {
-        _inputCtrl.JumpLanding();
+        _movementBehavior.JumpLanding();
     }
     public void ReadyToJumpEvent()
     {
-        _inputCtrl.ReadyToJump(true);
+        _movementBehavior.ReadyToJump(true);
     }
     public void NotReadyToJumpEvent()
     {
-        _inputCtrl.ReadyToJump(false);
+        _movementBehavior.ReadyToJump(false);
     }
 }
