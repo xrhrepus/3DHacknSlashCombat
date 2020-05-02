@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class InputCtrl : MonoBehaviour
 {
+    
     #region Fields
     private InputControl _inputActions;
     [SerializeField] private Vector2 _readMovVal;
@@ -82,7 +83,7 @@ public class InputCtrl : MonoBehaviour
         //input controller
         _characterController = GetComponent<CharacterController>();
         _inputActions = new InputControl();
-        _inputActions.PlayerControl.Move.performed += _move => {_readMovVal = _move.ReadValue<Vector2>(); MovePlayer(); };
+        _inputActions.PlayerControl.Move.performed += _move => {_readMovVal = _move.ReadValue<Vector2>();  };
         _inputActions.PlayerControl.Jump.performed += _jump => JumpPrepare();
         //animator
         _UCAnimControl.GetComponentInChildren<UnityChanAnimationControl>();
@@ -104,13 +105,13 @@ public class InputCtrl : MonoBehaviour
     #region Updates
     private void FixedUpdate()
     {
-        UpdateVelocity();
         MoveSlowdown();
-        Falling();
+        GroundCheck();
+        UpdateVelocity();
 
     }
 
-    void Update()
+    private void Update()
     {
         UpdateAnimation();
 
@@ -121,6 +122,7 @@ public class InputCtrl : MonoBehaviour
         {
             isUserMoveInput = false;
         }
+        MovePlayer();
     }
 
     #endregion
@@ -269,6 +271,7 @@ public class InputCtrl : MonoBehaviour
         _rigidbody.velocity = currHorizonVelocity;
 
     }
+    //if no move input, start to slow down
     void MoveSlowdown()
     {
         if (!isUserMoveInput)
@@ -276,9 +279,9 @@ public class InputCtrl : MonoBehaviour
             turningMag = 0.0f;
             Deccelerate();
         }
-        currHorizonVelocity = transform.forward * currHorizonSpeed;
+        //currHorizonVelocity = transform.forward * currHorizonSpeed; // already computed in UpdateVelocity()
     }
-    void Falling()
+    void GroundCheck()
     {
         isGrounded = Physics.Raycast(groundCheckPos.position, -Vector3.up, groundCheckDist, groundCheckLayer);
         if (isGrounded)
