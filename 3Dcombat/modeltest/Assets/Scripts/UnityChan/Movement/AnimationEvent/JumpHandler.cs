@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class JumpHandler : MonoBehaviour
 {
-    public MovementBehavior _movementBehavior;
+    [SerializeField]
+    private MovementBehavior _movementBehavior;
 
     public void JumpUpEvent()
     {
