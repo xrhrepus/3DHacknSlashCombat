@@ -49,6 +49,14 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""Dodge"",
+                    ""type"": ""Button"",
+                    ""id"": ""a99648fc-1dd3-4f61-9b0a-0e67bafa44fd"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -238,6 +246,28 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""action"": ""PrimaryAttack"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""39ce6511-cbce-4bb4-9d09-e03dc6131ff9"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Dodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""adb3d3bf-3c52-4b21-aac4-44d4a4bfa18a"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Dodge"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -273,6 +303,7 @@ public class @InputControl : IInputActionCollection, IDisposable
         m_PlayerControl_Jump = m_PlayerControl.FindAction("Jump", throwIfNotFound: true);
         m_PlayerControl_RotateCam = m_PlayerControl.FindAction("RotateCam", throwIfNotFound: true);
         m_PlayerControl_PrimaryAttack = m_PlayerControl.FindAction("PrimaryAttack", throwIfNotFound: true);
+        m_PlayerControl_Dodge = m_PlayerControl.FindAction("Dodge", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -326,6 +357,7 @@ public class @InputControl : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerControl_Jump;
     private readonly InputAction m_PlayerControl_RotateCam;
     private readonly InputAction m_PlayerControl_PrimaryAttack;
+    private readonly InputAction m_PlayerControl_Dodge;
     public struct PlayerControlActions
     {
         private @InputControl m_Wrapper;
@@ -334,6 +366,7 @@ public class @InputControl : IInputActionCollection, IDisposable
         public InputAction @Jump => m_Wrapper.m_PlayerControl_Jump;
         public InputAction @RotateCam => m_Wrapper.m_PlayerControl_RotateCam;
         public InputAction @PrimaryAttack => m_Wrapper.m_PlayerControl_PrimaryAttack;
+        public InputAction @Dodge => m_Wrapper.m_PlayerControl_Dodge;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControl; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -355,6 +388,9 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @PrimaryAttack.started -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnPrimaryAttack;
                 @PrimaryAttack.performed -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnPrimaryAttack;
                 @PrimaryAttack.canceled -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnPrimaryAttack;
+                @Dodge.started -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnDodge;
+                @Dodge.performed -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnDodge;
+                @Dodge.canceled -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnDodge;
             }
             m_Wrapper.m_PlayerControlActionsCallbackInterface = instance;
             if (instance != null)
@@ -371,6 +407,9 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @PrimaryAttack.started += instance.OnPrimaryAttack;
                 @PrimaryAttack.performed += instance.OnPrimaryAttack;
                 @PrimaryAttack.canceled += instance.OnPrimaryAttack;
+                @Dodge.started += instance.OnDodge;
+                @Dodge.performed += instance.OnDodge;
+                @Dodge.canceled += instance.OnDodge;
             }
         }
     }
@@ -399,5 +438,6 @@ public class @InputControl : IInputActionCollection, IDisposable
         void OnJump(InputAction.CallbackContext context);
         void OnRotateCam(InputAction.CallbackContext context);
         void OnPrimaryAttack(InputAction.CallbackContext context);
+        void OnDodge(InputAction.CallbackContext context);
     }
 }
