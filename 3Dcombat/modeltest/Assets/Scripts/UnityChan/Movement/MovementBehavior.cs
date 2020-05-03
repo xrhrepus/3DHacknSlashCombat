@@ -29,7 +29,8 @@ public class MovementBehavior : MonoBehaviour
     public float curVerticalSpeed = 0.0f;//current speed on world Y
     //public Vector3 currVerticalVelocity;//velocity on world Y, used to compute jump/gravity
 
-    public bool isUserMoveInput = false;
+    public bool isUserMoveInput { get; private set; } = false;
+    public bool isReadyToMove  = true;
 
     //jump
     [Header("Jump")]
@@ -51,6 +52,15 @@ public class MovementBehavior : MonoBehaviour
     [SerializeField] private Transform groundCheckPos;
     [SerializeField] private float groundCheckDist = 0.6f;
     [SerializeField] private LayerMask groundCheckLayer;
+
+
+    //dodge
+    [Header("Dodge")]
+    private Vector2 dodgeDirection;
+    public bool isReadyToDodge { get; private set; } = true;
+    public bool isDodging { get; private set; } = false;
+    public float _dodgeSpeed  = 8.0f;
+    public float _dodgeAnimationPlaybackSpeedMultiplier { get; set; } = 1.0f;
 
     //Animation
     [Header("Animation")]
@@ -86,7 +96,7 @@ public class MovementBehavior : MonoBehaviour
         //_inputActions.PlayerControl.Move.performed += _move => { ReadMoveValue(_move.ReadValue<Vector2>());  };
         //_inputActions.PlayerControl.Jump.performed += _jump => JumpPerformed();
         //animator
-        _animator.GetComponentInChildren<UnityChanAnimationControl>();
+        _animator.GetComponentInChildren<Animator>();
         //rb
         _rigidbody = GetComponent<Rigidbody>();
 
@@ -147,7 +157,7 @@ public class MovementBehavior : MonoBehaviour
         }
 
         isReadyToJump = false;
-
+        isReadyToDodge = false;
     }
 
     //triggered by animation clip event
@@ -162,25 +172,24 @@ public class MovementBehavior : MonoBehaviour
         {
             return;
         }
-        //_characterCollider.height -= ground_jump_offset;
-        //groundCheckPos.Translate(Vector3.up * ground_jump_offset);
 
         _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Force);
-        //_animator.SetTrigger("jump");
-         //curVerticalSpeed += Mathf.Sqrt(2.0f * gravityMag * jumpForce * Time.deltaTime);
      }
     public void JumpLanding()
     {
  
         currHorizonSpeed = 0.0f;
         currHorizonVelocity = Vector3.zero;
-        //_characterCollider.height += ground_jump_offset;
-        //groundCheckPos.Translate(-Vector3.up * ground_jump_offset);
-        
+        isReadyToDodge = true;
     }
     #endregion
 
     #region Move,Speed
+    public void StopMoving()
+    {
+        currHorizonSpeed = 0.0f;
+        currHorizonVelocity = Vector3.zero;
+    }
     public void ReadMoveValue(Vector2 val)
     {
         _readMovVal = val;
@@ -192,10 +201,10 @@ public class MovementBehavior : MonoBehaviour
 
     void MovePlayer()
     {
-        //if (!isGrounded)
-        //{
-        //     return;
-        //}
+        if (!isReadyToMove || isDodging)
+        {
+            return;
+        }
 
         Vector3 desireDir = (_camFocus.horizonLookDir * _readMovVal.y + _camFocus.horizonLookRight * _readMovVal.x).normalized;
 
@@ -224,6 +233,7 @@ public class MovementBehavior : MonoBehaviour
 
     void Accelerate()
     {
+ 
         if (currHorizonSpeed < maxMoveSpeed)
         {
             currHorizonSpeed += acceleration * Time.deltaTime;
@@ -271,6 +281,57 @@ public class MovementBehavior : MonoBehaviour
 
     #endregion
 
+    #region Dodge
+    public void DodgePerformed()
+    {
+ 
+        if (isReadyToDodge)
+        {
+
+
+            //if (desireDir != Vector3.zero)
+
+                DodgeMovement();
+            _animator.SetTrigger("dodge");
+            _animator.SetBool("isDodging", isDodging);
+
+        }
+    }
+ 
+    void DodgeMovement()
+    {
+        isDodging = true;
+        isReadyToDodge = false;
+        isReadyToMove = false;
+        isReadyToJump = false;
+        Vector3 desireDir = (_camFocus.horizonLookDir * _readMovVal.y + _camFocus.horizonLookRight * _readMovVal.x).normalized;
+        currHorizonSpeed = _dodgeSpeed;
+        if (desireDir != Vector3.zero)
+        {
+            Quaternion dest = Quaternion.LookRotation(desireDir).normalized;
+            transform.rotation = Quaternion.RotateTowards(transform.rotation, dest, maxTurningSpeed);
+            
+        }
+
+        //_dodgeAnimationPlaybackSpeedMultiplier = 
+
+    }
+
+    //used by animation event
+    public void DodgeCompelete()
+    {
+        isDodging = false;
+        isReadyToDodge = true;
+        isReadyToMove = true;
+        isReadyToJump = true;
+        //currHorizonSpeed = 0.0f;
+        StopMoving();
+        _animator.SetBool("isDodging", isDodging);
+
+    }
+
+    #endregion
+
     #region UpdateData
     void UpdateVelocity()
     {
@@ -283,7 +344,7 @@ public class MovementBehavior : MonoBehaviour
     //if no move input, start to slow down
     void MoveSlowdown()
     {
-        if (!isUserMoveInput)
+        if (!isUserMoveInput && !isDodging)
         {
             turningMag = 0.0f;
             Deccelerate();
