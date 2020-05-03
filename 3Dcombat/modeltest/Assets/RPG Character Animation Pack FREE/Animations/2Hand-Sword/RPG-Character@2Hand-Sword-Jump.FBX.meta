@@ -826,7 +826,7 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: Land
+        functionName: JumpLandEvent
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
