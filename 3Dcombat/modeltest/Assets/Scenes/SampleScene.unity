@@ -11181,7 +11181,7 @@ MonoBehaviour:
   _animator: {fileID: 995827630}
   spinMoveSpeed: 7
   leapMoveSpeed: 7
-  leapForce: 7
+  leapForce: 400
   airborneLandingForce: 12
 --- !u!114 &4000310161508214036
 MonoBehaviour:
