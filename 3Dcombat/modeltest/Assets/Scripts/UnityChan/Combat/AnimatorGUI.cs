@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TwoHandMeleeWeaponCombo : MonoBehaviour
+public class AnimatorGUI : MonoBehaviour
 {
     [Header("Animation")]
     [SerializeField] private Animator _animator;

@@ -20,7 +20,7 @@ public class MovementInput : MonoBehaviour
     {
 
         _inputActions = new InputControl();
-        _inputActions.PlayerControl.Move.performed += _move => { _movementBehavior.ReadMoveValue(_move.ReadValue<Vector2>()); };
+        _inputActions.PlayerControl.Move.performed += _move => { _movementBehavior.SetMoveValue(_move.ReadValue<Vector2>()); };
         _inputActions.PlayerControl.Jump.performed += _jump => { _movementBehavior.JumpPerformed(); };
         _inputActions.PlayerControl.Dodge.performed += _dodge => { _movementBehavior.DodgePerformed(); };
 

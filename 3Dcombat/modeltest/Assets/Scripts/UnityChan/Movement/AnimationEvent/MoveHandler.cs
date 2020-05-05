@@ -11,9 +11,18 @@ public class MoveHandler : MonoBehaviour
     { }
     public void FootR()
     { }
+    public void DodgeRollStart()
+    {
+ 
+
+        _movementBehavior.DodgeMovement();
+    }
     public void DodgeRollComplete()
     {
-    
+ 
         _movementBehavior.DodgeCompelete();
     }
+
+
 }
+

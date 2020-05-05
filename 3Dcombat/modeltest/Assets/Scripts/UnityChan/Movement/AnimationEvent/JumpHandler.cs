@@ -9,7 +9,7 @@ public class JumpHandler : MonoBehaviour
 
     public void JumpUpEvent()
     {
-        _movementBehavior.Jump();
+        _movementBehavior.JumpUp();
     }
 
     public void JumpLandEvent()
