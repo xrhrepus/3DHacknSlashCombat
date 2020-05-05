@@ -1174,14 +1174,6 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: c657a36a6d7197145905a79d259264cc, type: 2}
-    - target: {fileID: 9500000, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
-      propertyPath: m_WarningMessage
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 400326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1225,6 +1217,14 @@ PrefabInstance:
     - target: {fileID: 400326, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: c657a36a6d7197145905a79d259264cc, type: 2}
+    - target: {fileID: 9500000, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
+      propertyPath: m_WarningMessage
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 13700000, guid: 8f0565f23a2b58541a475bd3c1393052, type: 3}
       propertyPath: m_BlendShapeWeights.Array.size
@@ -4695,6 +4695,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b3a7b76d5b34cf042b7fbf899fe529f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _combatBehavior: {fileID: 4000310161508214035}
+  _animator: {fileID: 995827630}
 --- !u!1 &1003121702
 GameObject:
   m_ObjectHideFlags: 0
@@ -11174,8 +11176,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17cbc32b9822b0a4184af81bea5a3ae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isReadyToAttack: 0
   _movementBehavior: {fileID: 4000310161508214033}
   _animator: {fileID: 995827630}
+  spinMoveSpeed: 7
+  leapMoveSpeed: 7
+  leapForce: 7
+  airborneLandingForce: 12
 --- !u!114 &4000310161508214036
 MonoBehaviour:
   m_ObjectHideFlags: 0
