@@ -115,7 +115,7 @@ public class CombatBehavior : MonoBehaviour
     }
     public void LeapAttack_Leap()
     {
-        _movementBehavior.JumpUp();
+        _movementBehavior.JumpUp(leapForce);
     }
     public void LeapAttack_Landing()
     {

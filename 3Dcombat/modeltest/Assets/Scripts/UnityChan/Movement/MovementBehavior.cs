@@ -181,6 +181,15 @@ public class MovementBehavior : MonoBehaviour
 
         _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Force);
      }
+    public void JumpUp(float jForce)
+    {
+        if (!isGrounded)
+        {
+            return;
+        }
+
+        _rigidbody.AddForce(Vector3.up * jForce, ForceMode.Force);
+    }
 
     public void Airborne_ForceLanding(float airborneLandingForce)
     {
