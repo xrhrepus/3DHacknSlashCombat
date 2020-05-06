@@ -10,10 +10,27 @@ public class AttackHandler : MonoBehaviour
     [Header("Animation")]
     [SerializeField] private Animator _animator;
 
+    [Header("VisualHint")]
+    [SerializeField] private ParticleSystem _particleSystem;
+
     public void SetAttackMotionState(int state)
     {
         _animator.SetInteger("attackMotion", state);
     }
+    public void SetAnimatorSpeed(float speed)
+    {
+         _animator.speed = speed;
+    }
+    public void ComboVisualHintOn()
+    {
+        _particleSystem.Play();
+    }
+    public void ComboVisualHintOff()
+    {
+        _particleSystem.Clear();
+        _particleSystem.Stop();
+    }
+
     public void Hit()
     { }
     //
@@ -35,6 +52,7 @@ public class AttackHandler : MonoBehaviour
         _combatBehavior.ReturnToIdlePose();
         ReadyToAttack();
     }
+
     //
 
     public void ReadyToAttack()
@@ -70,7 +88,8 @@ public class AttackHandler : MonoBehaviour
     public void SpinAttack_Finish()
     {
         _combatBehavior.SpinAttack_Finish();
-    }
+     }
+
 
     public void LeapAttack_Dash()
     {
