@@ -73,6 +73,13 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
+      - time: 0.2742475
+        functionName: LeapAttack_Dash_2
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
       - time: 0.41806018
         functionName: LeapAttack_Landing
         data: 
@@ -80,7 +87,7 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.54180604
+      - time: 0.87513936
         functionName: LeapAttack_Finish
         data: 
         objectReferenceParameter: {instanceID: 0}
