@@ -767,7 +767,7 @@ ModelImporter:
       loopBlendOrientation: 1
       loopBlendPositionY: 1
       loopBlendPositionXZ: 0
-      keepOriginalOrientation: 1
+      keepOriginalOrientation: 0
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 1
       heightFromFeet: 0
@@ -776,6 +776,13 @@ ModelImporter:
       curves: []
       events:
       - time: 0
+        functionName: BasicAttack_Start
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0
         functionName: SetAttackMotionState
         data: 
         objectReferenceParameter: {instanceID: 0}
@@ -783,10 +790,10 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0
-        functionName: BasicAttack_Start
+        functionName: SetAnimatorSpeed
         data: 
         objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
+        floatParameter: 1
         intParameter: 0
         messageOptions: 0
       - time: 0.39020616
@@ -796,15 +803,57 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.6730174
+      - time: 0.4175341
+        functionName: SetAttackMotionState
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 2
+        messageOptions: 0
+      - time: 0.4331793
+        functionName: ReadyToAttack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
+      - time: 0.5518395
+        functionName: SetAnimatorSpeed
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0.1
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.576303
+        functionName: ComboVisualHintOn
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
+      - time: 0.5831297
         functionName: SetAttackMotionState
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 1
         messageOptions: 0
-      - time: 0.44816056
-        functionName: ReadyToAttack
+      - time: 0.60535115
+        functionName: SetAnimatorSpeed
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 1
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.7083662
+        functionName: NotReadyToAttack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 1
+        messageOptions: 0
+      - time: 0.729097
+        functionName: ComboVisualHintOff
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -841,6 +890,62 @@ ModelImporter:
       events:
       - time: 0
         functionName: BasicAttack_Start
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0
+        functionName: SetAnimatorSpeed
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 1
+        intParameter: 0
+        messageOptions: 0
+      - time: 0
+        functionName: NotReadyToAttack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.4381271
+        functionName: ReadyToAttack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.5250836
+        functionName: SetAnimatorSpeed
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0.5
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.5819398
+        functionName: SetAnimatorSpeed
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 1
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.6153846
+        functionName: NotReadyToAttack
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.44481602
+        functionName: ComboVisualHintOn
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.6153846
+        functionName: ComboVisualHintOff
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
