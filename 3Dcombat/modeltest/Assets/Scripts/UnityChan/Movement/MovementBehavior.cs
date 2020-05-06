@@ -394,7 +394,7 @@ public class MovementBehavior : MonoBehaviour
     //if no move input, start to slow down
     void MoveSlowdown()
     {
-        if (!isUserMoveInput && !isDodging)
+        if (!isUserMoveInput && !isDodging && isReadyToMove)
         {
             turningMag = 0.0f;
             Deccelerate();

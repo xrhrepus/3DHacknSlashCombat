@@ -13,6 +13,8 @@ public class TwoHandedMeleeWeapon_Placing : MonoBehaviour
 
     [SerializeField] private GameObject _twoHandedWeapon;
 
+    public Vector3 _extraRotation;
+
     public bool isSheath { get; set; }
 
     private void Awake()
@@ -20,9 +22,9 @@ public class TwoHandedMeleeWeapon_Placing : MonoBehaviour
         //Sheath();
         _twoHandedWeapon.transform.SetParent(_holdingTransform);
         _twoHandedWeapon.transform.localPosition = Vector3.zero;
-        _twoHandedWeapon.transform.localRotation = Quaternion.identity;
+        _twoHandedWeapon.transform.localRotation = Quaternion.Euler(_extraRotation);
     }
-
+    
     public void Unsheath()
     {
         _twoHandedWeapon.transform.position = _holdingTransform.position;

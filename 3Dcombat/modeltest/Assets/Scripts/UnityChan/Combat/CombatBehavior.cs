@@ -12,11 +12,15 @@ public class CombatBehavior : MonoBehaviour
     [Header("Animation")]
     [SerializeField] private Animator _animator;
 
+    [Header("Spin attack")]
     [SerializeField]
     private float spinMoveSpeed = 8.0f;
 
+    [Header("Leap attack")]
     [SerializeField]
     private float leapMoveSpeed = 7.0f;
+    [SerializeField]
+    private float leapMoveSpeed_p2 = 7.0f;
     [SerializeField]
     private float leapForce = 7.0f;
     [SerializeField]
@@ -62,6 +66,25 @@ public class CombatBehavior : MonoBehaviour
         _animator.SetTrigger("primatk");
     }
     #endregion
+
+    #region Minor adjustment on character transform
+    public void Move_Forward()
+    {
+        _movementBehavior.SetCurrHorizonSpeed(spinMoveSpeed);
+    }
+    public void Move_Stop()
+    {
+        _movementBehavior.SetHorizonSpeedZero();
+
+    }
+
+    public void Rotate_ToCam()
+    {
+        _movementBehavior.RotateTowardDesireDirection();
+    }
+
+    #endregion
+
     #region ComboBehavior
     public void ReturnToIdlePose()
     {
@@ -79,7 +102,7 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.SetHorizonSpeedZero();
         _movementBehavior.isReadyToMove = true;
     }
-    public void SpinAttack_Start()
+    public void SpinAttack_Dash()
     {
         if (_movementBehavior.isUserMoveInput)
         {
@@ -94,6 +117,8 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.SetCurrHorizonSpeed(spinMoveSpeed);
 
     }
+
+
     public void SpinAttack_Finish()
     {
         _movementBehavior.SetHorizonSpeedZero();
@@ -110,13 +135,33 @@ public class CombatBehavior : MonoBehaviour
         //    _movementBehavior.SetCurrHorizonVelocityDirection(_movementBehavior.GetTransform().forward);
         //}
         _movementBehavior.RotateTowardDesireDirection();
+        //_movementBehavior.SetCurrHorizonSpeed(leapMoveSpeed);
         _movementBehavior.SetCurrHorizonSpeed(leapMoveSpeed);
+
 
     }
     public void LeapAttack_Leap()
     {
+        _movementBehavior.SetHorizonSpeedZero();
         _movementBehavior.JumpUp(leapForce);
     }
+    public void LeapAttack_Dash_2()
+    {
+        //if (_movementBehavior.isUserMoveInput)
+        //{
+        //    //Vector2 movVal = _movementBehavior.GetMoveValue();
+        //    _movementBehavior.SetCurrHorizonVelocityDirection(_movementBehavior.GetMoveValue());
+        //}
+        ////else
+        ////{
+        ////    _movementBehavior.SetCurrHorizonVelocityDirection(_movementBehavior.GetTransform().forward);
+        ////}
+        //_movementBehavior.RotateTowardDesireDirection();
+        //_movementBehavior.SetCurrHorizonVelocityDirection(_movementBehavior.GetMoveValue());
+        _movementBehavior.SetCurrHorizonSpeed(leapMoveSpeed_p2);
+
+    }
+
     public void LeapAttack_Landing()
     {
         _movementBehavior.Airborne_ForceLanding(airborneLandingForce);

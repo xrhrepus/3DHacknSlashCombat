@@ -16,13 +16,27 @@ public class AttackHandler : MonoBehaviour
     }
     public void Hit()
     { }
+    //
+    public void Move_Forward()
+    {
+        _combatBehavior.Move_Forward();
+    }
+
+    public void Move_Stop()
+    {
+        _combatBehavior.Move_Stop();
+    }
+    public void Rotate_ToCam()
+    {
+        _combatBehavior.Rotate_ToCam();
+    }
     public void ReturnToIdlePose()
     {
         _combatBehavior.ReturnToIdlePose();
         ReadyToAttack();
     }
-
     //
+
     public void ReadyToAttack()
     {
         _combatBehavior.ReadyToAttack();
@@ -31,7 +45,8 @@ public class AttackHandler : MonoBehaviour
     {
         _combatBehavior.NotReadyToAttack();
     }
-    //
+
+    //=============
     public void BasicAttack_Start()
     {
         _combatBehavior.BasicAttack_Start();
@@ -44,12 +59,14 @@ public class AttackHandler : MonoBehaviour
     }
 
 
-    public void SpinAttack_Start()
+    public void SpinAttack_Dash()
     {
-        _combatBehavior.SpinAttack_Start();
+        _combatBehavior.SpinAttack_Dash();
         NotReadyToAttack();
 
     }
+
+
     public void SpinAttack_Finish()
     {
         _combatBehavior.SpinAttack_Finish();
@@ -64,6 +81,11 @@ public class AttackHandler : MonoBehaviour
     {
         _combatBehavior.LeapAttack_Leap();
     }
+    public void LeapAttack_Dash_2()
+    {
+        _combatBehavior.LeapAttack_Dash_2();
+    }
+
     public void LeapAttack_Landing()
     {
         _combatBehavior.LeapAttack_Landing();
