@@ -128,7 +128,7 @@ public class CombatBehavior : MonoBehaviour
         if (_movementBehavior.isUserMoveInput)
         {
             //Vector2 movVal = _movementBehavior.GetMoveValue();
-            _movementBehavior.SetCurrHorizonVelocityDirection(_movementBehavior.GetMoveValue());
+             _movementBehavior.SetCurrHorizonVelocityDirection(_movementBehavior.GetMoveValue());
         }
         //else
         //{

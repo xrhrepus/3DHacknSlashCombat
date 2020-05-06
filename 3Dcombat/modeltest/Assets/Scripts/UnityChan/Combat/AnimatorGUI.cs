@@ -25,7 +25,7 @@ public class AnimatorGUI : MonoBehaviour
         m_CurrentClipLength = m_CurrentClipInfo[0].clip.length;
         //Access the Animation clip name
         m_ClipName = m_CurrentClipInfo[0].clip.name;
-
+ 
     }
     void OnGUI()
     {
