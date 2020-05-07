@@ -41,7 +41,7 @@ public class MovementBehavior : MonoBehaviour
     public float jumpForce = 8.0f;
     public float gravityMag = 9.8f;
     public bool isGrounded = false;
-    private bool isReadyToJump = false;
+    public bool isReadyToJump = false;
  
     //adjust collider position for foot postion in jump animation
     [SerializeField] private CapsuleCollider _characterCollider;
@@ -204,6 +204,7 @@ public class MovementBehavior : MonoBehaviour
         //currHorizonVelocity = Vector3.zero;
         SetHorizonSpeedZero();
         isReadyToDodge = true;
+      //  isReadyToJump = true;
     }
     #endregion
 

@@ -17011,17 +17011,17 @@ MonoBehaviour:
   _readMovVal: {x: 0, y: 0}
   _camFocus: {fileID: 1092932550}
   _rigidbody: {fileID: 4000310161508214032}
-  maxTurningSpeed: 270
+  maxTurningSpeed: 330
   startTurningThreshold: 2.07
   maxMoveSpeed: 6
-  acceleration: 3
+  acceleration: 8
   currHorizonSpeed: 0
   currHorizonVelocity: {x: 0, y: 0, z: 0}
   curVerticalSpeed: 0
   isReadyToMove: 1
   maxAirJump: 1
   airJumpCount: 0
-  jumpForce: 300
+  jumpForce: 330
   gravityMag: 9.8
   isGrounded: 0
   _characterCollider: {fileID: 1003121699}
