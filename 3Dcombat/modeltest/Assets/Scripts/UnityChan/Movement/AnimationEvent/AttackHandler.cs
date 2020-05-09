@@ -63,56 +63,119 @@ public class AttackHandler : MonoBehaviour
     {
         _combatBehavior.NotReadyToAttack();
     }
-
+    #region TwoHandMelee attack
+    //2-hand melee Atk1
     //=============
-    public void BasicAttack_Start()
+    public void TwoHandMelee_ATK_1_Phase1()
     {
-        _combatBehavior.BasicAttack_Start();
-        NotReadyToAttack();
+        _combatBehavior.TwoHandMelee_ATK_1_Phase1();
     }
-    public void BasicAttack_Finish()
+    public void TwoHandMelee_ATK_1_Phase2()
     {
-        _combatBehavior.BasicAttack_Finish();
-        ReadyToAttack();
+        _combatBehavior.TwoHandMelee_ATK_1_Phase2();
+    }
+    public void TwoHandMelee_ATK_1_Phase3()
+    {
+        _combatBehavior.TwoHandMelee_ATK_1_Phase3();
+    }
+    public void TwoHandMelee_ATK_1_Phase4()
+    {
+        _combatBehavior.TwoHandMelee_ATK_1_Phase4();
+    }
+    //2-hand melee Atk2
+    //=============
+    public void TwoHandMelee_ATK_2_Phase1()
+    {
+        _combatBehavior.TwoHandMelee_ATK_2_Phase1();
+    }
+    public void TwoHandMelee_ATK_2_Phase2()
+    {
+        _combatBehavior.TwoHandMelee_ATK_2_Phase2();
+    }
+    public void TwoHandMelee_ATK_2_Phase3()
+    {
+        _combatBehavior.TwoHandMelee_ATK_2_Phase3();
+    }
+    public void TwoHandMelee_ATK_2_Phase4()
+    {
+        _combatBehavior.TwoHandMelee_ATK_2_Phase4();
+    }
+    //2-hand melee Atk3
+    //=============
+    public void TwoHandMelee_ATK_3_Phase1()
+    {
+        _combatBehavior.TwoHandMelee_ATK_3_Phase1();
+    }
+    public void TwoHandMelee_ATK_3_Phase2()
+    {
+        _combatBehavior.TwoHandMelee_ATK_3_Phase2();
+    }
+    public void TwoHandMelee_ATK_3_Phase3()
+    {
+        _combatBehavior.TwoHandMelee_ATK_3_Phase3();
+    }
+    public void TwoHandMelee_ATK_3_Phase4()
+    {
+        _combatBehavior.TwoHandMelee_ATK_3_Phase4();
+    }
+    public void TwoHandMelee_ATK_3_Phase5()
+    {
+        _combatBehavior.TwoHandMelee_ATK_3_Phase5();
     }
 
-
-    public void SpinAttack_Dash()
+    //2-hand melee Atk4
+    //=============
+    public void TwoHandMelee_ATK_4_Phase1()
     {
-        _combatBehavior.SpinAttack_Dash();
-        NotReadyToAttack();
-
+        _combatBehavior.TwoHandMelee_ATK_4_Phase1();
     }
-
-
-    public void SpinAttack_Finish()
+    public void TwoHandMelee_ATK_4_Phase2()
     {
-        _combatBehavior.SpinAttack_Finish();
-     }
-
-
-    public void LeapAttack_Dash()
-    {
-        _combatBehavior.LeapAttack_Dash();
-        NotReadyToAttack();
+        _combatBehavior.TwoHandMelee_ATK_4_Phase2();
     }
-    public void LeapAttack_Leap()
+    public void TwoHandMelee_ATK_4_Phase3()
     {
-        _combatBehavior.LeapAttack_Leap();
+        _combatBehavior.TwoHandMelee_ATK_4_Phase3();
     }
-    public void LeapAttack_Dash_2()
+    public void TwoHandMelee_ATK_4_Phase4()
     {
-        _combatBehavior.LeapAttack_Dash_2();
+        _combatBehavior.TwoHandMelee_ATK_4_Phase4();
     }
+    public void TwoHandMelee_ATK_4_Phase5()
+    {
+        _combatBehavior.TwoHandMelee_ATK_4_Phase5();
+    }
+    public void TwoHandMelee_ATK_4_Phase6()
+    {
+        _combatBehavior.TwoHandMelee_ATK_4_Phase6();
+    }
+    #endregion
 
-    public void LeapAttack_Landing()
-    {
-        _combatBehavior.LeapAttack_Landing();
-    }
-    public void LeapAttack_Finish()
-    {
-        _combatBehavior.LeapAttack_Finish();
+    //===
 
-    }
+
+    //public void LeapAttack_Dash()
+    //{
+    //    _combatBehavior.LeapAttack_Dash();
+    //    NotReadyToAttack();
+    //}
+    //public void LeapAttack_Leap()
+    //{
+    //    _combatBehavior.LeapAttack_Leap();
+    //}
+    //public void LeapAttack_Dash_2()
+    //{
+    //    _combatBehavior.LeapAttack_Dash_2();
+    //}
+
+    //public void LeapAttack_Landing()
+    //{
+    //    _combatBehavior.LeapAttack_Landing();
+    //}
+    //public void LeapAttack_Finish()
+    //{
+    //    _combatBehavior.LeapAttack_Finish();
+
+    //}
 
 }
