@@ -5,7 +5,7 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
 
-    public bool inFight { get; set; }
+    public bool InFight { get; set; }
 
     void Update()
     {
