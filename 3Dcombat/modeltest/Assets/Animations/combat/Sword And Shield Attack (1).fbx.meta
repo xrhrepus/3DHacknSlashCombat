@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 66e8a9c1de053ba489da0b08a0cdfa51
 ModelImporter:
-  serializedVersion: 25
+  serializedVersion: 19300
   internalIDToNameTable:
   - first:
       74: 1827226128182048838
@@ -14,7 +14,7 @@ ModelImporter:
     second: SpinAttack_Start
   externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -66,73 +66,38 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: NotReadyToAttack
+        functionName: TwoHandMelee_ATK_3_Phase1
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.103678934
-        functionName: SpinAttack_Dash
+      - time: 0.13366336
+        functionName: TwoHandMelee_ATK_3_Phase2
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.6751719
-        functionName: SpinAttack_Finish
+      - time: 0.6020308
+        functionName: TwoHandMelee_ATK_3_Phase3
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.6813348
-        functionName: SetAnimatorSpeed
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0.1
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.6832138
-        functionName: ReadyToAttack
+      - time: 0.636194
+        functionName: TwoHandMelee_ATK_3_Phase4
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.722408
-        functionName: SetAnimatorSpeed
+      - time: 0.7249233
+        functionName: TwoHandMelee_ATK_3_Phase5
         data: 
         objectReferenceParameter: {instanceID: 0}
-        floatParameter: 1
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.74916387
-        functionName: NotReadyToAttack
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 1
-        intParameter: 0
-        messageOptions: 0
-      - time: 0
-        functionName: SetAnimatorSpeed
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 1
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.6923077
-        functionName: ComboVisualHintOn
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 1
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.74916387
-        functionName: ComboVisualHintOff
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 1
+        floatParameter: 0
         intParameter: 0
         messageOptions: 0
       transformMask: []
@@ -204,6 +169,7 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -234,7 +200,6 @@ ModelImporter:
     normalSmoothingSource: 0
   referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
     serializedVersion: 3
     human:
@@ -1036,8 +1001,10 @@ ModelImporter:
     hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
+  avatarSetup: 1
   additionalBone: 0
   userData: 
   assetBundleName: 

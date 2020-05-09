@@ -1,14 +1,14 @@
 fileFormatVersion: 2
 guid: a5d2baff990f6c142bb892901eda9d7e
 ModelImporter:
-  serializedVersion: 25
+  serializedVersion: 19300
   internalIDToNameTable:
   - first:
       74: -203655887218126122
     second: LeapAttack
   externalObjects: {}
   materials:
-    importMaterials: 1
+    materialImportMode: 1
     materialName: 0
     materialSearch: 1
     materialLocation: 1
@@ -60,28 +60,28 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: SetAnimatorSpeed
+        functionName: TwoHandMelee_ATK_4_Phase1
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 1
         intParameter: 0
         messageOptions: 0
       - time: 0.07865168
-        functionName: LeapAttack_Dash
+        functionName: TwoHandMelee_ATK_4_Phase2
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.26086956
-        functionName: LeapAttack_Leap
+        functionName: TwoHandMelee_ATK_4_Phase3
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.2876254
-        functionName: LeapAttack_Dash_2
+        functionName: TwoHandMelee_ATK_4_Phase4
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -102,14 +102,14 @@ ModelImporter:
         intParameter: 0
         messageOptions: 0
       - time: 0.44816053
-        functionName: LeapAttack_Landing
+        functionName: TwoHandMelee_ATK_4_Phase5
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
       - time: 0.59197325
-        functionName: LeapAttack_Finish
+        functionName: TwoHandMelee_ATK_4_Phase6
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
@@ -140,6 +140,7 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 1
     importBlendShapes: 1
     importCameras: 1
@@ -170,7 +171,6 @@ ModelImporter:
     normalSmoothingSource: 0
   referencedClips: []
   importAnimation: 1
-  copyAvatar: 0
   humanDescription:
     serializedVersion: 3
     human:
@@ -934,8 +934,10 @@ ModelImporter:
     hasExtraRoot: 1
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
+  avatarSetup: 1
   additionalBone: 0
   userData: 
   assetBundleName: 
