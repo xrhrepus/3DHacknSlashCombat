@@ -1,7 +1,7 @@
 fileFormatVersion: 2
 guid: 7b5b17e2d42e0424f9c36012595dc9b6
 ModelImporter:
-  serializedVersion: 25
+  serializedVersion: 19300
   internalIDToNameTable:
   - first:
       1: 100000
@@ -722,7 +722,7 @@ ModelImporter:
     second: 2Hand-Sword-Attack2_mir
   externalObjects: {}
   materials:
-    importMaterials: 0
+    materialImportMode: 0
     materialName: 0
     materialSearch: 1
     materialLocation: 0
@@ -731,7 +731,7 @@ ModelImporter:
     bakeSimulation: 0
     resampleCurves: 1
     optimizeGameObjects: 0
-    motionNodeName: <Root Transform>
+    motionNodeName: 
     rigImportErrors: 
     rigImportWarnings: 
     animationImportErrors: 
@@ -766,8 +766,8 @@ ModelImporter:
       loopBlend: 0
       loopBlendOrientation: 1
       loopBlendPositionY: 1
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
       keepOriginalPositionY: 1
       keepOriginalPositionXZ: 1
       heightFromFeet: 0
@@ -776,88 +776,32 @@ ModelImporter:
       curves: []
       events:
       - time: 0
-        functionName: BasicAttack_Start
+        functionName: TwoHandMelee_ATK_2_Phase1
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0
-        functionName: SetAttackMotionState
+      - time: 0.56435645
+        functionName: TwoHandMelee_ATK_2_Phase2
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0
-        functionName: SetAnimatorSpeed
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 1
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.39020616
-        functionName: Hit
+      - time: 0.7475248
+        functionName: TwoHandMelee_ATK_2_Phase3
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.4175341
-        functionName: SetAttackMotionState
+      - time: 0.99009895
+        functionName: TwoHandMelee_ATK_2_Phase4
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0
-        intParameter: 2
-        messageOptions: 0
-      - time: 0.4331793
-        functionName: ReadyToAttack
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 1
-        messageOptions: 0
-      - time: 0.5518395
-        functionName: SetAnimatorSpeed
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0.1
         intParameter: 0
-        messageOptions: 0
-      - time: 0.576303
-        functionName: ComboVisualHintOn
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 1
-        messageOptions: 0
-      - time: 0.5831297
-        functionName: SetAttackMotionState
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 1
-        messageOptions: 0
-      - time: 0.60535115
-        functionName: SetAnimatorSpeed
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 1
-        intParameter: 0
-        messageOptions: 0
-      - time: 0.7083662
-        functionName: NotReadyToAttack
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 1
-        messageOptions: 0
-      - time: 0.729097
-        functionName: ComboVisualHintOff
-        data: 
-        objectReferenceParameter: {instanceID: 0}
-        floatParameter: 0
-        intParameter: 1
         messageOptions: 0
       transformMask: []
       maskType: 3
@@ -962,6 +906,7 @@ ModelImporter:
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
+    sortHierarchyByName: 1
     importVisibility: 0
     importBlendShapes: 0
     importCameras: 0
@@ -992,7 +937,6 @@ ModelImporter:
     normalSmoothingSource: 0
   referencedClips: []
   importAnimation: 1
-  copyAvatar: 1
   humanDescription:
     serializedVersion: 3
     human:
@@ -1694,8 +1638,10 @@ ModelImporter:
     skeletonHasParents: 0
   lastHumanDescriptionAvatarSource: {fileID: 9000000, guid: e42d9259129992a4d95e0b320ca2a43d,
     type: 3}
+  autoGenerateAvatarMappingIfUnspecified: 1
   animationType: 3
   humanoidOversampling: 1
+  avatarSetup: 2
   additionalBone: 0
   userData: 
   assetBundleName: 
