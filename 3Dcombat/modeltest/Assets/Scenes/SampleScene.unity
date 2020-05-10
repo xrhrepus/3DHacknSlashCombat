@@ -16899,6 +16899,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: 2HSword
       objectReference: {fileID: 0}
+    - target: {fileID: 554612249564160371, guid: 6b83a77b905957c43961078b079f9bb3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b83a77b905957c43961078b079f9bb3, type: 3}
 --- !u!1001 &3252558799254459164
@@ -17088,6 +17093,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _combatBehavior: {fileID: 4000310161508214035}
+  _holdDuration: 0.4
+  _atkHoldDown: 0
+  _holdDuration_timer: 0
+  _holdTimer_Start: 0
 --- !u!54 &4000310161508214032
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -17117,12 +17126,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _readMovVal: {x: 0, y: 0}
+  _combatBehavior: {fileID: 4000310161508214035}
   _camFocus: {fileID: 1092932550}
   _rigidbody: {fileID: 4000310161508214032}
+  _initRigidbodyMass: 1
   maxTurningSpeed: 330
   startTurningThreshold: 2.07
   maxMoveSpeed: 6
-  acceleration: 8
+  acceleration: 10
   currHorizonSpeed: 0
   currHorizonVelocity: {x: 0, y: 0, z: 0}
   curVerticalSpeed: 0
@@ -17171,6 +17182,18 @@ MonoBehaviour:
   _movementBehavior: {fileID: 4000310161508214033}
   _animator: {fileID: 995827630}
   _particleSystem: {fileID: 611725451}
+  comboIntervalSpeed_f1: 0.5
+  comboIntervalSpeed_f2: 0.2
+  comboIntervalSpeed_f3: 0.3
+  comboIntervalSpeed_f4: 0.3
+  jumpForce_f4: 2
+  riseForce_f5: 450
+  riseHorizonSpd: 5
+  midAirPlaybackSpd_rise: 0.3
+  comboIntervalSpeed_2hw1: 0.3
+  comboIntervalSpeed_2hw2: 0.3
+  comboIntervalSpeed_2hw3: 0.3
+  normalPlaybackSpeed: 1
   spinMoveSpeed: 5
   leapMoveSpeed: 4
   leapMoveSpeed_p2: 8
