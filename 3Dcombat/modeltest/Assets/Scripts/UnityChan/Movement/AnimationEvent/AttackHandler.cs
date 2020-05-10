@@ -19,8 +19,15 @@ public class AttackHandler : MonoBehaviour
     }
     public void SetAnimatorSpeed(float speed)
     {
-         _animator.speed = speed;
+        //_animator.speed = speed;
+        _combatBehavior.SetAnimatorSpeed(speed);
     }
+    public void ResetAnimatorSpeed()
+    {
+        //_animator.speed = speed;
+        _combatBehavior.ResetAnimatorSpeed();
+    }
+
     public void ComboVisualHintOn()
     {
         _particleSystem.Play();
@@ -34,6 +41,7 @@ public class AttackHandler : MonoBehaviour
     public void Hit()
     { }
     //
+    #region Minor character adjustment
     public void Move_Forward()
     {
         _combatBehavior.Move_Forward();
@@ -52,9 +60,8 @@ public class AttackHandler : MonoBehaviour
         _combatBehavior.ReturnToIdlePose();
         ReadyToAttack();
     }
-
-    //
-
+    #endregion
+    #region Set animator parameters
     public void ReadyToAttack()
     {
         _combatBehavior.ReadyToAttack();
@@ -63,6 +70,118 @@ public class AttackHandler : MonoBehaviour
     {
         _combatBehavior.NotReadyToAttack();
     }
+    public void ResetAttackTriggers()
+    {
+        _combatBehavior.ResetAttackTriggers();
+    }
+
+    #endregion
+
+    //
+    #region Fist attack
+    #region Fist attack 1
+    public void Fist_ATK_1_Phase1()
+    {
+        _combatBehavior.Fist_ATK_1_Phase1();
+    }
+    public void Fist_ATK_1_Phase2()
+    {
+        _combatBehavior.Fist_ATK_1_Phase2();
+    }
+    public void Fist_ATK_1_Phase3()
+    {
+        _combatBehavior.Fist_ATK_1_Phase3();
+    }
+    public void Fist_ATK_1_Phase4()
+    {
+        _combatBehavior.Fist_ATK_1_Phase4();
+    }
+
+    #endregion
+    #region Fist attack 2
+    public void Fist_ATK_2_Phase1()
+    {
+        _combatBehavior.Fist_ATK_2_Phase1();
+    }
+    public void Fist_ATK_2_Phase2()
+    {
+        _combatBehavior.Fist_ATK_2_Phase2();
+    }
+    public void Fist_ATK_2_Phase3()
+    {
+        _combatBehavior.Fist_ATK_2_Phase3();
+    }
+    public void Fist_ATK_2_Phase4()
+    {
+        _combatBehavior.Fist_ATK_2_Phase4();
+    }
+
+    #endregion
+    #region Fist attack 3
+    public void Fist_ATK_3_Phase1()
+    {
+        _combatBehavior.Fist_ATK_3_Phase1();
+    }
+    public void Fist_ATK_3_Phase2()
+    {
+        _combatBehavior.Fist_ATK_3_Phase2();
+    }
+    public void Fist_ATK_3_Phase3()
+    {
+        _combatBehavior.Fist_ATK_3_Phase3();
+    }
+    public void Fist_ATK_3_Phase4()
+    {
+        _combatBehavior.Fist_ATK_3_Phase4();
+    }
+
+    #endregion
+    #region Fist attack 4
+    public void Fist_ATK_4_Phase1()
+    {
+        _combatBehavior.Fist_ATK_4_Phase1();
+    }
+    public void Fist_ATK_4_Phase2()
+    {
+        _combatBehavior.Fist_ATK_4_Phase2();
+    }
+    public void Fist_ATK_4_Phase3()
+    {
+        _combatBehavior.Fist_ATK_4_Phase3();
+    }
+    public void Fist_ATK_4_Phase4()
+    {
+        _combatBehavior.Fist_ATK_4_Phase4();
+    }
+
+    #endregion
+    #region Fist attack 5
+    public void Fist_ATK_5_Phase1()
+    {
+        _combatBehavior.Fist_ATK_5_Phase1();
+    }
+    public void Fist_ATK_5_Phase2()
+    {
+        _combatBehavior.Fist_ATK_5_Phase2();
+    }
+    public void Fist_ATK_5_Phase3()
+    {
+        _combatBehavior.Fist_ATK_5_Phase3();
+    }
+    public void Fist_ATK_5_Phase4()
+    {
+        _combatBehavior.Fist_ATK_5_Phase4();
+    }
+    public void Fist_ATK_5_Phase5()
+    {
+        _combatBehavior.Fist_ATK_5_Phase5();
+    }
+
+    #endregion
+
+
+    #endregion
+
     #region TwoHandMelee attack
     //2-hand melee Atk1
     //=============
@@ -151,31 +270,6 @@ public class AttackHandler : MonoBehaviour
     }
     #endregion
 
-    //===
-
-
-    //public void LeapAttack_Dash()
-    //{
-    //    _combatBehavior.LeapAttack_Dash();
-    //    NotReadyToAttack();
-    //}
-    //public void LeapAttack_Leap()
-    //{
-    //    _combatBehavior.LeapAttack_Leap();
-    //}
-    //public void LeapAttack_Dash_2()
-    //{
-    //    _combatBehavior.LeapAttack_Dash_2();
-    //}
-
-    //public void LeapAttack_Landing()
-    //{
-    //    _combatBehavior.LeapAttack_Landing();
-    //}
-    //public void LeapAttack_Finish()
-    //{
-    //    _combatBehavior.LeapAttack_Finish();
-
-    //}
+ 
 
 }

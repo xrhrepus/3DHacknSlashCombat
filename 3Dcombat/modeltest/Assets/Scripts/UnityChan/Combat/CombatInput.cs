@@ -13,10 +13,11 @@ public class CombatInput : MonoBehaviour
     //[SerializeField] private UnityChanAnimationControl _UCAnimControl;
     [Header("Attack Hold down")]
     [SerializeField] private float _holdDuration = 0.4f;
-    [SerializeField] private bool _isAtkHoldDown = false;
+    [SerializeField] private bool _atkHoldDown = false;
     [SerializeField] private float _holdDuration_timer = 0.0f;
-    [SerializeField] private bool _holdDuration_StartCount = false;
+    [SerializeField] private bool _holdTimer_Start = false;
 
+ 
     private void OnEnable()
     {
         _inputActions.Enable();
@@ -27,28 +28,33 @@ public class CombatInput : MonoBehaviour
     }
     private void AttackPressed()
     {
-        _holdDuration_StartCount = true;
+        _holdTimer_Start = true;
     }
     private void AttackReleased()
     {
+        if (_atkHoldDown)
+        {
+             _combatBehavior.PrimaryAttackHoldToRelease();
+        }
         _holdDuration_timer = 0.0f;
-        _holdDuration_StartCount = false;
-        _isAtkHoldDown = false;
-
+        _holdTimer_Start = false;
+        _atkHoldDown = false;
+ 
     }
     public bool IsAttackHold()
     {
-        return _isAtkHoldDown;
+        return _atkHoldDown;
     }
+ 
     private void FixedUpdate()
     {
-        if (_holdDuration_StartCount)
+        if (_holdTimer_Start)
         {
             _holdDuration_timer += Time.deltaTime;
         }
         if (_holdDuration_timer > _holdDuration)
         {
-            _isAtkHoldDown = true;
+            _atkHoldDown = true;
             _combatBehavior.PrimaryAttackHeld();
         }
     }

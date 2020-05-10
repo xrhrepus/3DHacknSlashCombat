@@ -9,10 +9,14 @@ public class MovementBehavior : MonoBehaviour
     //private InputControl _inputActions;
     [SerializeField] private Vector2 _readMovVal;
 
+    [Header("CombatBehavior")]
+    [SerializeField] private CombatBehavior _combatBehavior;
+
     //movement
     [Header("Movement")]
     [SerializeField] private CameraFocus _camFocus;
     [SerializeField] private Rigidbody _rigidbody;
+    [SerializeField] private float _initRigidbodyMass = 1.0f;
 
     [Tooltip("Speed of character turn around(degree)")]
     public float maxTurningSpeed = 3.0f;
@@ -102,7 +106,7 @@ public class MovementBehavior : MonoBehaviour
 
         //jump
         ground_jump_offset = Vector3.Distance(jumpUpGroundCheckPos.position, groundCheckPos.position);
-
+        _rigidbody.mass = _initRigidbodyMass;
      }
  
 
@@ -134,11 +138,20 @@ public class MovementBehavior : MonoBehaviour
     }
 
     #endregion
-    #region Getter
+    #region Getter Setter
     public Transform GetTransform()
     {
         return this.gameObject.transform;
     }
+    public void SetRigidbodyMass(float mass)
+    {
+        _rigidbody.mass = mass;
+    }
+    public void ResetRigidbodyMass()
+    {
+        _rigidbody.mass = _initRigidbodyMass;
+    }
+
     #endregion
 
     #region Jump
@@ -178,7 +191,6 @@ public class MovementBehavior : MonoBehaviour
         {
             return;
         }
-
         _rigidbody.AddForce(Vector3.up * jumpForce, ForceMode.Force);
      }
     public void JumpUp(float jForce)
@@ -204,6 +216,7 @@ public class MovementBehavior : MonoBehaviour
         //currHorizonVelocity = Vector3.zero;
         SetHorizonSpeedZero();
         isReadyToDodge = true;
+        _combatBehavior.ResetAttackTriggers();
       //  isReadyToJump = true;
     }
     #endregion
@@ -345,10 +358,11 @@ public class MovementBehavior : MonoBehaviour
             isDodging = true;
 
             //DodgeMovement();
-
+            Debug.Log("dod");
             _animator.SetTrigger("dodge");
             _animator.SetBool("isDodging", isDodging);
-
+            _combatBehavior.ResetAnimatorSpeed();
+            _combatBehavior.ResetAttackTriggers();
         }
     }
 

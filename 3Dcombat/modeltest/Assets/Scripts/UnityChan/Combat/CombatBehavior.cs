@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class CombatBehavior : MonoBehaviour
 {
+    #region Fields
+
     [SerializeField]
     private bool isReadyToAttack = false;
 
@@ -14,16 +16,58 @@ public class CombatBehavior : MonoBehaviour
     [Header("VisualHint")]
     [SerializeField] private ParticleSystem _particleSystem;
 
+    [Header("Fist combat combo")]
+    [Tooltip("the playback speed of animator during the can combo state")]
+    [SerializeField]
+    private float comboIntervalSpeed_f1 = 0.3f;
+    [SerializeField]
+    private float comboIntervalSpeed_f2 = 0.3f;
+    [SerializeField]
+    private float comboIntervalSpeed_f3 = 0.3f;
+    [SerializeField]
+    private float comboIntervalSpeed_f4 = 0.3f;
+
+    //[Tooltip("the Normal playback speed of animator")]
+    //[SerializeField]
+    //private float normalPlaybackSpeed = 1.0f;
+
+    [Header("Fist attack 4(spin kick)")]
+    [SerializeField]
+    private float jumpForce_f4 = 150f;
+
+    [Header("Fist attack 5(charge rising punch)")]
+    [SerializeField]
+    private float riseForce_f5 = 150f;
+    [SerializeField]
+    private float riseHorizonSpd = 4.0f;
+    [SerializeField]
+    private float midAirPlaybackSpd_rise = 0.3f;
+
+    //[Header("Leap attack")]
+    //[SerializeField]
+    //private float leapMoveSpeed = 7.0f;
+    //[SerializeField]
+    //private float leapMoveSpeed_p2 = 7.0f;
+    //[SerializeField]
+    //private float leapForce = 7.0f;
+    //[SerializeField]
+    //private float airborneLandingForce = 7.0f;
+
+    #region 2-hand melee weapon
 
     [Header("2 Hand weapon combo")]
     [Tooltip("the playback speed of animator during the can combo state")]
     [SerializeField]
-    private float comboIntervalSpeed = 0.3f;
+    private float comboIntervalSpeed_2hw1 = 0.3f;
+    [SerializeField]
+    private float comboIntervalSpeed_2hw2 = 0.3f;
+    [SerializeField]
+    private float comboIntervalSpeed_2hw3 = 0.3f;
+
     [Tooltip("the Normal playback speed of animator")]
     [SerializeField]
     private float normalPlaybackSpeed = 1.0f;
 
- 
     [Header("Spin attack")]
     [SerializeField]
     private float spinMoveSpeed = 8.0f;
@@ -37,7 +81,9 @@ public class CombatBehavior : MonoBehaviour
     private float leapForce = 7.0f;
     [SerializeField]
     private float airborneLandingForce = 7.0f;
+    #endregion
 
+    #endregion
 
     enum AttackState
     {
@@ -54,6 +100,8 @@ public class CombatBehavior : MonoBehaviour
     {
         isReadyToAttack = false;
     }
+
+    
     #region Animator Control
     public void SetAttackMotionState(int state)
     {
@@ -63,6 +111,13 @@ public class CombatBehavior : MonoBehaviour
     {
         _animator.speed = speed;
     }
+    public void ResetAnimatorSpeed()
+    {
+        Debug.Log("rst");
+
+        _animator.speed = normalPlaybackSpeed;
+    }
+
     public void ComboVisualHintOn()
     {
         _particleSystem.Play();
@@ -75,13 +130,14 @@ public class CombatBehavior : MonoBehaviour
 
     #endregion
 
-
-    #region Attack
-    void ResetAttackTriggers()
+    #region Attack button status
+    public void ResetAttackTriggers()
     {
         _animator.ResetTrigger("primatk");
         _animator.ResetTrigger("primatkHold");
- 
+        _animator.ResetTrigger("primatkHoldToRelease");
+
+
     }
     public void PrimaryAttackPerformed()
     {
@@ -100,6 +156,14 @@ public class CombatBehavior : MonoBehaviour
             SetAnimator_PrimAttackHeld();
         }
     }
+    public void PrimaryAttackHoldToRelease()
+    {
+        //if (isReadyToAttack)
+        {
+            SetAnimatorSpeed(normalPlaybackSpeed);
+            SetAnimator_PrimAttackHoldToRelease();
+        }
+    }
 
     //public void AttackFinishing()
     //{
@@ -112,6 +176,10 @@ public class CombatBehavior : MonoBehaviour
     void SetAnimator_PrimAttackHeld()
     {
         _animator.SetTrigger("primatkHold");
+    }
+    void SetAnimator_PrimAttackHoldToRelease()
+    {
+        _animator.SetTrigger("primatkHoldToRelease");
     }
 
     #endregion
@@ -129,7 +197,11 @@ public class CombatBehavior : MonoBehaviour
 
     public void Rotate_ToCam()
     {
+        if (_movementBehavior.isUserMoveInput)
+            _movementBehavior.SetCurrHorizonVelocityDirection(_movementBehavior.GetMoveValue());
         _movementBehavior.RotateTowardDesireDirection();
+        //_movementBehavior.SetCurrHorizonSpeed(1.2f);
+
     }
 
     #endregion
@@ -140,22 +212,206 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.SetHorizonSpeedZero();
         _movementBehavior.isReadyToMove = true;
     }
+    #region Fist attack
+    #region Fist_Attack_1
+    public void Fist_ATK_1_Phase1()
+    {
+        _movementBehavior.ReadyToJump(false);
+        ResetAttackTriggers();
+        //_movementBehavior.SetHorizonSpeedZero();
+        _movementBehavior.isReadyToMove = false;
+        Rotate_ToCam();
+
+        NotReadyToAttack();
+    }
+    public void Fist_ATK_1_Phase2()
+    {
+        _movementBehavior.SetHorizonSpeedZero();
+        ReadyToAttack();
+        SetAnimatorSpeed(comboIntervalSpeed_f1);
+        ComboVisualHintOn();
+    }
+    public void Fist_ATK_1_Phase3()
+    {
+        NotReadyToAttack();
+        SetAnimatorSpeed(normalPlaybackSpeed);
+        ComboVisualHintOff();
+    }
+    public void Fist_ATK_1_Phase4()
+    {
+        _movementBehavior.SetHorizonSpeedZero();
+        _movementBehavior.isReadyToMove = true;
+        ReadyToAttack();
+    }
+    #endregion
+    #region Fist_Attack_2
+    public void Fist_ATK_2_Phase1()
+    {
+        _movementBehavior.ReadyToJump(false);
+
+        ResetAttackTriggers();
+        _movementBehavior.SetHorizonSpeedZero();
+        _movementBehavior.isReadyToMove = false;
+        NotReadyToAttack();
+        Rotate_ToCam();
+
+    }
+    public void Fist_ATK_2_Phase2()
+    {
+
+        ReadyToAttack();
+        SetAnimatorSpeed(comboIntervalSpeed_f2);
+        ComboVisualHintOn();
+    }
+    public void Fist_ATK_2_Phase3()
+    {
+        NotReadyToAttack();
+        SetAnimatorSpeed(normalPlaybackSpeed);
+        ComboVisualHintOff();
+    }
+    public void Fist_ATK_2_Phase4()
+    {
+        _movementBehavior.SetHorizonSpeedZero();
+        _movementBehavior.isReadyToMove = true;
+        ReadyToAttack();
+    }
+    #endregion
+    #region Fist_Attack_3
+    public void Fist_ATK_3_Phase1()
+    {
+        _movementBehavior.ReadyToJump(false);
+
+        ResetAttackTriggers();
+        _movementBehavior.SetHorizonSpeedZero();
+        _movementBehavior.isReadyToMove = false;
+        NotReadyToAttack();
+        Rotate_ToCam();
+
+    }
+    public void Fist_ATK_3_Phase2()
+    {
+
+        ReadyToAttack();
+        SetAnimatorSpeed(comboIntervalSpeed_f3);
+        ComboVisualHintOn();
+    }
+    public void Fist_ATK_3_Phase3()
+    {
+        NotReadyToAttack();
+        SetAnimatorSpeed(normalPlaybackSpeed);
+        ComboVisualHintOff();
+    }
+    public void Fist_ATK_3_Phase4()
+    {
+        _movementBehavior.SetHorizonSpeedZero();
+        _movementBehavior.isReadyToMove = true;
+        ReadyToAttack();
+    }
+    #endregion
+    #region Fist_Attack_4
+    public void Fist_ATK_4_Phase1()
+    {
+        _movementBehavior.ReadyToJump(false);
+        ResetAttackTriggers();
+        _movementBehavior.SetHorizonSpeedZero();
+        _movementBehavior.isReadyToMove = false;
+        NotReadyToAttack();
+        Rotate_ToCam();
+
+    }
+ 
+    public void Fist_ATK_4_Phase2()
+    {
+
+//        ReadyToAttack();
+//        SetAnimatorSpeed(comboIntervalSpeed_f3);
+//        ComboVisualHintOn();
+    }
+    public void Fist_ATK_4_Phase3()
+    {
+//        NotReadyToAttack();
+//        SetAnimatorSpeed(normalPlaybackSpeed);
+//        ComboVisualHintOff();
+    }
+    public void Fist_ATK_4_Phase4()
+    {
+        _movementBehavior.SetHorizonSpeedZero();
+        _movementBehavior.isReadyToMove = true;
+        ReadyToAttack();
+    }
+    #endregion
+    #region Fist_Attack_5 rising punch
+    public void Fist_ATK_5_Phase1()//charge
+    {
+        _movementBehavior.ReadyToJump(false);
+        ResetAttackTriggers();
+        _movementBehavior.SetHorizonSpeedZero();
+        _movementBehavior.isReadyToMove = false;
+        NotReadyToAttack();
+ 
+    }
+
+    public void Fist_ATK_5_Phase2()//rise
+    {
+        Fist_ATK_5_Rise();
+    }
+    public void Fist_ATK_5_Phase3()//floating
+    {
+        _movementBehavior.SetRigidbodyMass(0.2f);
+        //_movementBehavior.SetHorizonSpeedZero();
+        _movementBehavior.SetCurrHorizonSpeed(riseHorizonSpd * 0.5f);
+
+        NotReadyToAttack();
+        SetAnimatorSpeed(midAirPlaybackSpd_rise);
+        //        ComboVisualHintOff();
+    }
+    public void Fist_ATK_5_Phase4()//falling
+    {
+        _movementBehavior.ResetRigidbodyMass();
+        ResetAnimatorSpeed();
+
+    }
+
+    public void Fist_ATK_5_Phase5()//landing
+    {
+        _movementBehavior.SetHorizonSpeedZero();
+        _movementBehavior.isReadyToMove = true;
+        ReadyToAttack();
+    }
+
+    void Fist_ATK_5_Charge()
+    {
+
+    }
+    void Fist_ATK_5_Rise()
+    {
+        Rotate_ToCam();
+        _movementBehavior.SetCurrHorizonSpeed(riseHorizonSpd);
+
+        //_movementBehavior.SetHorizonSpeedZero();
+        _movementBehavior.JumpUp(riseForce_f5);
+    }
+    #endregion
+
+    #endregion
+
     #region TwoHandMelee attack
     #region TwoHandMelee_ATK_1
     //2-hand melee Atk1
     public void TwoHandMelee_ATK_1_Phase1()
     {
+        _movementBehavior.ReadyToJump(false);
         ResetAttackTriggers();
         _movementBehavior.SetHorizonSpeedZero();
         _movementBehavior.isReadyToMove = false;
         NotReadyToAttack();
+ 
     }
     public void TwoHandMelee_ATK_1_Phase2()
     {
         ReadyToAttack();
-        SetAnimatorSpeed(comboIntervalSpeed);
+        SetAnimatorSpeed(comboIntervalSpeed_2hw1);
         ComboVisualHintOn();
-
 
     }
     public void TwoHandMelee_ATK_1_Phase3()
@@ -163,6 +419,7 @@ public class CombatBehavior : MonoBehaviour
         NotReadyToAttack();
         SetAnimatorSpeed(normalPlaybackSpeed);
         ComboVisualHintOff();
+ 
     }
     public void TwoHandMelee_ATK_1_Phase4()
     {
@@ -176,28 +433,33 @@ public class CombatBehavior : MonoBehaviour
     //2-hand melee Atk1
     public void TwoHandMelee_ATK_2_Phase1()
     {
+        _movementBehavior.ReadyToJump(false);
         ResetAttackTriggers();
         _movementBehavior.SetHorizonSpeedZero();
         _movementBehavior.isReadyToMove = false;
         NotReadyToAttack();
+ 
     }
     public void TwoHandMelee_ATK_2_Phase2()
     {
         ReadyToAttack();
-        SetAnimatorSpeed(comboIntervalSpeed);
+        SetAnimatorSpeed(comboIntervalSpeed_2hw2);
         ComboVisualHintOn();
+ 
     }
     public void TwoHandMelee_ATK_2_Phase3()
     {
         NotReadyToAttack();
         SetAnimatorSpeed(normalPlaybackSpeed);
         ComboVisualHintOff();
+ 
     }
     public void TwoHandMelee_ATK_2_Phase4()
     {
         _movementBehavior.SetHorizonSpeedZero();
         _movementBehavior.isReadyToMove = true;
         ReadyToAttack();
+ 
     }
 
     #endregion
@@ -205,6 +467,7 @@ public class CombatBehavior : MonoBehaviour
     //2-hand melee Atk3
     public void TwoHandMelee_ATK_3_Phase1()
     {
+        _movementBehavior.ReadyToJump(false);
         ResetAttackTriggers();
         _movementBehavior.SetHorizonSpeedZero();
         _movementBehavior.isReadyToMove = false;
@@ -217,7 +480,7 @@ public class CombatBehavior : MonoBehaviour
     public void TwoHandMelee_ATK_3_Phase3()
     {
         ReadyToAttack();
-        SetAnimatorSpeed(comboIntervalSpeed);
+        SetAnimatorSpeed(comboIntervalSpeed_2hw3);
         ComboVisualHintOn();
     }
     public void TwoHandMelee_ATK_3_Phase4()
@@ -237,16 +500,7 @@ public class CombatBehavior : MonoBehaviour
 
     void SpinAttack_Dash()
     {
-        if (_movementBehavior.isUserMoveInput)
-        {
-            //Vector2 movVal = _movementBehavior.GetMoveValue();
-            _movementBehavior.SetCurrHorizonVelocityDirection(_movementBehavior.GetMoveValue());
-        }
-        //else
-        //{
-        //    _movementBehavior.SetCurrHorizonVelocityDirection(_movementBehavior.GetTransform().forward);
-        //}
-        _movementBehavior.RotateTowardDesireDirection();
+        Rotate_ToCam();
         _movementBehavior.SetCurrHorizonSpeed(spinMoveSpeed);
 
     }
@@ -262,6 +516,7 @@ public class CombatBehavior : MonoBehaviour
     //2-hand melee Atk3
     public void TwoHandMelee_ATK_4_Phase1()
     {
+        _movementBehavior.ReadyToJump(false);
         ResetAttackTriggers();
         _movementBehavior.SetHorizonSpeedZero();
         _movementBehavior.isReadyToMove = false;
@@ -298,16 +553,7 @@ public class CombatBehavior : MonoBehaviour
 
     public void LeapAttack_Dash()
     {
-        if (_movementBehavior.isUserMoveInput)
-        {
-            //Vector2 movVal = _movementBehavior.GetMoveValue();
-            _movementBehavior.SetCurrHorizonVelocityDirection(_movementBehavior.GetMoveValue());
-        }
-        //else
-        //{
-        //    _movementBehavior.SetCurrHorizonVelocityDirection(_movementBehavior.GetTransform().forward);
-        //}
-        _movementBehavior.RotateTowardDesireDirection();
+        Rotate_ToCam();
         //_movementBehavior.SetCurrHorizonSpeed(leapMoveSpeed);
         _movementBehavior.SetCurrHorizonSpeed(leapMoveSpeed);
 
