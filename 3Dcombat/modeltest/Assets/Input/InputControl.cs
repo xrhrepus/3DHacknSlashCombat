@@ -57,6 +57,22 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""DropWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""cda851a0-05e0-49b9-90dc-60dbdaed9454"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""PickUpWeapon"",
+                    ""type"": ""Button"",
+                    ""id"": ""8edcc1c7-77d1-481c-907f-4a43c158cec1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -268,6 +284,50 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""action"": ""Dodge"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""514f9ffc-a7a9-4279-8e9a-d9f34ba2a198"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""DropWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9ab8397b-ce25-4434-84f5-86bb874a13a3"",
+                    ""path"": ""<Keyboard>/g"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""DropWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""bdb4f62a-daf8-40a4-9061-ff0bf24ae3a7"",
+                    ""path"": ""<Gamepad>/dpad/down"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""PickUpWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a8c32aae-7fdb-4ac7-a846-1594155d5089"",
+                    ""path"": ""<Keyboard>/f"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""PickUpWeapon"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -304,6 +364,8 @@ public class @InputControl : IInputActionCollection, IDisposable
         m_PlayerControl_RotateCam = m_PlayerControl.FindAction("RotateCam", throwIfNotFound: true);
         m_PlayerControl_PrimaryAttack = m_PlayerControl.FindAction("PrimaryAttack", throwIfNotFound: true);
         m_PlayerControl_Dodge = m_PlayerControl.FindAction("Dodge", throwIfNotFound: true);
+        m_PlayerControl_DropWeapon = m_PlayerControl.FindAction("DropWeapon", throwIfNotFound: true);
+        m_PlayerControl_PickUpWeapon = m_PlayerControl.FindAction("PickUpWeapon", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -358,6 +420,8 @@ public class @InputControl : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerControl_RotateCam;
     private readonly InputAction m_PlayerControl_PrimaryAttack;
     private readonly InputAction m_PlayerControl_Dodge;
+    private readonly InputAction m_PlayerControl_DropWeapon;
+    private readonly InputAction m_PlayerControl_PickUpWeapon;
     public struct PlayerControlActions
     {
         private @InputControl m_Wrapper;
@@ -367,6 +431,8 @@ public class @InputControl : IInputActionCollection, IDisposable
         public InputAction @RotateCam => m_Wrapper.m_PlayerControl_RotateCam;
         public InputAction @PrimaryAttack => m_Wrapper.m_PlayerControl_PrimaryAttack;
         public InputAction @Dodge => m_Wrapper.m_PlayerControl_Dodge;
+        public InputAction @DropWeapon => m_Wrapper.m_PlayerControl_DropWeapon;
+        public InputAction @PickUpWeapon => m_Wrapper.m_PlayerControl_PickUpWeapon;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControl; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -391,6 +457,12 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @Dodge.started -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnDodge;
                 @Dodge.performed -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnDodge;
                 @Dodge.canceled -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnDodge;
+                @DropWeapon.started -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnDropWeapon;
+                @DropWeapon.performed -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnDropWeapon;
+                @DropWeapon.canceled -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnDropWeapon;
+                @PickUpWeapon.started -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnPickUpWeapon;
+                @PickUpWeapon.performed -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnPickUpWeapon;
+                @PickUpWeapon.canceled -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnPickUpWeapon;
             }
             m_Wrapper.m_PlayerControlActionsCallbackInterface = instance;
             if (instance != null)
@@ -410,6 +482,12 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @Dodge.started += instance.OnDodge;
                 @Dodge.performed += instance.OnDodge;
                 @Dodge.canceled += instance.OnDodge;
+                @DropWeapon.started += instance.OnDropWeapon;
+                @DropWeapon.performed += instance.OnDropWeapon;
+                @DropWeapon.canceled += instance.OnDropWeapon;
+                @PickUpWeapon.started += instance.OnPickUpWeapon;
+                @PickUpWeapon.performed += instance.OnPickUpWeapon;
+                @PickUpWeapon.canceled += instance.OnPickUpWeapon;
             }
         }
     }
@@ -439,5 +517,7 @@ public class @InputControl : IInputActionCollection, IDisposable
         void OnRotateCam(InputAction.CallbackContext context);
         void OnPrimaryAttack(InputAction.CallbackContext context);
         void OnDodge(InputAction.CallbackContext context);
+        void OnDropWeapon(InputAction.CallbackContext context);
+        void OnPickUpWeapon(InputAction.CallbackContext context);
     }
 }
