@@ -222,6 +222,15 @@ public class MovementBehavior : MonoBehaviour
     #endregion
 
     #region Move,Speed
+    public void IdlePoseStart()
+    {
+        SetHorizonSpeedZero();
+        ReadyToJump(true);
+        //isReadyToJump = true;
+        isReadyToDodge = true;
+        isReadyToMove = true;
+    }
+
     public void SetHorizonSpeedZero()
     {
         currHorizonSpeed = 0.0f;

@@ -18,19 +18,24 @@ public class CombatInput : MonoBehaviour
     [SerializeField] private bool _holdTimer_Start = false;
 
  
-    private void OnEnable()
-    {
-        _inputActions.Enable();
-    }
-    private void OnDisable()
-    {
-        _inputActions.Disable();
-    }
-    private void AttackPressed()
+    //private void OnEnable()
+    //{
+    //    _inputActions.Enable();
+    //}
+    //private void OnDisable()
+    //{
+    //    _inputActions.Disable();
+    //}
+    public void AttackPressed()
     {
         _holdTimer_Start = true;
     }
-    private void AttackReleased()
+    public void AttackPerformed()
+    {
+        _combatBehavior.PrimaryAttackPerformed();
+    }
+
+    public void AttackReleased()
     {
         if (_atkHoldDown)
         {
@@ -60,11 +65,12 @@ public class CombatInput : MonoBehaviour
     }
     private void Awake()
     {
- 
-        _inputActions = new InputControl();
-        _inputActions.PlayerControl.PrimaryAttack.started += _primAtk => { AttackPressed(); };
-        _inputActions.PlayerControl.PrimaryAttack.performed += _primAtk => { _combatBehavior.PrimaryAttackPerformed(); };
-        _inputActions.PlayerControl.PrimaryAttack.canceled += _primAtk => { AttackReleased(); };
+        //move into Player.cs
+
+        //_inputActions = new InputControl();
+        //_inputActions.PlayerControl.PrimaryAttack.started += _primAtk => { AttackPressed(); };
+        //_inputActions.PlayerControl.PrimaryAttack.performed += _primAtk => { AttackPerformed(); };
+        //_inputActions.PlayerControl.PrimaryAttack.canceled += _primAtk => { AttackReleased(); };
 
 
     }

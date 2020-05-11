@@ -16,6 +16,7 @@ public class CombatBehavior : MonoBehaviour
     [Header("VisualHint")]
     [SerializeField] private ParticleSystem _particleSystem;
 
+ 
     [Header("Fist combat combo")]
     [Tooltip("the playback speed of animator during the can combo state")]
     [SerializeField]
@@ -84,13 +85,6 @@ public class CombatBehavior : MonoBehaviour
     #endregion
 
     #endregion
-
-    enum AttackState
-    {
-        CanCombo = 0x1 << 1,
-        Finish = 0x1 << 2
-    }
-
  
     public void ReadyToAttack()
     {
@@ -113,8 +107,6 @@ public class CombatBehavior : MonoBehaviour
     }
     public void ResetAnimatorSpeed()
     {
-        Debug.Log("rst");
-
         _animator.speed = normalPlaybackSpeed;
     }
 
@@ -127,7 +119,11 @@ public class CombatBehavior : MonoBehaviour
         _particleSystem.Clear();
         _particleSystem.Stop();
     }
-
+    public void SetWeaponType(int type)
+    {
+        _animator.SetInteger("weaponType", type);
+    }
+ 
     #endregion
 
     #region Attack button status
@@ -207,10 +203,25 @@ public class CombatBehavior : MonoBehaviour
     #endregion
 
     #region ComboBehavior
+    public void SheathingWeapon()
+    {
+         _movementBehavior.isReadyToMove = false;
+        _movementBehavior.ReadyToJump(false);
+        NotReadyToAttack();
+    }
+    public void UnsheathingWeapon()
+    {
+        _movementBehavior.isReadyToMove = false;
+        _movementBehavior.ReadyToJump(false);
+        _movementBehavior.SetHorizonSpeedZero();
+    }
+
     public void ReturnToIdlePose()
     {
-        _movementBehavior.SetHorizonSpeedZero();
-        _movementBehavior.isReadyToMove = true;
+        _movementBehavior.IdlePoseStart();
+        ReadyToAttack();
+        ResetAnimatorSpeed();
+        ResetAttackTriggers();
     }
     #region Fist attack
     #region Fist_Attack_1

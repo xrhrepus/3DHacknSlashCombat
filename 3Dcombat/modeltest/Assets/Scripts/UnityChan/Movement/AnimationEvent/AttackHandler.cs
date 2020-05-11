@@ -9,9 +9,12 @@ public class AttackHandler : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] private Animator _animator;
+    [SerializeField] private Player _player;
 
     [Header("VisualHint")]
     [SerializeField] private ParticleSystem _particleSystem;
+
+
 
     public void SetAttackMotionState(int state)
     {
@@ -58,7 +61,6 @@ public class AttackHandler : MonoBehaviour
     public void ReturnToIdlePose()
     {
         _combatBehavior.ReturnToIdlePose();
-        ReadyToAttack();
     }
     #endregion
     #region Set animator parameters
@@ -76,6 +78,7 @@ public class AttackHandler : MonoBehaviour
     }
 
     #endregion
+
 
     //
     #region Fist attack
@@ -183,6 +186,29 @@ public class AttackHandler : MonoBehaviour
     #endregion
 
     #region TwoHandMelee attack
+    //Unsheath weapon
+    #region Unsheath weapon
+    public void UnsheathWeapon()
+    {
+        _player.UnsheathWeapon();
+    }
+    public void SheathWeapon()
+    {
+        _player.SheathWeapon();
+    }
+    public void SheathingWeapon()
+    {
+        _combatBehavior.SheathingWeapon();
+    }
+    public void UnsheathingWeapon()
+    {
+        _combatBehavior.UnsheathingWeapon();
+    }
+
+    #endregion
+
+
+
     //2-hand melee Atk1
     //=============
     public void TwoHandMelee_ATK_1_Phase1()

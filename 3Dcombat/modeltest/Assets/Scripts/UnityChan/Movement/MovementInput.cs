@@ -8,21 +8,35 @@ public class MovementInput : MonoBehaviour
 
     [Header("MovementBehavior")]
     [SerializeField] private MovementBehavior _movementBehavior;
-    private void OnEnable()
+    //private void OnEnable()
+    //{
+    //    _inputActions.Enable();
+    //}
+    //private void OnDisable()
+    //{
+    //    _inputActions.Disable();
+    //}
+    public void MovePerformed(Vector2 val)
     {
-        _inputActions.Enable();
+        _movementBehavior.SetMoveValue(val);
     }
-    private void OnDisable()
+    public void JumpPerformed()
     {
-        _inputActions.Disable();
+        _movementBehavior.JumpPerformed();
     }
+    public void DodgePerformed()
+    {
+        _movementBehavior.DodgePerformed();
+    }
+
+
     private void Awake()
     {
-
-        _inputActions = new InputControl();
-        _inputActions.PlayerControl.Move.performed += _move => { _movementBehavior.SetMoveValue(_move.ReadValue<Vector2>()); };
-        _inputActions.PlayerControl.Jump.performed += _jump => { _movementBehavior.JumpPerformed(); };
-        _inputActions.PlayerControl.Dodge.performed += _dodge => { _movementBehavior.DodgePerformed(); };
+        //move into Player.cs
+        //_inputActions = new InputControl();
+        //_inputActions.PlayerControl.Move.performed += _move => { MovePerformed(_move.ReadValue<Vector2>());  };
+        //_inputActions.PlayerControl.Jump.performed += _jump => { JumpPerformed(); };
+        //_inputActions.PlayerControl.Dodge.performed += _dodge => { DodgePerformed(); };
 
     }
 
