@@ -62,6 +62,11 @@ public class AttackHandler : MonoBehaviour
     {
         _combatBehavior.ReturnToIdlePose();
     }
+    public void ReturnToRunPose()
+    {
+        _combatBehavior.ReturnToRunPose();
+    }
+
     #endregion
     #region Set animator parameters
     public void ReadyToAttack()

@@ -61,7 +61,7 @@ public class MovementBehavior : MonoBehaviour
     //dodge
     [Header("Dodge")]
     private Vector2 dodgeDirection;
-    public bool isReadyToDodge { get; private set; } = true;
+    public bool isReadyToDodge { get; set; } = true;
     public bool isDodging { get; private set; } = false;
     public float _dodgeSpeed  = 8.0f;
     public float _dodgeAnimationPlaybackSpeedMultiplier { get; set; } = 1.0f;
@@ -227,6 +227,12 @@ public class MovementBehavior : MonoBehaviour
         SetHorizonSpeedZero();
         ReadyToJump(true);
         //isReadyToJump = true;
+        isReadyToDodge = true;
+        isReadyToMove = true;
+    }
+    public void RunPoseStart()
+    {
+        ReadyToJump(true);
         isReadyToDodge = true;
         isReadyToMove = true;
     }

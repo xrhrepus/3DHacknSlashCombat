@@ -12,12 +12,22 @@ public class Weapon_PickUp : MonoBehaviour
         _weapon = wp;
     }
     
-    private void OnTriggerStay(Collider other)
+    private void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            Debug.Log("pIn");
-            other.GetComponent<Player>().EquipWeapon(_weapon);
+            Debug.Log("pen");
+             other.GetComponent<Player>().AddToNearbyWeapon(_weapon);
         }
     }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.tag == "Player")
+        {
+            Debug.Log("pex");
+
+            other.GetComponent<Player>().RemoveFromNearbyWeapon(_weapon);
+        }
+    }
+
 }

@@ -37,6 +37,11 @@ public class Player_WeaponPlacing : MonoBehaviour
 
         //TODO: might need different extra transform for diff weapons and diff characters
     }
+    public void SetWeaponNull()
+    {
+        _weaponGO = null;
+     }
+
 
     public void ToSheathLocation()
     {

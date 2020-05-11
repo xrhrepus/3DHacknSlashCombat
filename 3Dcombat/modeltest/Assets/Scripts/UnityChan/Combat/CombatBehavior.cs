@@ -8,6 +8,7 @@ public class CombatBehavior : MonoBehaviour
 
     [SerializeField]
     private bool isReadyToAttack = false;
+    public bool isAttacking { get; private set; }
 
     [Header("MovementBehavior")]
     [SerializeField] private MovementBehavior _movementBehavior;
@@ -149,7 +150,7 @@ public class CombatBehavior : MonoBehaviour
         if (isReadyToAttack)
         {
             SetAnimatorSpeed(normalPlaybackSpeed);
-            SetAnimator_PrimAttackHeld();
+            SetAnimator_PrimAttackHold();
         }
     }
     public void PrimaryAttackHoldToRelease()
@@ -169,7 +170,7 @@ public class CombatBehavior : MonoBehaviour
     {
         _animator.SetTrigger("primatk");
     }
-    void SetAnimator_PrimAttackHeld()
+    void SetAnimator_PrimAttackHold()
     {
         _animator.SetTrigger("primatkHold");
     }
@@ -202,10 +203,11 @@ public class CombatBehavior : MonoBehaviour
 
     #endregion
 
-    #region ComboBehavior
+    #region Combat behavior
+    #region SheathingWeapon/Reset character movment conditions
     public void SheathingWeapon()
     {
-         _movementBehavior.isReadyToMove = false;
+        _movementBehavior.isReadyToMove = false;
         _movementBehavior.ReadyToJump(false);
         NotReadyToAttack();
     }
@@ -218,18 +220,29 @@ public class CombatBehavior : MonoBehaviour
 
     public void ReturnToIdlePose()
     {
+        isAttacking = false;
         _movementBehavior.IdlePoseStart();
         ReadyToAttack();
         ResetAnimatorSpeed();
         ResetAttackTriggers();
     }
+    public void ReturnToRunPose()
+    {
+        isAttacking = false;
+        _movementBehavior.RunPoseStart();
+        ReadyToAttack();
+        ResetAnimatorSpeed();
+        ResetAttackTriggers();
+    }
+    #endregion
     #region Fist attack
     #region Fist_Attack_1
     public void Fist_ATK_1_Phase1()
     {
+        isAttacking = true;
         _movementBehavior.ReadyToJump(false);
         ResetAttackTriggers();
-        //_movementBehavior.SetHorizonSpeedZero();
+        _movementBehavior.SetHorizonSpeedZero();
         _movementBehavior.isReadyToMove = false;
         Rotate_ToCam();
 
@@ -237,7 +250,7 @@ public class CombatBehavior : MonoBehaviour
     }
     public void Fist_ATK_1_Phase2()
     {
-        _movementBehavior.SetHorizonSpeedZero();
+        //_movementBehavior.SetHorizonSpeedZero();
         ReadyToAttack();
         SetAnimatorSpeed(comboIntervalSpeed_f1);
         ComboVisualHintOn();
@@ -251,13 +264,14 @@ public class CombatBehavior : MonoBehaviour
     public void Fist_ATK_1_Phase4()
     {
         _movementBehavior.SetHorizonSpeedZero();
-        _movementBehavior.isReadyToMove = true;
-        ReadyToAttack();
+        //_movementBehavior.isReadyToMove = true;
+        //ReadyToAttack();
     }
     #endregion
     #region Fist_Attack_2
     public void Fist_ATK_2_Phase1()
     {
+        isAttacking = true;
         _movementBehavior.ReadyToJump(false);
 
         ResetAttackTriggers();
@@ -283,13 +297,14 @@ public class CombatBehavior : MonoBehaviour
     public void Fist_ATK_2_Phase4()
     {
         _movementBehavior.SetHorizonSpeedZero();
-        _movementBehavior.isReadyToMove = true;
-        ReadyToAttack();
+        //_movementBehavior.isReadyToMove = true;
+        //ReadyToAttack();
     }
     #endregion
     #region Fist_Attack_3
     public void Fist_ATK_3_Phase1()
     {
+        isAttacking = true;
         _movementBehavior.ReadyToJump(false);
 
         ResetAttackTriggers();
@@ -315,13 +330,14 @@ public class CombatBehavior : MonoBehaviour
     public void Fist_ATK_3_Phase4()
     {
         _movementBehavior.SetHorizonSpeedZero();
-        _movementBehavior.isReadyToMove = true;
-        ReadyToAttack();
+       // _movementBehavior.isReadyToMove = true;
+        //ReadyToAttack();
     }
     #endregion
     #region Fist_Attack_4
     public void Fist_ATK_4_Phase1()
     {
+        isAttacking = true;
         _movementBehavior.ReadyToJump(false);
         ResetAttackTriggers();
         _movementBehavior.SetHorizonSpeedZero();
@@ -347,17 +363,19 @@ public class CombatBehavior : MonoBehaviour
     public void Fist_ATK_4_Phase4()
     {
         _movementBehavior.SetHorizonSpeedZero();
-        _movementBehavior.isReadyToMove = true;
-        ReadyToAttack();
+       // _movementBehavior.isReadyToMove = true;
+        //ReadyToAttack();
     }
     #endregion
     #region Fist_Attack_5 rising punch
     public void Fist_ATK_5_Phase1()//charge
     {
+        isAttacking = true;
         _movementBehavior.ReadyToJump(false);
         ResetAttackTriggers();
         _movementBehavior.SetHorizonSpeedZero();
         _movementBehavior.isReadyToMove = false;
+        _movementBehavior.isReadyToDodge = false;
         NotReadyToAttack();
  
     }
@@ -369,7 +387,6 @@ public class CombatBehavior : MonoBehaviour
     public void Fist_ATK_5_Phase3()//floating
     {
         _movementBehavior.SetRigidbodyMass(0.2f);
-        //_movementBehavior.SetHorizonSpeedZero();
         _movementBehavior.SetCurrHorizonSpeed(riseHorizonSpd * 0.5f);
 
         NotReadyToAttack();
@@ -383,11 +400,11 @@ public class CombatBehavior : MonoBehaviour
 
     }
 
-    public void Fist_ATK_5_Phase5()//landing
+    public void Fist_ATK_5_Phase5()//falling p2
     {
         _movementBehavior.SetHorizonSpeedZero();
-        _movementBehavior.isReadyToMove = true;
-        ReadyToAttack();
+        _movementBehavior.isReadyToMove = true;//allow air move
+        //ReadyToAttack();
     }
 
     void Fist_ATK_5_Charge()
@@ -411,6 +428,7 @@ public class CombatBehavior : MonoBehaviour
     //2-hand melee Atk1
     public void TwoHandMelee_ATK_1_Phase1()
     {
+        isAttacking = true;
         _movementBehavior.ReadyToJump(false);
         ResetAttackTriggers();
         _movementBehavior.SetHorizonSpeedZero();
@@ -444,12 +462,13 @@ public class CombatBehavior : MonoBehaviour
     //2-hand melee Atk1
     public void TwoHandMelee_ATK_2_Phase1()
     {
+        isAttacking = true;
+        Rotate_ToCam();
         _movementBehavior.ReadyToJump(false);
         ResetAttackTriggers();
         _movementBehavior.SetHorizonSpeedZero();
         _movementBehavior.isReadyToMove = false;
         NotReadyToAttack();
- 
     }
     public void TwoHandMelee_ATK_2_Phase2()
     {
@@ -478,6 +497,7 @@ public class CombatBehavior : MonoBehaviour
     //2-hand melee Atk3
     public void TwoHandMelee_ATK_3_Phase1()
     {
+        isAttacking = true;
         _movementBehavior.ReadyToJump(false);
         ResetAttackTriggers();
         _movementBehavior.SetHorizonSpeedZero();
@@ -527,10 +547,13 @@ public class CombatBehavior : MonoBehaviour
     //2-hand melee Atk3
     public void TwoHandMelee_ATK_4_Phase1()
     {
+        isAttacking = true;
         _movementBehavior.ReadyToJump(false);
         ResetAttackTriggers();
         _movementBehavior.SetHorizonSpeedZero();
         _movementBehavior.isReadyToMove = false;
+        _movementBehavior.isReadyToDodge = false;
+
         NotReadyToAttack();
     }
     public void TwoHandMelee_ATK_4_Phase2()
