@@ -35,15 +35,26 @@ public class CombatBehavior : MonoBehaviour
 
     [Header("Fist attack 4(spin kick)")]
     [SerializeField]
-    private float jumpForce_f4 = 150f;
+    private float jumpForce_f4 = 250f;
 
     [Header("Fist attack 5(charge rising punch)")]
+    [Tooltip("the time to reach fully charge")]
     [SerializeField]
-    private float riseForce_f5 = 150f;
+    private float maxChargeTime_f5 = 1.0f;
+    [Tooltip("the current charge progress")]
     [SerializeField]
-    private float riseHorizonSpd = 4.0f;
+    private float chargeProgress_f5 = 0.0f;
+    public bool isCharging_f5 { get; private set; }
+    [Tooltip("the min uprising force")]
     [SerializeField]
-    private float midAirPlaybackSpd_rise = 0.3f;
+    private float minRiseForce_f5 = 200f;
+    [SerializeField]
+    [Tooltip("final upward force =  minRiseForce_f5 + extraRiseForce_f5 * (chargeProgress_f5 / maxChargeTime_f5)")]
+    private float extraRiseForce_f5 = 450f;
+    [SerializeField]
+    private float airborneHorizonSpd = 4.0f;
+    [SerializeField]
+    private float airbornePlaybackSpd_rise = 0.3f;
 
     //[Header("Leap attack")]
     //[SerializeField]
@@ -54,7 +65,13 @@ public class CombatBehavior : MonoBehaviour
     //private float leapForce = 7.0f;
     //[SerializeField]
     //private float airborneLandingForce = 7.0f;
-
+    private void FixedUpdate()
+    {
+        if (isCharging_f5 && chargeProgress_f5 < maxChargeTime_f5)
+        {
+            chargeProgress_f5 += Time.deltaTime;
+        }
+    }
     #region 2-hand melee weapon
 
     [Header("2 Hand weapon combo")]
@@ -377,20 +394,26 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.isReadyToMove = false;
         _movementBehavior.isReadyToDodge = false;
         NotReadyToAttack();
+        isCharging_f5 = true;
  
     }
-
+    private void Fist_ATK_5_ResetChargeTimer()
+    {
+        isCharging_f5 = false;
+        chargeProgress_f5 = 0.0f;
+    }
     public void Fist_ATK_5_Phase2()//rise
     {
         Fist_ATK_5_Rise();
+        Fist_ATK_5_ResetChargeTimer();
     }
     public void Fist_ATK_5_Phase3()//floating
     {
         _movementBehavior.SetRigidbodyMass(0.2f);
-        _movementBehavior.SetCurrHorizonSpeed(riseHorizonSpd * 0.5f);
+        _movementBehavior.SetCurrHorizonSpeed(airborneHorizonSpd * 0.5f);
 
         NotReadyToAttack();
-        SetAnimatorSpeed(midAirPlaybackSpd_rise);
+        SetAnimatorSpeed(airbornePlaybackSpd_rise);
         //        ComboVisualHintOff();
     }
     public void Fist_ATK_5_Phase4()//falling
@@ -414,10 +437,10 @@ public class CombatBehavior : MonoBehaviour
     void Fist_ATK_5_Rise()
     {
         Rotate_ToCam();
-        _movementBehavior.SetCurrHorizonSpeed(riseHorizonSpd);
+        _movementBehavior.SetCurrHorizonSpeed(airborneHorizonSpd);
 
         //_movementBehavior.SetHorizonSpeedZero();
-        _movementBehavior.JumpUp(riseForce_f5);
+        _movementBehavior.JumpUp( minRiseForce_f5 + extraRiseForce_f5 * (chargeProgress_f5 / maxChargeTime_f5));
     }
     #endregion
 
