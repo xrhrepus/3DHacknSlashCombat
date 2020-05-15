@@ -16,16 +16,14 @@ public class Weapon_PickUp : MonoBehaviour
     {
         if (other.tag == "Player")
         {
-            Debug.Log("pen");
-             other.GetComponent<Player>().AddToNearbyWeapon(_weapon);
+              other.GetComponent<Player>().AddToNearbyWeapon(_weapon);
         }
     }
     private void OnTriggerExit(Collider other)
     {
         if (other.tag == "Player")
         {
-            Debug.Log("pex");
-
+ 
             other.GetComponent<Player>().RemoveFromNearbyWeapon(_weapon);
         }
     }
