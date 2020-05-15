@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
     }
     public void DropWeapon()// can only have one weapon
     {
-        if (!_combatBehavior.isAttacking)
+        if (!_combatBehavior.isAttacking && _hasWeapon)
         {
             _weapon.gameObject.transform.parent = null;
             _weapon = null;
@@ -92,7 +92,7 @@ public class Player : MonoBehaviour
         _inputActions.PlayerControl.PrimaryAttack.performed += _primAtk => { _combatInput.AttackPerformed(); };
         _inputActions.PlayerControl.PrimaryAttack.canceled += _primAtk => { _combatInput.AttackReleased(); };
         //pick drop weapon
-        _inputActions.PlayerControl.PickUpWeapon.performed += _dropWeapon => { EquipWeapon(); };
+        _inputActions.PlayerControl.PickUpWeapon.performed += _equipWeapon => { EquipWeapon(); };
         _inputActions.PlayerControl.DropWeapon.performed += _dropWeapon => { DropWeapon(); };
 
     }
