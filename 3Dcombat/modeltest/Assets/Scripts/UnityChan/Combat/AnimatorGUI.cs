@@ -11,8 +11,7 @@ public class AnimatorGUI : MonoBehaviour
 
      string m_ClipName;
     AnimatorClipInfo[] m_CurrentClipInfo;
-
-    float m_CurrentClipLength;
+     float m_CurrentClipLength;
 
     void Start()
     {
@@ -21,7 +20,7 @@ public class AnimatorGUI : MonoBehaviour
     }
     private void Update()
     {
-        //Fetch the current Animation clip information for the base layer
+         //Fetch the current Animation clip information for the base layer
         m_CurrentClipInfo = this._animator.GetCurrentAnimatorClipInfo(0);
         //Access the current length of the clip
         m_CurrentClipLength = m_CurrentClipInfo[0].clip.length;
@@ -34,11 +33,19 @@ public class AnimatorGUI : MonoBehaviour
         //Output the current Animation name and length to the screen
         GUI.Label(new Rect(0, 0, 200, 20), "Clip Name : " + m_ClipName);
         GUI.Label(new Rect(0, 30, 200, 20), "Clip Length : " + m_CurrentClipLength);
-        GUI.Label(new Rect(0, 60, 200, 20), "normalizedTime : " + _animator.GetCurrentAnimatorStateInfo(0).normalizedTime);
-        GUI.Label(new Rect(0, 90, 200, 20), "length : " + _animator.GetCurrentAnimatorStateInfo(0).length);
+        float ntime = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        float spd = _animator.GetCurrentAnimatorStateInfo(0).speed;
+        float len = _animator.GetCurrentAnimatorStateInfo(0).length;
+        float percent = ntime / len;
+        GUI.Label(new Rect(0, 60, 200, 20), "normalizedTime : " + ntime);
+        GUI.Label(new Rect(0, 90, 200, 20), "length : " + len);
+        GUI.Label(new Rect(0, 120, 200, 20), "speed : " + spd);
+        GUI.Label(new Rect(0, 150, 200, 20), "speed mtp : " + _animator.GetCurrentAnimatorStateInfo(0).speedMultiplier);
+
+        GUI.Label(new Rect(0, 210, 200, 20), "percent : " + percent);
+
         Slider.maxValue = _animator.GetCurrentAnimatorStateInfo(0).length;
         Slider.value = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
-
 
     }
 }

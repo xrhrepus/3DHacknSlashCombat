@@ -14,7 +14,8 @@ public class AttackHandler : MonoBehaviour
     [Header("VisualHint")]
     [SerializeField] private ParticleSystem _particleSystem;
 
- 
+    [SerializeField] private AnimationInfoReader _animationInfoReader;
+
     public void SetAttackMotionState(int state)
     {
         _animator.SetInteger("attackMotion", state);
@@ -90,6 +91,7 @@ public class AttackHandler : MonoBehaviour
     public void Fist_ATK_1_Phase1()
     {
         _combatBehavior.Fist_ATK_1_Phase1();
+        //_animationInfoReader.AIReaderStart();
     }
     public void Fist_ATK_1_Phase2()
     {
@@ -102,6 +104,8 @@ public class AttackHandler : MonoBehaviour
     public void Fist_ATK_1_Phase4()
     {
         _combatBehavior.Fist_ATK_1_Phase4();
+        //_animationInfoReader.AIReaderStop();
+        //_animationInfoReader.AIReaderGetTime();
     }
 
     #endregion
