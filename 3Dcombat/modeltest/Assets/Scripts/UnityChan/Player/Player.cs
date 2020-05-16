@@ -7,15 +7,11 @@ public class Player : MonoBehaviour
 
     public bool InFight { get; set; }
     //
-    [SerializeField] private InputControl _inputActions;
+    private InputControl _inputActions;
     [SerializeField] private MovementInput _movementInput;
     [SerializeField] private CombatInput _combatInput;
     //
-    [Header("MovementBehavior")]
-    [SerializeField] private MovementBehavior _movementBehavior;
-    [Header("CombatBehavior")]
-    [SerializeField] private CombatBehavior _combatBehavior;
-
+ 
     [Header("Weapon")]
     [SerializeField] private Weapon _weapon;
     public bool _hasWeapon { get; private set; }
@@ -23,17 +19,6 @@ public class Player : MonoBehaviour
     [SerializeField] private List< Weapon> _weaponNearby = new List<Weapon>();
 
     //
-    #region OnEnable/OnDisable
-    private void OnEnable()
-    {
-        _inputActions.Enable();
-    }
-    private void OnDisable()
-    {
-        _inputActions.Disable();
-    }
-
-    #endregion
     public void AddToNearbyWeapon(Weapon wp)
     {
         _weaponNearby.Add(wp);
@@ -45,24 +30,24 @@ public class Player : MonoBehaviour
 
     public void EquipWeapon()
     {
-        if (!_combatBehavior.isAttacking && _weaponNearby.Count > 0)
+        if (!_combatInput.CombatBehavior.isAttacking && _weaponNearby.Count > 0)
         {
             Weapon wp = _weaponNearby[0];
             _weapon = wp;
             _player_WeaponPlacing.ReplaceWeapon(_weapon);
-            _combatBehavior.SetWeaponType((int)wp._weaponType);
+            _combatInput.CombatBehavior.SetWeaponType((int)wp._weaponType);
             RemoveFromNearbyWeapon(wp);
             _hasWeapon = true;
         }
     }
     public void DropWeapon()// can only have one weapon
     {
-        if (!_combatBehavior.isAttacking && _hasWeapon)
+        if (!_combatInput.CombatBehavior.isAttacking && _hasWeapon)
         {
             _weapon.gameObject.transform.parent = null;
             _weapon = null;
             _player_WeaponPlacing.SetWeaponNull();
-            _combatBehavior.SetWeaponType((int)Weapon.WeaponType.fist);
+            _combatInput.CombatBehavior.SetWeaponType((int)Weapon.WeaponType.fist);
             _hasWeapon = false;
         }
 
@@ -80,6 +65,18 @@ public class Player : MonoBehaviour
             _player_WeaponPlacing.ToSheathLocation();
     }
 
+ 
+ 
+
+    #region OnEnable/OnDisable/Awake
+    private void OnEnable()
+    {
+        _inputActions.Enable();
+    }
+    private void OnDisable()
+    {
+        _inputActions.Disable();
+    }
     private void Awake()
     {
         _inputActions = new InputControl();
@@ -96,6 +93,9 @@ public class Player : MonoBehaviour
         _inputActions.PlayerControl.DropWeapon.performed += _dropWeapon => { DropWeapon(); };
 
     }
+
+    #endregion
+
     void Update()
     {
         

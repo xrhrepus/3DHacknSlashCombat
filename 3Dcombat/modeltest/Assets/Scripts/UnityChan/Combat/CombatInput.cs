@@ -2,30 +2,28 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// combat input belongs to Player.cs, make use of CombatBehavior.cs
+/// </summary>
 public class CombatInput : MonoBehaviour
 {
+    //ref to Player
+    private Player _player;
 
-    private InputControl _inputActions;
-
+    //make use of CombatBehavior
     [Header("CombatBehavior")]
     [SerializeField] private CombatBehavior _combatBehavior;
-    //[Header("Animation")]
-    //[SerializeField] private UnityChanAnimationControl _UCAnimControl;
-    [Header("Attack Hold down")]
+    public CombatBehavior CombatBehavior { get => _combatBehavior; }
+
+    //status of Attack button
+    [Header("Attack button Status")]
     [SerializeField] private float _holdDuration = 0.4f;
     [SerializeField] private bool _atkHoldDown = false;
     [SerializeField] private float _holdDuration_timer = 0.0f;
     [SerializeField] private bool _holdTimer_Start = false;
 
- 
-    //private void OnEnable()
-    //{
-    //    _inputActions.Enable();
-    //}
-    //private void OnDisable()
-    //{
-    //    _inputActions.Disable();
-    //}
+    //Attack button Status
+    #region Attack button Status
     public void AttackPressed()
     {
         _holdTimer_Start = true;
@@ -34,23 +32,24 @@ public class CombatInput : MonoBehaviour
     {
         _combatBehavior.PrimaryAttackPerformed();
     }
-
     public void AttackReleased()
     {
         if (_atkHoldDown)
         {
-             _combatBehavior.PrimaryAttackHoldToRelease();
+            _combatBehavior.PrimaryAttackHoldToRelease();
         }
         _holdDuration_timer = 0.0f;
         _holdTimer_Start = false;
         _atkHoldDown = false;
- 
+
     }
     public bool IsAttackHold()
     {
         return _atkHoldDown;
     }
- 
+
+    #endregion
+
     private void FixedUpdate()
     {
         if (_holdTimer_Start)
@@ -65,13 +64,7 @@ public class CombatInput : MonoBehaviour
     }
     private void Awake()
     {
-        //move into Player.cs
-
-        //_inputActions = new InputControl();
-        //_inputActions.PlayerControl.PrimaryAttack.started += _primAtk => { AttackPressed(); };
-        //_inputActions.PlayerControl.PrimaryAttack.performed += _primAtk => { AttackPerformed(); };
-        //_inputActions.PlayerControl.PrimaryAttack.canceled += _primAtk => { AttackReleased(); };
-
+        _player = GetComponent<Player>();
 
     }
 
