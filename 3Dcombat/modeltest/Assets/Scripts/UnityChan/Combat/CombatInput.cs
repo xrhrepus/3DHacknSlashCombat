@@ -9,6 +9,7 @@ public class CombatInput : MonoBehaviour
 {
     //ref to Player
     private Player _player;
+    public Player Player { get => _player; }
 
     //make use of CombatBehavior
     [Header("CombatBehavior")]
@@ -65,7 +66,7 @@ public class CombatInput : MonoBehaviour
     private void Awake()
     {
         _player = GetComponent<Player>();
-
+        _combatBehavior = GetComponent<CombatBehavior>();
     }
 
 }

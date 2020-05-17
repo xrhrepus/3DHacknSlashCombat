@@ -35,23 +35,44 @@ public class Player : MonoBehaviour
             Weapon wp = _weaponNearby[0];
             _weapon = wp;
             _player_WeaponPlacing.ReplaceWeapon(_weapon);
-            _combatInput.CombatBehavior.SetWeaponType((int)wp._weaponType);
+            _combatInput.CombatBehavior.SetWeaponType((int)wp.Type);
             RemoveFromNearbyWeapon(wp);
+            _weapon.StopMoving();
             _hasWeapon = true;
         }
     }
     public void DropWeapon()// can only have one weapon
     {
-        if (!_combatInput.CombatBehavior.isAttacking && _hasWeapon)
+        if (!_combatInput.CombatBehavior.isAttacking)
         {
+            DetachWeapon();
+            //_weapon.gameObject.transform.parent = null;
+            //_weapon = null;
+            //_player_WeaponPlacing.SetWeaponNull();
+            //_combatInput.CombatBehavior.SetWeaponType((int)Weapon.WeaponType.fist);
+            //_hasWeapon = false;
+        }
+
+    }
+    public void ThrowingWeaponAttack()
+    {
+        Weapon tweapon = _weapon;
+        DetachWeapon();
+        tweapon.ThrowingAttack(transform.position + transform.forward * 20.0f);
+    }
+    void DetachWeapon()// throw weapon out for some reason
+    {
+        if (_hasWeapon)
+        {
+            //_weapon.TurnOnPhysics();
             _weapon.gameObject.transform.parent = null;
             _weapon = null;
             _player_WeaponPlacing.SetWeaponNull();
             _combatInput.CombatBehavior.SetWeaponType((int)Weapon.WeaponType.fist);
             _hasWeapon = false;
         }
-
     }
+
     public void UnsheathWeapon()
     {
         if (_hasWeapon)

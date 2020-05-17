@@ -2,10 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// behaviors control the movemnt(transform/rigidbody force, velocity) of gameobject
+/// might need to move animator controls to CombatEventsHandler later
+/// 
+/// </summary>
 public class CombatBehavior : MonoBehaviour
 {
     #region Fields
-
+    [Header("Combat input control")]
+    [SerializeField] private CombatInput _combatInput;
+ 
     [SerializeField]
     private bool isReadyToAttack = false;
     public bool isAttacking { get; private set; }
@@ -17,7 +24,7 @@ public class CombatBehavior : MonoBehaviour
     [Header("VisualHint")]
     [SerializeField] private ParticleSystem _particleSystem;
 
- 
+    #region Fist combat
     [Header("Fist combat combo")]
     [Tooltip("the playback speed of animator during the can combo state")]
     [SerializeField]
@@ -28,10 +35,6 @@ public class CombatBehavior : MonoBehaviour
     private float comboIntervalSpeed_f3 = 0.3f;
     [SerializeField]
     private float comboIntervalSpeed_f4 = 0.3f;
-
-    //[Tooltip("the Normal playback speed of animator")]
-    //[SerializeField]
-    //private float normalPlaybackSpeed = 1.0f;
 
     [Header("Fist attack 4(spin kick)")]
     [SerializeField]
@@ -56,22 +59,9 @@ public class CombatBehavior : MonoBehaviour
     [SerializeField]
     private float airbornePlaybackSpd_rise = 0.3f;
 
-    //[Header("Leap attack")]
-    //[SerializeField]
-    //private float leapMoveSpeed = 7.0f;
-    //[SerializeField]
-    //private float leapMoveSpeed_p2 = 7.0f;
-    //[SerializeField]
-    //private float leapForce = 7.0f;
-    //[SerializeField]
-    //private float airborneLandingForce = 7.0f;
-    private void FixedUpdate()
-    {
-        if (isCharging_f5 && chargeProgress_f5 < maxChargeTime_f5)
-        {
-            chargeProgress_f5 += Time.deltaTime;
-        }
-    }
+    #endregion
+
+
     #region 2-hand melee weapon
 
     [Header("2 Hand weapon combo")]
@@ -103,7 +93,22 @@ public class CombatBehavior : MonoBehaviour
     #endregion
 
     #endregion
- 
+    #region Awake/FixedUpdate
+    private void Awake()
+    {
+        _combatInput = GetComponent<CombatInput>();
+    }
+    private void FixedUpdate()
+    {
+        if (isCharging_f5 && chargeProgress_f5 < maxChargeTime_f5)
+        {
+            chargeProgress_f5 += Time.deltaTime;
+        }
+    }
+    #endregion
+
+
+
     public void ReadyToAttack()
     {
         isReadyToAttack = true;
@@ -637,10 +642,55 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.SetHorizonSpeedZero();
     }
     #endregion
+    #region TwoHandMelee_ATK_5(Throw)
+    //2-hand melee Atk5
+
+    //may have lock-on system later
+    //leave P1 for lock-on 
+    public void TwoHandMelee_ATK_5_Phase1()
+    {
+        isAttacking = true;
+        Rotate_ToCam();
+        ResetAttackTriggers();
+        _movementBehavior.SetHorizonSpeedZero();
+        _movementBehavior.ReadyToJump(false);
+        _movementBehavior.isReadyToMove = false;
+        _movementBehavior.isReadyToDodge = false;
+
+        //lock-on
+    }
+
+    //throw out
+    public void TwoHandMelee_ATK_5_Phase2()
+    {
+        _combatInput.Player.ThrowingWeaponAttack();
+        //ReadyToAttack();
+        //SetAnimatorSpeed(comboIntervalSpeed_2hw2);
+        //ComboVisualHintOn();
+
+    }
+
+    ////back to no weapon state (Fist)
+    //public void TwoHandMelee_ATK_5_Phase3()
+    //{
+    //    NotReadyToAttack();
+    //    SetAnimatorSpeed(normalPlaybackSpeed);
+    //    ComboVisualHintOff();
+
+    //}
+    //public void TwoHandMelee_ATK_5_Phase4()
+    //{
+    //    _movementBehavior.SetHorizonSpeedZero();
+    //    _movementBehavior.isReadyToMove = true;
+    //    ReadyToAttack();
+
+    //}
 
     #endregion
 
- 
+    #endregion
+
+
 
     #endregion
 }
