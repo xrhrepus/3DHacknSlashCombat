@@ -17672,7 +17672,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weapon_PickUp: {fileID: 1234932967}
-  _weaponType: 1
+  _weapon_ThrowingOut: {fileID: 0}
+  _collisionBoxCollider: {fileID: 0}
+  _type: 1
 --- !u!1 &1248935775
 GameObject:
   m_ObjectHideFlags: 0
@@ -20394,9 +20396,17 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6500000, guid: d096c2dbc4ba8b344a7752253f0049ad, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6500002, guid: d096c2dbc4ba8b344a7752253f0049ad, type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6500004, guid: d096c2dbc4ba8b344a7752253f0049ad, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d096c2dbc4ba8b344a7752253f0049ad, type: 3}
@@ -20533,9 +20543,39 @@ PrefabInstance:
       propertyPath: m_TagString
       value: PickUp
       objectReference: {fileID: 0}
+    - target: {fileID: 554612250265244328, guid: 6b83a77b905957c43961078b079f9bb3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 554612250265244330, guid: 6b83a77b905957c43961078b079f9bb3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 554612250265244332, guid: 6b83a77b905957c43961078b079f9bb3,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 554612250265276046, guid: 6b83a77b905957c43961078b079f9bb3,
         type: 3}
       propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 554612250267187880, guid: 6b83a77b905957c43961078b079f9bb3,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 554612250267187882, guid: 6b83a77b905957c43961078b079f9bb3,
+        type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 554612250267187884, guid: 6b83a77b905957c43961078b079f9bb3,
+        type: 3}
+      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -20796,6 +20836,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 17cbc32b9822b0a4184af81bea5a3ae6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _combatInput: {fileID: 0}
   isReadyToAttack: 0
   _movementBehavior: {fileID: 4000310161508214033}
   _animator: {fileID: 995827630}
@@ -20927,7 +20968,6 @@ GameObject:
   - component: {fileID: 5372717985798832301}
   - component: {fileID: 5372717985798832300}
   - component: {fileID: 5372717985798832304}
-  - component: {fileID: 5372717985798832303}
   - component: {fileID: 5372717985798832305}
   m_Layer: 0
   m_Name: 2HBroadSword
@@ -20949,7 +20989,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _weapon_PickUp: {fileID: 5372717985798832301}
-  _weaponType: 1
+  _weapon_ThrowingOut: {fileID: 5372717985798832304}
+  _collisionBoxCollider: {fileID: 5372717985798832305}
+  _type: 1
 --- !u!114 &5372717985798832301
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20976,22 +21018,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.62847733, y: 2.159947, z: 0.5137415}
   m_Center: {x: -0.035739303, y: 0.57997346, z: 0.023757458}
---- !u!54 &5372717985798832303
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5372717985798832299}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!114 &5372717985798832304
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -21005,14 +21031,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _player: {fileID: 4000310161508214038}
-  _rigidbody: {fileID: 5372717985798832303}
-  _destination: {fileID: 502793747}
-  _rotateSpeed: 11
-  _travelSpeed: 20
-  _initAngle: 0.17
-  _minSteerDistance: 2
+  _velocity: {x: 0, y: 0, z: 0}
+  _destination: {x: 0, y: 0, z: 0}
+  _rotateSpeed: 33
+  _travelSpeed: 2
+  _initAngle: {x: 0, y: 0.17, z: 0}
+  _minSteerDistance: 1.5
   _finishDistance: 1
   _maxSteerForce: 8
+  _timerStart: 0
+  _timer: 0
+  _maxTime: 8
   _stop: 1
   _isTraveling: 0
 --- !u!65 &5372717985798832305
@@ -21024,7 +21053,7 @@ BoxCollider:
   m_GameObject: {fileID: 5372717985798832299}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Size: {x: 0.37570512, y: 1.5606474, z: 0.110227585}
   m_Center: {x: 0.0044159293, y: 0.55871546, z: -0.016951697}
