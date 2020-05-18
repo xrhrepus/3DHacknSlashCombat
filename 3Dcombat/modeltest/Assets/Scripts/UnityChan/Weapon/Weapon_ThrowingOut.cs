@@ -13,7 +13,10 @@ public class Weapon_ThrowingOut : MonoBehaviour
     [SerializeField] private float _rotateSpeed;
     [SerializeField] private float _travelSpeed = 20.0f;
     [Tooltip("initial angle between player forward and weapon init velocity")]
-    [SerializeField] private Vector3 _initAngle = new Vector3(0.0f, 0.17f , 0.0f);
+    [SerializeField] private Vector3 _initVelocityAngle = new Vector3(20.0f, 35.0f , 0.0f);
+    [Tooltip("initial angle of weapon rotation around local X")]
+    [SerializeField] private float _initTiltAngle = 35.0f;
+    [SerializeField] private Transform _initDir;
     [Tooltip("weapon will go straight toward to target if distance between them less than _minDistance")]
     [SerializeField] private float _minSteerDistance = 10f;
     [Tooltip("weapon stops traveling and move to destinationif distance between them less than _finishDistance")]
@@ -40,16 +43,20 @@ public class Weapon_ThrowingOut : MonoBehaviour
             Gizmos.DrawCube(transform.position + _velocity, Vector3.one * 0.5f);
             Gizmos.color = Color.blue;
             Gizmos.DrawWireSphere(_destination, _minSteerDistance);
+
+            Gizmos.color = Color.cyan;
+            Gizmos.DrawLine(transform.position, transform.position + transform.forward * 4.0f);
+ 
+ 
         }
     }
     public void ThrowingAttack(Vector3 destination)
     {
         SetDestination(destination);
         _stop = false;
-         _velocity = (Matrix4x4.Rotate(Quaternion.Euler(  _initAngle )).MultiplyVector(_player.transform.forward)).normalized * _travelSpeed;
+         //_velocity = (Matrix4x4.Rotate(Quaternion.Euler(  _initVelocityAngle )).MultiplyVector(_player.transform.forward)).normalized * _travelSpeed;
+        _velocity = _initDir.transform.forward * _travelSpeed;
  
-        //_velocity =  (_player.transform.forward) * _travelSpeed;
-
         StartCoroutine(Travel());
 
     }
@@ -76,10 +83,12 @@ public class Weapon_ThrowingOut : MonoBehaviour
         _timerStart = true;
 
         _isTraveling = true;
+        transform.Rotate(_initTiltAngle , 0.0f, 0.0f, Space.Self);
+
         while (Vector3.Distance(transform.position, _destination ) > _minSteerDistance && !_stop && (_timer < _maxTime))
         {
-            transform.RotateAround(transform.position, Vector3.up, _rotateSpeed);
-            _velocity += ComputeVelocity(_velocity, _destination )  * Time.fixedDeltaTime;
+            transform.Rotate(0.0f, 0.0f, _rotateSpeed, Space.Self);
+             _velocity += ComputeVelocity(_velocity, _destination )  * Time.fixedDeltaTime;
             yield return null;
         }
         while (Vector3.Distance(transform.position, _destination ) > _finishDistance && !_stop && (_timer < _maxTime))
@@ -143,7 +152,13 @@ public class Weapon_ThrowingOut : MonoBehaviour
         {
             Debug.Log("I");
             //transform.Rotate(new Vector3(0.0f,angle,0.0f),Space.World);
-            transform.RotateAround(transform.position, Vector3.up, _rotateSpeed);
+            //transform.RotateAround(transform.position, Vector3.up, _rotateSpeed);
+            //_velocity = (Matrix4x4.Rotate(Quaternion.Euler(_initVelocityAngle)).MultiplyVector(_player.transform.forward)).normalized * _travelSpeed;
+            //Quaternion.FromToRotation(transform.up, _destination - transform.position)
+            //transform.r
+
+            transform.rotation = Quaternion.Lerp(Quaternion.FromToRotation(transform.forward, _destination - transform.position), Quaternion.Euler(transform.forward), 0.3f) * transform.rotation;
+
         }
 
     }
