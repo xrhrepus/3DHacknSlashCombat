@@ -73,6 +73,14 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""Aim"",
+                    ""type"": ""Button"",
+                    ""id"": ""f72970e0-d524-425e-b467-bb27d675ffae"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -328,6 +336,28 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""action"": ""PickUpWeapon"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b05f2a46-15e1-4085-8f77-c9b37199dbdb"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7c4a3c18-c012-4cb9-8f45-80ef48162071"",
+                    ""path"": ""<Mouse>/rightButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Aim"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -366,6 +396,7 @@ public class @InputControl : IInputActionCollection, IDisposable
         m_PlayerControl_Dodge = m_PlayerControl.FindAction("Dodge", throwIfNotFound: true);
         m_PlayerControl_DropWeapon = m_PlayerControl.FindAction("DropWeapon", throwIfNotFound: true);
         m_PlayerControl_PickUpWeapon = m_PlayerControl.FindAction("PickUpWeapon", throwIfNotFound: true);
+        m_PlayerControl_Aim = m_PlayerControl.FindAction("Aim", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -422,6 +453,7 @@ public class @InputControl : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerControl_Dodge;
     private readonly InputAction m_PlayerControl_DropWeapon;
     private readonly InputAction m_PlayerControl_PickUpWeapon;
+    private readonly InputAction m_PlayerControl_Aim;
     public struct PlayerControlActions
     {
         private @InputControl m_Wrapper;
@@ -433,6 +465,7 @@ public class @InputControl : IInputActionCollection, IDisposable
         public InputAction @Dodge => m_Wrapper.m_PlayerControl_Dodge;
         public InputAction @DropWeapon => m_Wrapper.m_PlayerControl_DropWeapon;
         public InputAction @PickUpWeapon => m_Wrapper.m_PlayerControl_PickUpWeapon;
+        public InputAction @Aim => m_Wrapper.m_PlayerControl_Aim;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControl; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -463,6 +496,9 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @PickUpWeapon.started -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnPickUpWeapon;
                 @PickUpWeapon.performed -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnPickUpWeapon;
                 @PickUpWeapon.canceled -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnPickUpWeapon;
+                @Aim.started -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnAim;
+                @Aim.performed -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnAim;
+                @Aim.canceled -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnAim;
             }
             m_Wrapper.m_PlayerControlActionsCallbackInterface = instance;
             if (instance != null)
@@ -488,6 +524,9 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @PickUpWeapon.started += instance.OnPickUpWeapon;
                 @PickUpWeapon.performed += instance.OnPickUpWeapon;
                 @PickUpWeapon.canceled += instance.OnPickUpWeapon;
+                @Aim.started += instance.OnAim;
+                @Aim.performed += instance.OnAim;
+                @Aim.canceled += instance.OnAim;
             }
         }
     }
@@ -519,5 +558,6 @@ public class @InputControl : IInputActionCollection, IDisposable
         void OnDodge(InputAction.CallbackContext context);
         void OnDropWeapon(InputAction.CallbackContext context);
         void OnPickUpWeapon(InputAction.CallbackContext context);
+        void OnAim(InputAction.CallbackContext context);
     }
 }
