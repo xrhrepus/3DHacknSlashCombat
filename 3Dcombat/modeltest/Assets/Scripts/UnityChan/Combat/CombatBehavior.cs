@@ -92,6 +92,11 @@ public class CombatBehavior : MonoBehaviour
     private float airborneLandingForce = 7.0f;
     #endregion
 
+    [Header("Aiming")]
+    [SerializeField] private bool _isAiming = false;
+    public bool IsAiming { get => _isAiming; }
+
+
     #endregion
     #region Awake/FixedUpdate
     private void Awake()
@@ -146,7 +151,13 @@ public class CombatBehavior : MonoBehaviour
     {
         _animator.SetInteger("weaponType", type);
     }
- 
+    public void SetLeftTrigger(bool holdDown)
+    {
+        _animator.SetBool("leftTriggerHold", holdDown);
+        _animator.SetLayerWeight(_animator.GetLayerIndex("Base Layer"), holdDown? 0.0f : 1.0f);
+        _isAiming = holdDown;
+    }
+
     #endregion
 
     #region Attack button status
@@ -216,10 +227,11 @@ public class CombatBehavior : MonoBehaviour
 
     public void Rotate_ToCam()
     {
-        if (_movementBehavior.isUserMoveInput)
-            _movementBehavior.SetCurrHorizonVelocityDirection(_movementBehavior.GetMoveValue());
-        _movementBehavior.RotateTowardDesireDirection();
-        //_movementBehavior.SetCurrHorizonSpeed(1.2f);
+        _movementBehavior.Rotate_To_Cam();
+        //if (_movementBehavior.isUserMoveInput)
+        //    _movementBehavior.SetCurrHorizonVelocityDirection(_movementBehavior.GetMoveValue());
+        //_movementBehavior.RotateTowardDesireDirection();
+        
 
     }
 

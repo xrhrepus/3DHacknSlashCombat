@@ -86,8 +86,17 @@ public class Player : MonoBehaviour
             _player_WeaponPlacing.ToSheathLocation();
     }
 
+    public void Aiming_Start()
+    {
+        _combatInput.CombatBehavior.SetLeftTrigger(true);
  
- 
+    }
+
+    public void  Aiming_End()
+    {
+        _combatInput.CombatBehavior.SetLeftTrigger(false);
+    }
+
 
     #region OnEnable/OnDisable/Awake
     private void OnEnable()
@@ -112,6 +121,12 @@ public class Player : MonoBehaviour
         //pick drop weapon
         _inputActions.PlayerControl.PickUpWeapon.performed += _equipWeapon => { EquipWeapon(); };
         _inputActions.PlayerControl.DropWeapon.performed += _dropWeapon => { DropWeapon(); };
+        //aim
+        _inputActions.PlayerControl.Aim.performed += _aim => Aiming_Start();
+        //_inputActions.PlayerControl.Aim.started += _aim => _combatInput.CombatBehavior.SetLeftTrigger(true);
+        _inputActions.PlayerControl.Aim.canceled += _aim => Aiming_End();
+
+
 
     }
 

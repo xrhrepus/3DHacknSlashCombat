@@ -10,7 +10,7 @@ public class MovementInput : MonoBehaviour
     //make use of MovementBehavior
     [Header("MovementBehavior")]
     [SerializeField] private MovementBehavior _movementBehavior;
- 
+    public MovementBehavior MovementBehavior { get => _movementBehavior; }
     public void MovePerformed(Vector2 val)
     {
         _movementBehavior.SetMoveValue(val);
