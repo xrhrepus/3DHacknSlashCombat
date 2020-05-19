@@ -20870,10 +20870,10 @@ MonoBehaviour:
   _initRigidbodyMass: 1
   maxTurningSpeed: 330
   startTurningThreshold: 2.07
-  maxMoveSpeed: 6
-  acceleration: 10
+  maxMoveSpeed: 8
+  acceleration: 7
   currHorizonSpeed: 0
-  currHorizonVelocity: {x: 0, y: 0, z: 0}
+  currHorizonVelocityDir: {x: 0, y: 0, z: 0}
   curVerticalSpeed: 0
   isReadyToMove: 1
   maxAirJump: 1
@@ -20930,7 +20930,7 @@ MonoBehaviour:
   chargeProgress_f5: 0
   minRiseForce_f5: 250
   extraRiseForce_f5: 200
-  airborneHorizonSpd: 4
+  airborneHorizonSpd: 6
   airbornePlaybackSpd_rise: 0.3
   comboIntervalSpeed_2hw1: 0.3
   comboIntervalSpeed_2hw2: 0.3
@@ -20941,6 +20941,7 @@ MonoBehaviour:
   leapMoveSpeed_p2: 8
   leapForce: 420
   airborneLandingForce: 25
+  _isAiming: 0
 --- !u!114 &4000310161508214036
 MonoBehaviour:
   m_ObjectHideFlags: 0
