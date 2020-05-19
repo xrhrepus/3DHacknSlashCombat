@@ -715,13 +715,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 190006994}
-  m_LocalRotation: {x: -0.2777568, y: 0.3751009, z: 0.118885145, w: 0.87636566}
+  m_LocalRotation: {x: -0.0926735, y: 0.17171276, z: 0.06829835, w: 0.97839755}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4000310161508214024}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: -35.171, y: 46.344, z: 0}
+  m_LocalEulerAnglesHint: {x: -11.818001, y: 19.29, z: 5.971}
 --- !u!23 &190006996
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -19152,13 +19152,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1672287449}
-  m_LocalRotation: {x: 0.000000059604638, y: -0, z: -0.000000059604638, w: 1}
-  m_LocalPosition: {x: 0.2, y: 0.35, z: -0.25}
+  m_LocalRotation: {x: 0.02577763, y: -0.10349313, z: 0.13364656, w: 0.9852732}
+  m_LocalPosition: {x: 0.17, y: 0.42, z: -0.12}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1003352176}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 4.5, y: -11.4, z: 15}
 --- !u!1 &1673989556
 GameObject:
   m_ObjectHideFlags: 0
@@ -20870,7 +20870,8 @@ MonoBehaviour:
   _initRigidbodyMass: 1
   maxTurningSpeed: 330
   startTurningThreshold: 2.07
-  maxMoveSpeed: 8
+  maxMoveSpeed: 7
+  maxAimingMoveSpeed: 2
   acceleration: 7
   currHorizonSpeed: 0
   currHorizonVelocityDir: {x: 0, y: 0, z: 0}
@@ -20930,15 +20931,15 @@ MonoBehaviour:
   chargeProgress_f5: 0
   minRiseForce_f5: 250
   extraRiseForce_f5: 200
-  airborneHorizonSpd: 6
+  airborneHorizonSpd: 8
   airbornePlaybackSpd_rise: 0.3
   comboIntervalSpeed_2hw1: 0.3
   comboIntervalSpeed_2hw2: 0.3
   comboIntervalSpeed_2hw3: 0.3
   normalPlaybackSpeed: 1
   spinMoveSpeed: 5
-  leapMoveSpeed: 4
-  leapMoveSpeed_p2: 8
+  leapMoveSpeed: 8
+  leapMoveSpeed_p2: 12
   leapForce: 420
   airborneLandingForce: 25
   _isAiming: 0
@@ -21115,7 +21116,7 @@ MonoBehaviour:
   _velocity: {x: 0, y: 0, z: 0}
   _destination: {x: 0, y: 0, z: 0}
   _rotateSpeed: 33
-  _travelSpeed: 4
+  _travelSpeed: 16
   _initVelocityAngle: {x: 20, y: 35, z: 0}
   _initTiltAngle: -35
   _initDir: {fileID: 190006995}
