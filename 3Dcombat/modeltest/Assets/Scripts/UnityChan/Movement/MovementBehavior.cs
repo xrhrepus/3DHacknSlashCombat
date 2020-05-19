@@ -29,7 +29,7 @@ public class MovementBehavior : MonoBehaviour
     public float maxMoveSpeed = 3.0f;
     public float acceleration = 1.0f;
     public float currHorizonSpeed = 0.0f;//current speed on local X-Z plane
-    public Vector3 currHorizonVelocity;//velocity on local X-Z plane, used by animator
+    public Vector3 currHorizonVelocityDir;//velocity on local X-Z plane, used by animator
     public float curVerticalSpeed = 0.0f;//current speed on world Y
     //public Vector3 currVerticalVelocity;//velocity on world Y, used to compute jump/gravity
 
@@ -69,26 +69,27 @@ public class MovementBehavior : MonoBehaviour
     //Animation
     [Header("Animation")]
     [SerializeField] private Animator _animator;
-    //[SerializeField] private UnityChanAnimationControl _UCAnimControl;
-    #endregion
+     #endregion
 
     #region Trivial
-    //private void OnEnable()
-    //{
-    //    _inputActions.Enable();
-    //}
-    //private void OnDisable()
-    //{
-    //    _inputActions.Disable();
-    //}
+ 
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        //Gizmos.DrawLine(transform.position, transform.position + currHorizonDir * 2.0f);
-        //Gizmos.DrawCube(transform.position + currHorizonDir * 2.0f, Vector3.one * 0.5f);
 
-        Gizmos.DrawLine(transform.position, transform.position + currHorizonVelocity);
-        Gizmos.DrawCube(transform.position + currHorizonVelocity, Vector3.one * 0.2f);
+        Gizmos.DrawLine(transform.position, transform.position + currHorizonVelocityDir);
+        Gizmos.DrawCube(transform.position + currHorizonVelocityDir, Vector3.one * 0.8f);
+
+        Gizmos.color = Color.yellow;
+
+        Vector3 test = currHorizonVelocityDir.normalized * currHorizonSpeed;
+        test.y = _rigidbody.velocity.y;
+
+        Gizmos.DrawLine(transform.position,(transform.position + test));
+        Gizmos.DrawCube(transform.position + test, Vector3.one * 0.3f);
+ 
+
+
     }
     #endregion
 
@@ -115,18 +116,13 @@ public class MovementBehavior : MonoBehaviour
     #region Updates
     private void FixedUpdate()
     {
-        MoveSlowdown();
+
         GroundCheck();
-        UpdateVelocity();
+
 
     }
 
     private void Update()
-    {
-        UpdateAnimation();
-
-    }
-    private void LateUpdate()
     {
         isUserMoveInput = true;
 
@@ -134,7 +130,16 @@ public class MovementBehavior : MonoBehaviour
         {
             isUserMoveInput = false;
         }
+
         MovePlayer();
+        MoveSlowdown();
+
+    }
+    private void LateUpdate()
+    {
+        UpdateVelocity();
+        UpdateAnimation();
+
     }
 
     #endregion
@@ -211,10 +216,7 @@ public class MovementBehavior : MonoBehaviour
 
     public void JumpLanding()
     {
- 
-        //currHorizonSpeed = 0.0f;
-        //currHorizonVelocity = Vector3.zero;
-        SetHorizonSpeedZero();
+         SetHorizonSpeedZero();
         isReadyToDodge = true;
         _combatBehavior.ResetAttackTriggers();
       //  isReadyToJump = true;
@@ -224,6 +226,7 @@ public class MovementBehavior : MonoBehaviour
     #region Move,Speed
     public void IdlePoseStart()
     {
+        Debug.Log("idps");
         SetHorizonSpeedZero();
         ReadyToJump(true);
         //isReadyToJump = true;
@@ -240,7 +243,7 @@ public class MovementBehavior : MonoBehaviour
     public void SetHorizonSpeedZero()
     {
         currHorizonSpeed = 0.0f;
-        currHorizonVelocity = Vector3.zero;
+        currHorizonVelocityDir = Vector3.zero;
     }
     public void SetMoveValue(Vector2 val)
     {
@@ -261,7 +264,7 @@ public class MovementBehavior : MonoBehaviour
     }
     public void SetCurrHorizonVelocityDirection(Vector3 dir)
     {
-        currHorizonVelocity = dir;
+         currHorizonVelocityDir = dir;
     }
     public void RotateTowardDesireDirection()
     {
@@ -273,10 +276,20 @@ public class MovementBehavior : MonoBehaviour
         }
 
     }
-
-    public void MovePerformed()
+    public void Rotate_To_Cam()
     {
+        //if (isUserMoveInput)
+        //{
+        //    //currHorizonVelocity.x = _readMovVal.x;
+        //    //currHorizonVelocity.z = _readMovVal.y;
+        //    currHorizonVelocity = Vector3.zero;
+        //}
+        RotateTowardDesireDirection();
 
+    }
+    public void Align_With_Cam()
+    {
+        transform.forward = _camFocus.horizonLookDir;
     }
 
     void MovePlayer()
@@ -288,50 +301,53 @@ public class MovementBehavior : MonoBehaviour
 
         Vector3 desireDir = (_camFocus.horizonLookDir * _readMovVal.y + _camFocus.horizonLookRight * _readMovVal.x).normalized;
 
+        if (_combatBehavior.IsAiming && desireDir != Vector3.zero)
+        {
+            Debug.Log("1");
+             Accelerate();
+            Align_With_Cam();
+            currHorizonVelocityDir = desireDir;
+            return;
+        }
 
         if (desireDir != Vector3.zero)
         {
-            Accelerate();
+             Accelerate();
             Quaternion dest = Quaternion.LookRotation(desireDir).normalized;
             transform.rotation = Quaternion.RotateTowards(transform.rotation, dest, maxTurningSpeed * Time.deltaTime);
 
-            //turningMag = GetRotateDirection(prevDirection, transform.rotation);
-            //turningMag = Mathf.Abs(turningMag) > startTurning ? turningMag : 0.0f;
-
+            currHorizonVelocityDir = transform.forward;
             turningMag = GetRotateDirection(transform.rotation, dest);
             turningMag = Mathf.Abs(turningMag) > startTurningThreshold ? turningMag : 0.0f;
 
         }
  
-
-        //currHorizonVelocity = transform.forward * currHorizonSpeed;
-        ////_characterController.Move(currHorizonVelocity * Time.deltaTime);
-        //currHorizonVelocity.y = _rigidbody.velocity.y;
-        // _rigidbody.velocity = currHorizonVelocity;
     }
 
     void Accelerate()
     {
- 
-        if (currHorizonSpeed < maxMoveSpeed)
+        if (isReadyToMove)
         {
-            currHorizonSpeed += acceleration * Time.deltaTime;
+            if (currHorizonSpeed < maxMoveSpeed)
+            {
+                currHorizonSpeed += acceleration * Time.fixedDeltaTime;
+            }
         }
+
     }
     void Deccelerate()
     {
-        if (currHorizonSpeed > 0.0f)
-        {
-            currHorizonSpeed -= acceleration * Time.deltaTime * 8.0f;
-        }
-        else
+        //if (currHorizonSpeed > 0.0f)
+        //{
+        //    currHorizonSpeed -= acceleration * Time.fixedDeltaTime * 8.0f;
+        //}
+        //else
         {
             currHorizonSpeed = 0.0f;
-            //currHorizonDir = Vector3.zero;
-        }
+         }
     }
 
-    float GetRotateDirection(Quaternion from, Quaternion to)
+    private float GetRotateDirection(Quaternion from, Quaternion to)
     {
         //https://forum.unity.com/threads/checking-rotation-direction.437670/
 
@@ -373,7 +389,6 @@ public class MovementBehavior : MonoBehaviour
             isDodging = true;
 
             //DodgeMovement();
-            Debug.Log("dod");
             _animator.SetTrigger("dodge");
             _animator.SetBool("isDodging", isDodging);
             _combatBehavior.ResetAnimatorSpeed();
@@ -393,8 +408,7 @@ public class MovementBehavior : MonoBehaviour
             
         }
 
-        //_dodgeAnimationPlaybackSpeedMultiplier = 
-
+ 
     }
 
     //used by animation event
@@ -404,8 +418,7 @@ public class MovementBehavior : MonoBehaviour
         isReadyToDodge = true;
         isReadyToMove = true;
         isReadyToJump = true;
-        //currHorizonSpeed = 0.0f;
-        SetHorizonSpeedZero();
+         SetHorizonSpeedZero();
         _animator.SetBool("isDodging", isDodging);
 
     }
@@ -415,10 +428,22 @@ public class MovementBehavior : MonoBehaviour
     #region UpdateData
     void UpdateVelocity()
     {
-        currHorizonVelocity = transform.forward * currHorizonSpeed;
-        currHorizonVelocity.y = _rigidbody.velocity.y;
-        //_characterController.Move(currHorizonVelocity * Time.deltaTime);
-        _rigidbody.velocity = currHorizonVelocity;
+        //Debug.Log("cv0 " + currHorizonVelocity);
+
+        if (currHorizonVelocityDir == Vector3.zero)
+        {
+            currHorizonVelocityDir = transform.forward;
+        }
+        //Debug.Log("cv 1" + currHorizonVelocity);
+
+        //currHorizonVelocityDir = transform.forward * currHorizonSpeed;
+        //Debug.Log("fwd " + transform.forward);
+        //currHorizonVelocity = new Vector3( currHorizonVelocity.x, 0.0f, currHorizonVelocity.z) * currHorizonSpeed /** Time.fixedDeltaTime*/;
+        currHorizonVelocityDir = currHorizonVelocityDir.normalized * currHorizonSpeed ;
+
+        currHorizonVelocityDir.y = _rigidbody.velocity.y;
+       _rigidbody.velocity = currHorizonVelocityDir;
+
 
     }
     //if no move input, start to slow down
@@ -429,7 +454,6 @@ public class MovementBehavior : MonoBehaviour
             turningMag = 0.0f;
             Deccelerate();
         }
-        //currHorizonVelocity = transform.forward * currHorizonSpeed; // already computed in UpdateVelocity()
     }
     void GroundCheck()
     {
@@ -438,30 +462,21 @@ public class MovementBehavior : MonoBehaviour
         {
             airJumpCount = maxAirJump;
         }
-        //if (!_characterController.isGrounded)//if airborne
-        //{
-        //    curVerticalSpeed += -gravityMag * Time.deltaTime;
-        //    _characterController.Move(Vector3.down * curVerticalSpeed * Time.deltaTime);
-        //}
+ 
     }
     void UpdateAnimation()
     {
-        _animator.SetFloat("speed", currHorizonVelocity.magnitude);
-        _animator.SetFloat("forward", currHorizonVelocity.magnitude / maxMoveSpeed);
+ 
+        _animator.SetFloat("speed", currHorizonVelocityDir.magnitude);
+        
+        _animator.SetFloat("forward", currHorizonSpeed / maxMoveSpeed);
         _animator.SetFloat("turning", turningMag);
         _animator.SetFloat("ySpeed", _rigidbody.velocity.y);
+        _animator.SetFloat("moveH",_readMovVal.x);
+        _animator.SetFloat("moveV", _readMovVal.y);
 
         _animator.SetBool("isGrounded", isGrounded);
-        //_UCAnimControl.SetParamFloat("speed", currHorizonVelocity.magnitude);
-        //_UCAnimControl.SetParamFloat("forward", currHorizonVelocity.magnitude / maxMoveSpeed);
-        //_UCAnimControl.SetParamFloat("turning", turningMag);
-        //_UCAnimControl.SetParamFloat("ySpeed", _rigidbody.velocity.y);
-
-        //_UCAnimControl.SetParamBool("isGrounded", isGrounded);
-
-
-
-    }
+     }
 
     #endregion
 
