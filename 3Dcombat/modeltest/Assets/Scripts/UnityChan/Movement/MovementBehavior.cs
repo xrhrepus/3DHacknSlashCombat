@@ -27,6 +27,8 @@ public class MovementBehavior : MonoBehaviour
 
     //speed
     public float maxMoveSpeed = 3.0f;
+    public float maxAimingMoveSpeed = 3.0f;
+
     public float acceleration = 1.0f;
     public float currHorizonSpeed = 0.0f;//current speed on local X-Z plane
     public Vector3 currHorizonVelocityDir;//velocity on local X-Z plane, used by animator
@@ -301,12 +303,14 @@ public class MovementBehavior : MonoBehaviour
 
         Vector3 desireDir = (_camFocus.horizonLookDir * _readMovVal.y + _camFocus.horizonLookRight * _readMovVal.x).normalized;
 
-        if (_combatBehavior.IsAiming && desireDir != Vector3.zero)
+        if (_combatBehavior.IsAiming /*&& desireDir != Vector3.zero*/)
         {
-            Debug.Log("1");
-             Accelerate();
             Align_With_Cam();
-            currHorizonVelocityDir = desireDir;
+            if (desireDir != Vector3.zero)
+            {
+                Accelerate();
+                currHorizonVelocityDir = desireDir;
+            }
             return;
         }
 
@@ -332,16 +336,20 @@ public class MovementBehavior : MonoBehaviour
             {
                 currHorizonSpeed += acceleration * Time.fixedDeltaTime;
             }
+            if (_combatBehavior.IsAiming && currHorizonSpeed > maxAimingMoveSpeed)
+            {
+                currHorizonSpeed = maxAimingMoveSpeed;
+            }
         }
 
     }
     void Deccelerate()
     {
-        //if (currHorizonSpeed > 0.0f)
-        //{
-        //    currHorizonSpeed -= acceleration * Time.fixedDeltaTime * 8.0f;
-        //}
-        //else
+        if (currHorizonSpeed > 0.0f)
+        {
+            currHorizonSpeed -= acceleration * Time.fixedDeltaTime * 8.0f;
+        }
+        else
         {
             currHorizonSpeed = 0.0f;
          }

@@ -313,6 +313,20 @@ public class AttackHandler : MonoBehaviour
     {
         _combatBehavior.TwoHandMelee_ATK_5_Phase2();
     }
+    //2-hand melee Atk6
+    //=============
+    public void TwoHandMelee_ATK_6_Phase1()
+    {
+        _combatBehavior.TwoHandMelee_ATK_6_Phase1();
+    }
+    public void TwoHandMelee_ATK_6_Phase2()
+    {
+        _combatBehavior.TwoHandMelee_ATK_6_Phase2();
+    }
+    public void TwoHandMelee_ATK_6_Phase3()
+    {
+        _combatBehavior.TwoHandMelee_ATK_6_Phase3();
+    }
 
     #endregion
 

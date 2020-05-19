@@ -35,7 +35,7 @@ public class Player : MonoBehaviour
             Weapon wp = _weaponNearby[0];
             _weapon = wp;
             _player_WeaponPlacing.ReplaceWeapon(_weapon);
-            _combatInput.CombatBehavior.SetWeaponType((int)wp.Type);
+            _combatInput.CombatBehavior.SetAnimator_WeaponType((int)wp.Type);
             RemoveFromNearbyWeapon(wp);
             _weapon.StopMoving();
             _hasWeapon = true;
@@ -68,7 +68,7 @@ public class Player : MonoBehaviour
             _weapon.gameObject.transform.parent = null;
             _weapon = null;
             _player_WeaponPlacing.SetWeaponNull();
-            _combatInput.CombatBehavior.SetWeaponType((int)Weapon.WeaponType.fist);
+            _combatInput.CombatBehavior.SetAnimator_WeaponType((int)Weapon.WeaponType.fist);
             _hasWeapon = false;
         }
     }
@@ -88,15 +88,15 @@ public class Player : MonoBehaviour
 
     public void Aiming_Start()
     {
-        _combatInput.CombatBehavior.SetLeftTrigger(true);
+        _combatInput.CombatBehavior.SetAnimator_IsAiming(true);
  
     }
 
     public void  Aiming_End()
     {
-        _combatInput.CombatBehavior.SetLeftTrigger(false);
+        _combatInput.CombatBehavior.SetAnimator_IsAiming(false);
     }
-
+ 
 
     #region OnEnable/OnDisable/Awake
     private void OnEnable()

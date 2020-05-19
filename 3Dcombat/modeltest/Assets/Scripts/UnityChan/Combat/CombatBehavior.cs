@@ -107,8 +107,12 @@ public class CombatBehavior : MonoBehaviour
     {
         if (isCharging_f5 && chargeProgress_f5 < maxChargeTime_f5)
         {
-            chargeProgress_f5 += Time.deltaTime;
+            chargeProgress_f5 += Time.fixedDeltaTime;
         }
+    }
+    private void Update()
+    {
+        _animator.SetBool("isAttacking", isAttacking);
     }
     #endregion
 
@@ -147,17 +151,19 @@ public class CombatBehavior : MonoBehaviour
         _particleSystem.Clear();
         _particleSystem.Stop();
     }
-    public void SetWeaponType(int type)
+    public void SetAnimator_WeaponType(int type)
     {
         _animator.SetInteger("weaponType", type);
     }
-    public void SetLeftTrigger(bool holdDown)
+    public void SetAnimator_IsAiming(bool holdDown)
     {
-        _animator.SetBool("leftTriggerHold", holdDown);
-        _animator.SetLayerWeight(_animator.GetLayerIndex("Base Layer"), holdDown? 0.0f : 1.0f);
+        _animator.SetBool("isAiming", holdDown);
+        //_animator.SetLayerWeight(_animator.GetLayerIndex("Base Layer"), holdDown? 0.0f : 1.0f);
+
         _isAiming = holdDown;
     }
-
+ 
+    
     #endregion
 
     #region Attack button status
@@ -697,6 +703,44 @@ public class CombatBehavior : MonoBehaviour
     //    ReadyToAttack();
 
     //}
+
+    #endregion
+    #region TwoHandMelee_ATK_6(Aim Throw)
+    //2-hand melee Atk5
+
+    //may have lock-on system later
+    //leave P1 for lock-on 
+    public void TwoHandMelee_ATK_6_Phase1()
+    {
+        isAttacking = true;
+        //Rotate_ToCam();
+        ResetAttackTriggers();
+        _movementBehavior.SetHorizonSpeedZero();
+        _movementBehavior.ReadyToJump(false);
+        _movementBehavior.isReadyToMove = false;
+        _movementBehavior.isReadyToDodge = false;
+        _animator.SetLayerWeight(_animator.GetLayerIndex("RightArm"), 0.0f);
+
+        //lock-on
+    }
+
+    //throw out
+    public void TwoHandMelee_ATK_6_Phase2()
+    {
+        SetAnimator_IsAiming(false);
+        _combatInput.Player.ThrowingWeaponAttack();
+
+        //ReadyToAttack();
+        //SetAnimatorSpeed(comboIntervalSpeed_2hw2);
+        //ComboVisualHintOn();
+
+    }
+    public void TwoHandMelee_ATK_6_Phase3()
+    {
+        _animator.SetLayerWeight(_animator.GetLayerIndex("RightArm"), 1.0f);
+
+    }
+
 
     #endregion
 
