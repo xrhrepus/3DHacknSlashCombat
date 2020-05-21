@@ -120,46 +120,46 @@ public class Weapon_ThrowingOut : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.L) && _stop)
-        {
-            Debug.Log("L");
-            ThrowingAttack(_destination);
-            //_stop = false;
-            ////rigidbody.AddForce(Player.transform.forward * force);
-            //StartCoroutine(Travel());
-         }
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            Debug.Log("m");
-            _stop = true;
-        }
+        //if (Input.GetKeyDown(KeyCode.L) && _stop)
+        //{
+        //    Debug.Log("L");
+        //    ThrowingAttack(_destination);
+        //    //_stop = false;
+        //    ////rigidbody.AddForce(Player.transform.forward * force);
+        //    //StartCoroutine(Travel());
+        // }
+        //if (Input.GetKeyDown(KeyCode.M))
+        //{
+        //    Debug.Log("m");
+        //    _stop = true;
+        //}
 
 
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            Debug.Log("P");
-            //rigidbody.AddForce(Player.transform.forward * force);
-            _velocity = _player.transform.forward * _travelSpeed;
-        }
+        //if (Input.GetKeyDown(KeyCode.P))
+        //{
+        //    Debug.Log("P");
+        //    //rigidbody.AddForce(Player.transform.forward * force);
+        //    _velocity = _player.transform.forward * _travelSpeed;
+        //}
 
-        if (Input.GetKeyDown(KeyCode.O))
-        {
-            Debug.Log("O");
-            transform.position = _player.transform.position;
-            _velocity = Vector3.zero;
-        }
-        if (Input.GetKey(KeyCode.I))
-        {
-            Debug.Log("I");
-            //transform.Rotate(new Vector3(0.0f,angle,0.0f),Space.World);
-            //transform.RotateAround(transform.position, Vector3.up, _rotateSpeed);
-            //_velocity = (Matrix4x4.Rotate(Quaternion.Euler(_initVelocityAngle)).MultiplyVector(_player.transform.forward)).normalized * _travelSpeed;
-            //Quaternion.FromToRotation(transform.up, _destination - transform.position)
-            //transform.r
+        //if (Input.GetKeyDown(KeyCode.O))
+        //{
+        //    Debug.Log("O");
+        //    transform.position = _player.transform.position;
+        //    _velocity = Vector3.zero;
+        //}
+        //if (Input.GetKey(KeyCode.I))
+        //{
+        //    Debug.Log("I");
+        //    //transform.Rotate(new Vector3(0.0f,angle,0.0f),Space.World);
+        //    //transform.RotateAround(transform.position, Vector3.up, _rotateSpeed);
+        //    //_velocity = (Matrix4x4.Rotate(Quaternion.Euler(_initVelocityAngle)).MultiplyVector(_player.transform.forward)).normalized * _travelSpeed;
+        //    //Quaternion.FromToRotation(transform.up, _destination - transform.position)
+        //    //transform.r
 
-            transform.rotation = Quaternion.Lerp(Quaternion.FromToRotation(transform.forward, _destination - transform.position), Quaternion.Euler(transform.forward), 0.3f) * transform.rotation;
+        //    transform.rotation = Quaternion.Lerp(Quaternion.FromToRotation(transform.forward, _destination - transform.position), Quaternion.Euler(transform.forward), 0.3f) * transform.rotation;
 
-        }
+        //}
 
     }
 }
