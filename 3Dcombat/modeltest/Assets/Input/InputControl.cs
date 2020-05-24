@@ -81,6 +81,14 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": ""Press""
+                },
+                {
+                    ""name"": ""CallingWeaponBack"",
+                    ""type"": ""Button"",
+                    ""id"": ""92f04fbe-395d-48cd-8def-ac7a0d850db6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press""
                 }
             ],
             ""bindings"": [
@@ -358,6 +366,28 @@ public class @InputControl : IInputActionCollection, IDisposable
                     ""action"": ""Aim"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""837f3e4c-ae1d-4388-ab78-bb0a63b794d2"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Gamepad"",
+                    ""action"": ""CallingWeaponBack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""94080dab-a86e-4c99-bfdf-c84db4fce6e7"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""CallingWeaponBack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -397,6 +427,7 @@ public class @InputControl : IInputActionCollection, IDisposable
         m_PlayerControl_DropWeapon = m_PlayerControl.FindAction("DropWeapon", throwIfNotFound: true);
         m_PlayerControl_PickUpWeapon = m_PlayerControl.FindAction("PickUpWeapon", throwIfNotFound: true);
         m_PlayerControl_Aim = m_PlayerControl.FindAction("Aim", throwIfNotFound: true);
+        m_PlayerControl_CallingWeaponBack = m_PlayerControl.FindAction("CallingWeaponBack", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -454,6 +485,7 @@ public class @InputControl : IInputActionCollection, IDisposable
     private readonly InputAction m_PlayerControl_DropWeapon;
     private readonly InputAction m_PlayerControl_PickUpWeapon;
     private readonly InputAction m_PlayerControl_Aim;
+    private readonly InputAction m_PlayerControl_CallingWeaponBack;
     public struct PlayerControlActions
     {
         private @InputControl m_Wrapper;
@@ -466,6 +498,7 @@ public class @InputControl : IInputActionCollection, IDisposable
         public InputAction @DropWeapon => m_Wrapper.m_PlayerControl_DropWeapon;
         public InputAction @PickUpWeapon => m_Wrapper.m_PlayerControl_PickUpWeapon;
         public InputAction @Aim => m_Wrapper.m_PlayerControl_Aim;
+        public InputAction @CallingWeaponBack => m_Wrapper.m_PlayerControl_CallingWeaponBack;
         public InputActionMap Get() { return m_Wrapper.m_PlayerControl; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -499,6 +532,9 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @Aim.started -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnAim;
                 @Aim.performed -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnAim;
                 @Aim.canceled -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnAim;
+                @CallingWeaponBack.started -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnCallingWeaponBack;
+                @CallingWeaponBack.performed -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnCallingWeaponBack;
+                @CallingWeaponBack.canceled -= m_Wrapper.m_PlayerControlActionsCallbackInterface.OnCallingWeaponBack;
             }
             m_Wrapper.m_PlayerControlActionsCallbackInterface = instance;
             if (instance != null)
@@ -527,6 +563,9 @@ public class @InputControl : IInputActionCollection, IDisposable
                 @Aim.started += instance.OnAim;
                 @Aim.performed += instance.OnAim;
                 @Aim.canceled += instance.OnAim;
+                @CallingWeaponBack.started += instance.OnCallingWeaponBack;
+                @CallingWeaponBack.performed += instance.OnCallingWeaponBack;
+                @CallingWeaponBack.canceled += instance.OnCallingWeaponBack;
             }
         }
     }
@@ -559,5 +598,6 @@ public class @InputControl : IInputActionCollection, IDisposable
         void OnDropWeapon(InputAction.CallbackContext context);
         void OnPickUpWeapon(InputAction.CallbackContext context);
         void OnAim(InputAction.CallbackContext context);
+        void OnCallingWeaponBack(InputAction.CallbackContext context);
     }
 }
