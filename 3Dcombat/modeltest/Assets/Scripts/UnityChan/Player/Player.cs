@@ -11,7 +11,10 @@ public class Player : MonoBehaviour
     [SerializeField] private MovementInput _movementInput;
     [SerializeField] private CombatInput _combatInput;
     //
- 
+    [Header("Camera")]
+    [SerializeField] private CameraFocus _cameraFocus;
+    public CameraFocus CameraFocus { get => _cameraFocus; }
+
     [Header("Weapon")]
     [SerializeField] private Weapon _weapon;
     public bool _hasWeapon { get; private set; }
@@ -114,6 +117,7 @@ public class Player : MonoBehaviour
     public void  Aiming_End()
     {
         _combatInput.CombatBehavior.Set_IsAiming(false);
+        _lockOnDevice.StopLockOn();
      }
 
 
@@ -155,7 +159,8 @@ public class Player : MonoBehaviour
     {
         if (_combatInput.CombatBehavior.IsAiming)
         {
-            _lockOnDevice.FindLockObject()?.BeLockedOn();
+            _lockOnDevice.FindLockObject()?.LockedOn();
         }
+ 
     }
 }

@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class LockOnDevice : MonoBehaviour
 {
+
+    [SerializeField] private Player _player;
     [SerializeField] private LayerMask _layerMask;
     [SerializeField] private float _detectAngle;
     private float _detectAngleCosine;
     [SerializeField] private LockOnObjectPool _lockOnObjectPool;
+    private LockOnObject _currentLockOnObject;
+    public LockOnObject CurrentLockOnObject { get => _currentLockOnObject; }
     private void Awake()
     {
         _detectAngleCosine = Mathf.Cos(_detectAngle * Mathf.Deg2Rad);
     }
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.yellow;
-        Gizmos.DrawFrustum(transform.position, _detectAngle, 20.0f, 1.0f, 1.778f);
- 
+  
     }
     /// <summary>
     /// return a LockOnObject which most parallel with transform.forward inside of detectAngle
@@ -29,7 +31,9 @@ public class LockOnDevice : MonoBehaviour
         foreach (var lockObj in _lockOnObjectPool.LockOnObjects)
         {
             //if inside detect range
-            float cosAngle = Vector3.Dot(transform.forward.normalized, (lockObj.transform.position - transform.position).normalized);
+            //float cosAngle = Vector3.Dot(transform.forward.normalized, (lockObj.transform.position - transform.position).normalized);
+            float cosAngle = Vector3.Dot(_player.CameraFocus._cam.transform.forward.normalized, (lockObj.transform.position - transform.position).normalized);
+
             if (cosAngle > _detectAngleCosine)
             {
                 if (cosAngle > closestAngle)
@@ -39,9 +43,27 @@ public class LockOnDevice : MonoBehaviour
                 }
             }
         }
+        //_currentLockOnObject?.NotLockedOn();
+        //_currentLockOnObject = target;
+        //target?.LockedOn();
+        ChangeCurrentLockOnObject(target);
         return target;
     }
- 
+    private void ChangeCurrentLockOnObject(LockOnObject target)
+    {
+        if (target == _currentLockOnObject)
+        {
+            return;
+        }
+        _currentLockOnObject?.NotLockedOn();
+        _currentLockOnObject = target;
+        target?.LockedOn();
+    }
+    public void StopLockOn()
+    {
+        _currentLockOnObject?.NotLockedOn();
+
+    }
     // Update is called once per frame
     void Update()
     {

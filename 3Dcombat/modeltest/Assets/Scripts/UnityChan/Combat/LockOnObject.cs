@@ -5,21 +5,30 @@ using UnityEngine;
 public class LockOnObject : MonoBehaviour
 {
     //[SerializeField] private Sprite
+    public ParticleSystem ParticleSystem;
 
-    public void BeLockedOn()
+    [SerializeField] private bool _isLockedOn = false;
+    public bool isLockedOn { get => _isLockedOn; }
+
+    public void LockedOn()
     {
-        Debug.Log(name + " locked");
+        if (!_isLockedOn)
+        {
+            Debug.Log(name + " locked");
+            _isLockedOn = true;
+            ParticleSystem.Play();
+        }
+    }
+    public void NotLockedOn()
+    {
+        if (_isLockedOn)
+        {
+            Debug.Log(name + " not locked");
+            _isLockedOn = false;
+            ParticleSystem.Stop();
+            ParticleSystem.Clear();
+        }
     }
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+ 
 }
