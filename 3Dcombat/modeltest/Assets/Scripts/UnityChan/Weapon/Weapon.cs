@@ -26,6 +26,11 @@ public class Weapon : MonoBehaviour
     {
         _weapon_ThrowingOut.ThrowingAttack(dest);
     }
+    public void BackingToHand(Transform owner)
+    {
+        _weapon_ThrowingOut.BackingToHand(owner);
+    }
+
     public void StopMoving()
     {
         _weapon_ThrowingOut.StopMoving();

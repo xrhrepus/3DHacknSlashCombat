@@ -17,6 +17,9 @@ public class Player : MonoBehaviour
 
     [Header("Weapon")]
     [SerializeField] private Weapon _weapon;
+
+    [SerializeField] private Weapon _weaponCallingBack;
+
     public bool _hasWeapon { get; private set; }
     [SerializeField] private Player_WeaponPlacing _player_WeaponPlacing;
     [SerializeField] private List< Weapon> _weaponNearby = new List<Weapon>();
@@ -45,6 +48,7 @@ public class Player : MonoBehaviour
             RemoveFromNearbyWeapon(wp);
             _weapon.StopMoving();
             _hasWeapon = true;
+            _weaponCallingBack = _weapon;
         }
     }
     public void DropWeapon()// can only have one weapon
@@ -69,18 +73,26 @@ public class Player : MonoBehaviour
             var lcobj =_lockOnDevice.FindLockObject();
             if (lcobj != null)
             {
-                Debug.Log("lcok atk");
-                tweapon.ThrowingAttack(lcobj.transform.position);
+                 tweapon.ThrowingAttack(lcobj.transform.position);
+            }
+            else
+            {
+                tweapon.ThrowingAttack(transform.position + transform.forward * 20.0f);
             }
 
         }
         else
         {
-            Debug.Log("not lcok atk");
-
-            tweapon.ThrowingAttack(transform.position + transform.forward * 20.0f);
+              tweapon.ThrowingAttack(transform.position + transform.forward * 20.0f);
         }
 
+    }
+    public void CallingWeaponBack()
+    {
+        if (_weaponCallingBack != null)
+        {
+            _weaponCallingBack.BackingToHand(transform);
+        }
     }
     void DetachWeapon()// throw weapon out for some reason
     {
@@ -148,6 +160,9 @@ public class Player : MonoBehaviour
         _inputActions.PlayerControl.Aim.performed += _aim => Aiming_Start();
         //_inputActions.PlayerControl.Aim.started += _aim => _combatInput.CombatBehavior.SetLeftTrigger(true);
         _inputActions.PlayerControl.Aim.canceled += _aim => Aiming_End();
+
+        //call weapon back
+        _inputActions.PlayerControl.CallingWeaponBack.performed += _equipWeapon => { CallingWeaponBack(); };
 
 
 

@@ -12,15 +12,20 @@ public class Weapon_ThrowingOut : MonoBehaviour
     [Tooltip("weapon rotating speed")]
     [SerializeField] private float _rotateSpeed;
     [SerializeField] private float _travelSpeed = 20.0f;
-    [Tooltip("initial angle between player forward and weapon init velocity")]
-    [SerializeField] private Vector3 _initVelocityAngle = new Vector3(20.0f, 35.0f , 0.0f);
+    
     [Tooltip("initial angle of weapon rotation around local X")]
     [SerializeField] private float _initTiltAngle = 35.0f;
+    [Tooltip("initial angle between player forward and weapon init velocity")]
     [SerializeField] private Transform _initDir;
     [Tooltip("weapon will go straight toward to target if distance between them less than _minDistance")]
     [SerializeField] private float _minSteerDistance = 10f;
     [Tooltip("weapon stops traveling and move to destinationif distance between them less than _finishDistance")]
     [SerializeField] private float _finishDistance = 1.0f;
+
+    [Header("Calling back to owner")]
+    [SerializeField] private Transform _ownerTransform;
+    [SerializeField] private bool _waitingForCall = false;
+    public bool WaitingForCall { get => _waitingForCall; }
 
     [SerializeField] private float _maxSteerForce = 1.0f;
     [SerializeField] private bool _timerStart = false;
@@ -54,12 +59,27 @@ public class Weapon_ThrowingOut : MonoBehaviour
     {
         SetDestination(destination);
         _stop = false;
-         //_velocity = (Matrix4x4.Rotate(Quaternion.Euler(  _initVelocityAngle )).MultiplyVector(_player.transform.forward)).normalized * _travelSpeed;
+        
         _velocity = _initDir.transform.forward * _travelSpeed;
  
-        StartCoroutine(Travel());
+        StartCoroutine(SteerTravel());
 
     }
+    public void BackingToHand(Transform owner)
+    {
+        if (!_isTraveling && _stop && _waitingForCall)
+        {
+            _ownerTransform = owner;
+            SetDestination(owner.position);
+            _stop = false;
+            _waitingForCall = false;
+            _velocity = _initDir.transform.forward * _travelSpeed;
+            StartCoroutine(SteerTravelBack());
+
+        }
+
+    }
+
     public void StopMoving()
     {
         _stop = true;
@@ -77,7 +97,7 @@ public class Weapon_ThrowingOut : MonoBehaviour
         Vector3 steer = (((dest - transform.position).normalized * _travelSpeed) - vel);
         return Vector3.ClampMagnitude(steer, _maxSteerForce);
     }
-    IEnumerator Travel()
+    IEnumerator SteerTravel()
     {
         _timer = 0.0f;
         _timerStart = true;
@@ -104,8 +124,39 @@ public class Weapon_ThrowingOut : MonoBehaviour
         _isTraveling = false;
         _timerStart = false;
         _velocity = Vector3.zero;
+        _waitingForCall = true;
         yield return null;
     }
+    IEnumerator SteerTravelBack()
+    {
+        _timer = 0.0f;
+        _timerStart = true;
+
+        _isTraveling = true;
+        transform.Rotate(_initTiltAngle, 0.0f, 0.0f, Space.Self);
+
+        while (Vector3.Distance(transform.position, _ownerTransform.position) > _minSteerDistance && !_stop && (_timer < _maxTime))
+        {
+            transform.Rotate(0.0f, 0.0f, _rotateSpeed, Space.Self);
+            _velocity += ComputeVelocity(_velocity, _ownerTransform.position) * Time.fixedDeltaTime;
+            yield return null;
+        }
+        while (Vector3.Distance(transform.position, _ownerTransform.position) > _finishDistance && !_stop && (_timer < _maxTime))
+        {
+            _velocity = (_ownerTransform.position - transform.position).normalized * _travelSpeed;
+            yield return null;
+        }
+        if (Vector3.Distance(transform.position, _ownerTransform.position) < _finishDistance)
+        {
+            transform.position = _ownerTransform.position;
+        }
+        _stop = true;
+        _isTraveling = false;
+        _timerStart = false;
+        _velocity = Vector3.zero;
+        yield return null;
+    }
+
     private void FixedUpdate()
     {
         if (_timerStart)
