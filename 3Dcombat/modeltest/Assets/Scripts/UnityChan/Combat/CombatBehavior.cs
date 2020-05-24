@@ -738,7 +738,7 @@ public class CombatBehavior : MonoBehaviour
     public void TwoHandMelee_ATK_6_Phase3()
     {
         _animator.SetLayerWeight(_animator.GetLayerIndex("RightArm"), 1.0f);
-
+ 
     }
 
 
