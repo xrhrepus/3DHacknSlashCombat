@@ -18,6 +18,9 @@ public class Player : MonoBehaviour
     [SerializeField] private Player_WeaponPlacing _player_WeaponPlacing;
     [SerializeField] private List< Weapon> _weaponNearby = new List<Weapon>();
 
+    [Header("LockOn")]
+    [SerializeField] private LockOnDevice _lockOnDevice;
+    [SerializeField] private bool _isLocking = false;
     //
     public void AddToNearbyWeapon(Weapon wp)
     {
@@ -95,8 +98,8 @@ public class Player : MonoBehaviour
     public void  Aiming_End()
     {
         _combatInput.CombatBehavior.SetAnimator_IsAiming(false);
-    }
- 
+     }
+
 
     #region OnEnable/OnDisable/Awake
     private void OnEnable()
@@ -134,6 +137,9 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        
+        if (_combatInput.CombatBehavior.IsAiming)
+        {
+            _lockOnDevice.FindLockObject()?.BeLockedOn();
+        }
     }
 }
