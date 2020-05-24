@@ -155,7 +155,7 @@ public class CombatBehavior : MonoBehaviour
     {
         _animator.SetInteger("weaponType", type);
     }
-    public void SetAnimator_IsAiming(bool holdDown)
+    public void Set_IsAiming(bool holdDown)
     {
         _animator.SetBool("isAiming", holdDown);
         //_animator.SetLayerWeight(_animator.GetLayerIndex("Base Layer"), holdDown? 0.0f : 1.0f);
@@ -727,8 +727,8 @@ public class CombatBehavior : MonoBehaviour
     //throw out
     public void TwoHandMelee_ATK_6_Phase2()
     {
-        SetAnimator_IsAiming(false);
         _combatInput.Player.ThrowingWeaponAttack();
+        Set_IsAiming(false);
 
         //ReadyToAttack();
         //SetAnimatorSpeed(comboIntervalSpeed_2hw2);

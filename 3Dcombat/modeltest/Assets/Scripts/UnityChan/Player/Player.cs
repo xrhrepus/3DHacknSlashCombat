@@ -61,7 +61,23 @@ public class Player : MonoBehaviour
     {
         Weapon tweapon = _weapon;
         DetachWeapon();
-        tweapon.ThrowingAttack(transform.position + transform.forward * 20.0f);
+        if (_combatInput.CombatBehavior.IsAiming)
+        {
+            var lcobj =_lockOnDevice.FindLockObject();
+            if (lcobj != null)
+            {
+                Debug.Log("lcok atk");
+                tweapon.ThrowingAttack(lcobj.transform.position);
+            }
+
+        }
+        else
+        {
+            Debug.Log("not lcok atk");
+
+            tweapon.ThrowingAttack(transform.position + transform.forward * 20.0f);
+        }
+
     }
     void DetachWeapon()// throw weapon out for some reason
     {
@@ -91,13 +107,13 @@ public class Player : MonoBehaviour
 
     public void Aiming_Start()
     {
-        _combatInput.CombatBehavior.SetAnimator_IsAiming(true);
+        _combatInput.CombatBehavior.Set_IsAiming(true);
  
     }
 
     public void  Aiming_End()
     {
-        _combatInput.CombatBehavior.SetAnimator_IsAiming(false);
+        _combatInput.CombatBehavior.Set_IsAiming(false);
      }
 
 
