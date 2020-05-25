@@ -228,7 +228,7 @@ public class MovementBehavior : MonoBehaviour
     #region Move,Speed
     public void IdlePoseStart()
     {
-        Debug.Log("idps");
+ 
         SetHorizonSpeedZero();
         ReadyToJump(true);
         //isReadyToJump = true;

@@ -38,22 +38,22 @@ public class Weapon_ThrowingOut : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        if (_destination != null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawCube(_destination, Vector3.one);
+        //if (_destination != null)
+        //{
+        //    Gizmos.color = Color.red;
+        //    Gizmos.DrawCube(_destination, Vector3.one);
 
-            Gizmos.color = Color.green;
-            Gizmos.DrawLine(transform.position, transform.position + _velocity);
-            Gizmos.DrawCube(transform.position + _velocity, Vector3.one * 0.5f);
-            Gizmos.color = Color.blue;
-            Gizmos.DrawWireSphere(_destination, _minSteerDistance);
+        //    Gizmos.color = Color.green;
+        //    Gizmos.DrawLine(transform.position, transform.position + _velocity);
+        //    Gizmos.DrawCube(transform.position + _velocity, Vector3.one * 0.5f);
+        //    Gizmos.color = Color.blue;
+        //    Gizmos.DrawWireSphere(_destination, _minSteerDistance);
 
-            Gizmos.color = Color.cyan;
-            Gizmos.DrawLine(transform.position, transform.position + transform.forward * 4.0f);
+        //    Gizmos.color = Color.cyan;
+        //    Gizmos.DrawLine(transform.position, transform.position + transform.forward * 4.0f);
  
  
-        }
+        //}
     }
     public void ThrowingAttack(Vector3 destination)
     {
