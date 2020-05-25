@@ -15,10 +15,10 @@ TagManager:
   - 
   - 
   - Ground
-  - 
-  - 
-  - 
-  - 
+  - AttackHitBox
+  - Enemy
+  - Destroyable
+  - WeaponProjectile
   - 
   - 
   - 
