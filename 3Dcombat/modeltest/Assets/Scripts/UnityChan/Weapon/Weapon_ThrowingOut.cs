@@ -26,6 +26,8 @@ public class Weapon_ThrowingOut : MonoBehaviour
     [SerializeField] private Transform _ownerTransform;
     [SerializeField] private bool _waitingForCall = false;
     public bool WaitingForCall { get => _waitingForCall; }
+    [Header("Tracking Target")]
+    [SerializeField] private Transform _targetTransform;
 
     [SerializeField] private float _maxSteerForce = 1.0f;
     [SerializeField] private bool _timerStart = false;
@@ -65,6 +67,17 @@ public class Weapon_ThrowingOut : MonoBehaviour
         StartCoroutine(SteerTravel());
 
     }
+    public void ThrowingAttack_Tracking(Transform target)
+    {
+        _targetTransform = target;
+        _stop = false;
+
+        _velocity = _initDir.transform.forward * _travelSpeed;
+
+        StartCoroutine(SteerTravel_Tracking());
+
+    }
+
     public void BackingToHand(Transform owner)
     {
         if (!_isTraveling && _stop && _waitingForCall)
@@ -127,6 +140,36 @@ public class Weapon_ThrowingOut : MonoBehaviour
         _waitingForCall = true;
         yield return null;
     }
+    IEnumerator SteerTravel_Tracking()
+    {
+        _timer = 0.0f;
+        _timerStart = true;
+
+        _isTraveling = true;
+        transform.Rotate(_initTiltAngle, 0.0f, 0.0f, Space.Self);
+
+        while (Vector3.Distance(transform.position, _targetTransform.position) > _minSteerDistance && !_stop && (_timer < _maxTime))
+        {
+            transform.Rotate(0.0f, 0.0f, _rotateSpeed, Space.Self);
+            _velocity += ComputeVelocity(_velocity, _targetTransform.position) * Time.fixedDeltaTime;
+            yield return null;
+        }
+        while (Vector3.Distance(transform.position, _targetTransform.position) > _finishDistance && !_stop && (_timer < _maxTime))
+        {
+            _velocity = (_targetTransform.position - transform.position).normalized * _travelSpeed;
+            yield return null;
+        }
+        if (Vector3.Distance(transform.position, _targetTransform.position) < _finishDistance)
+        {
+            transform.position = _targetTransform.position;
+        }
+        _stop = true;
+        _isTraveling = false;
+        _timerStart = false;
+        _velocity = Vector3.zero;
+        yield return null;
+    }
+
     IEnumerator SteerTravelBack()
     {
         _timer = 0.0f;
@@ -149,6 +192,8 @@ public class Weapon_ThrowingOut : MonoBehaviour
         if (Vector3.Distance(transform.position, _ownerTransform.position) < _finishDistance)
         {
             transform.position = _ownerTransform.position;
+            _player.AddToNearbyWeapon(this.GetComponent<Weapon>());
+            _player.EquipWeapon();
         }
         _stop = true;
         _isTraveling = false;

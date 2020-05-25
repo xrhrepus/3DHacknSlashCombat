@@ -26,6 +26,11 @@ public class Weapon : MonoBehaviour
     {
         _weapon_ThrowingOut.ThrowingAttack(dest);
     }
+    public void ThrowingAttack_Tracking(Transform targetTF)
+    {
+        _weapon_ThrowingOut.ThrowingAttack_Tracking(targetTF);
+    }
+
     public void BackingToHand(Transform owner)
     {
         _weapon_ThrowingOut.BackingToHand(owner);

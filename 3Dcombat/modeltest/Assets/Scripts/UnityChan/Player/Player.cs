@@ -77,7 +77,7 @@ public class Player : MonoBehaviour
             }
             else
             {
-                tweapon.ThrowingAttack(transform.position + transform.forward * 20.0f);
+                tweapon.ThrowingAttack_Tracking(lcobj.transform);
             }
 
         }

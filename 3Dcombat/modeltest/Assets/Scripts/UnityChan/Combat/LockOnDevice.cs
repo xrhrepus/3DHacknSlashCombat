@@ -28,18 +28,30 @@ public class LockOnDevice : MonoBehaviour
     {
         LockOnObject target = null;
         float closestAngle = 0.0f; // 1.0 == parallel
+        float closestDistance = 1000.0f; // 1.0 == parallel
+
         foreach (var lockObj in _lockOnObjectPool.LockOnObjects)
         {
             //if inside detect range
             //float cosAngle = Vector3.Dot(transform.forward.normalized, (lockObj.transform.position - transform.position).normalized);
             float cosAngle = Vector3.Dot(_player.CameraFocus._cam.transform.forward.normalized, (lockObj.transform.position - transform.position).normalized);
-
+            
             if (cosAngle > _detectAngleCosine)
             {
                 if (cosAngle > closestAngle)
                 {
                     closestAngle = cosAngle;
+                    
                     target = lockObj;
+
+                    //float dist = Vector3.Distance(transform.position, lockObj.transform.position);
+                    //if (dist < closestDistance)
+                    //{
+                    //    closestAngle = cosAngle;
+                    //    closestDistance = dist;
+                    //    target = lockObj;
+                    //}
+                    
                 }
             }
         }

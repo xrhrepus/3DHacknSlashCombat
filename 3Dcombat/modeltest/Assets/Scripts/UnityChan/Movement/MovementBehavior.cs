@@ -71,10 +71,15 @@ public class MovementBehavior : MonoBehaviour
     //Animation
     [Header("Animation")]
     [SerializeField] private Animator _animator;
-     #endregion
+
+
+    [Header("CombatHitBoxControl")]
+    [SerializeField] private CombatHitBoxControl _combatHitBoxControl;
+
+    #endregion
 
     #region Trivial
- 
+
     private void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
@@ -401,6 +406,7 @@ public class MovementBehavior : MonoBehaviour
             _animator.SetBool("isDodging", isDodging);
             _combatBehavior.ResetAnimatorSpeed();
             _combatBehavior.ResetAttackTriggers();
+            _combatHitBoxControl.Turn_All_Off();
         }
     }
 

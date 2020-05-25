@@ -506,6 +506,7 @@ public class CombatBehavior : MonoBehaviour
         ReadyToAttack();
         SetAnimatorSpeed(comboIntervalSpeed_2hw1);
         ComboVisualHintOn();
+        _combatHitBoxControl.TwoHandMelee_A1();
 
     }
     public void TwoHandMelee_ATK_1_Phase3()
@@ -513,7 +514,7 @@ public class CombatBehavior : MonoBehaviour
         NotReadyToAttack();
         SetAnimatorSpeed(normalPlaybackSpeed);
         ComboVisualHintOff();
- 
+        _combatHitBoxControl.TwoHandMelee_All_Off();
     }
     public void TwoHandMelee_ATK_1_Phase4()
     {
@@ -540,14 +541,14 @@ public class CombatBehavior : MonoBehaviour
         ReadyToAttack();
         SetAnimatorSpeed(comboIntervalSpeed_2hw2);
         ComboVisualHintOn();
- 
+        _combatHitBoxControl.TwoHandMelee_A2();
     }
     public void TwoHandMelee_ATK_2_Phase3()
     {
         NotReadyToAttack();
         SetAnimatorSpeed(normalPlaybackSpeed);
         ComboVisualHintOff();
- 
+        _combatHitBoxControl.TwoHandMelee_All_Off();
     }
     public void TwoHandMelee_ATK_2_Phase4()
     {
@@ -578,10 +579,12 @@ public class CombatBehavior : MonoBehaviour
         ReadyToAttack();
         SetAnimatorSpeed(comboIntervalSpeed_2hw3);
         ComboVisualHintOn();
+        _combatHitBoxControl.TwoHandMelee_A3();
     }
     public void TwoHandMelee_ATK_3_Phase4()
     {
         _movementBehavior.SetHorizonSpeedZero();
+        _combatHitBoxControl.TwoHandMelee_All_Off();
 
     }
     public void TwoHandMelee_ATK_3_Phase5()
@@ -637,6 +640,7 @@ public class CombatBehavior : MonoBehaviour
     public void TwoHandMelee_ATK_4_Phase5()
     {
         LeapAttack_Landing();
+        _combatHitBoxControl.TwoHandMelee_A4();
 
     }
     public void TwoHandMelee_ATK_4_Phase6()
@@ -647,6 +651,7 @@ public class CombatBehavior : MonoBehaviour
         ComboVisualHintOff();
 
         LeapAttack_Finish();
+        _combatHitBoxControl.TwoHandMelee_All_Off();
         //ReadyToAttack();
     }
 
