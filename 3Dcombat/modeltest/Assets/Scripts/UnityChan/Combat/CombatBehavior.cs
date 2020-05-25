@@ -24,6 +24,10 @@ public class CombatBehavior : MonoBehaviour
     [Header("VisualHint")]
     [SerializeField] private ParticleSystem _particleSystem;
 
+
+    [Header("CombatHitBoxControl")]
+    [SerializeField] private CombatHitBoxControl _combatHitBoxControl;
+
     #region Fist combat
     [Header("Fist combat combo")]
     [Tooltip("the playback speed of animator during the can combo state")]
@@ -294,12 +298,15 @@ public class CombatBehavior : MonoBehaviour
         ReadyToAttack();
         SetAnimatorSpeed(comboIntervalSpeed_f1);
         ComboVisualHintOn();
+        _combatHitBoxControl.Fist_A1();
     }
     public void Fist_ATK_1_Phase3()
     {
         NotReadyToAttack();
         SetAnimatorSpeed(normalPlaybackSpeed);
         ComboVisualHintOff();
+        _combatHitBoxControl.Fist_All_Off();
+
     }
     public void Fist_ATK_1_Phase4()
     {
@@ -327,12 +334,16 @@ public class CombatBehavior : MonoBehaviour
         ReadyToAttack();
         SetAnimatorSpeed(comboIntervalSpeed_f2);
         ComboVisualHintOn();
+        _combatHitBoxControl.Fist_A2();
+
     }
     public void Fist_ATK_2_Phase3()
     {
         NotReadyToAttack();
         SetAnimatorSpeed(normalPlaybackSpeed);
         ComboVisualHintOff();
+        _combatHitBoxControl.Fist_All_Off();
+
     }
     public void Fist_ATK_2_Phase4()
     {
@@ -360,17 +371,20 @@ public class CombatBehavior : MonoBehaviour
         ReadyToAttack();
         SetAnimatorSpeed(comboIntervalSpeed_f3);
         ComboVisualHintOn();
+        _combatHitBoxControl.Fist_A3();
     }
     public void Fist_ATK_3_Phase3()
     {
         NotReadyToAttack();
         SetAnimatorSpeed(normalPlaybackSpeed);
         ComboVisualHintOff();
+        _combatHitBoxControl.Fist_All_Off();
+
     }
     public void Fist_ATK_3_Phase4()
     {
         _movementBehavior.SetHorizonSpeedZero();
-       // _movementBehavior.isReadyToMove = true;
+        // _movementBehavior.isReadyToMove = true;
         //ReadyToAttack();
     }
     #endregion
@@ -389,21 +403,23 @@ public class CombatBehavior : MonoBehaviour
  
     public void Fist_ATK_4_Phase2()
     {
+        _combatHitBoxControl.Fist_A4();
 
-//        ReadyToAttack();
-//        SetAnimatorSpeed(comboIntervalSpeed_f3);
-//        ComboVisualHintOn();
+        //        ReadyToAttack();
+        //        SetAnimatorSpeed(comboIntervalSpeed_f3);
+        //        ComboVisualHintOn();
     }
     public void Fist_ATK_4_Phase3()
     {
 //        NotReadyToAttack();
 //        SetAnimatorSpeed(normalPlaybackSpeed);
-//        ComboVisualHintOff();
+        _combatHitBoxControl.Fist_All_Off();
+        //        ComboVisualHintOff();
     }
     public void Fist_ATK_4_Phase4()
     {
         _movementBehavior.SetHorizonSpeedZero();
-       // _movementBehavior.isReadyToMove = true;
+        // _movementBehavior.isReadyToMove = true;
         //ReadyToAttack();
     }
     #endregion
@@ -429,6 +445,8 @@ public class CombatBehavior : MonoBehaviour
     {
         Fist_ATK_5_Rise();
         Fist_ATK_5_ResetChargeTimer();
+        _combatHitBoxControl.Fist_A5();
+
     }
     public void Fist_ATK_5_Phase3()//floating
     {
@@ -437,6 +455,7 @@ public class CombatBehavior : MonoBehaviour
 
         NotReadyToAttack();
         SetAnimatorSpeed(airbornePlaybackSpd_rise);
+        _combatHitBoxControl.Fist_All_Off();
         //        ComboVisualHintOff();
     }
     public void Fist_ATK_5_Phase4()//falling
