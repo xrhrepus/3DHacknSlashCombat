@@ -233,15 +233,18 @@ public class MovementBehavior : MonoBehaviour
     #region Move,Speed
     public void IdlePoseStart()
     {
- 
+        Debug.Log("idle");
         SetHorizonSpeedZero();
         ReadyToJump(true);
         //isReadyToJump = true;
         isReadyToDodge = true;
+
         isReadyToMove = true;
     }
     public void RunPoseStart()
     {
+        Debug.Log("run");
+
         ReadyToJump(true);
         isReadyToDodge = true;
         isReadyToMove = true;
@@ -395,7 +398,6 @@ public class MovementBehavior : MonoBehaviour
  
         if (isReadyToDodge)
         {
-            //if (desireDir != Vector3.zero)
             isReadyToDodge = false;
             isReadyToMove = false;
             isReadyToJump = false;

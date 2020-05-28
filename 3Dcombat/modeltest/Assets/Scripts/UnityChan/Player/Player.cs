@@ -27,6 +27,10 @@ public class Player : MonoBehaviour
     [Header("LockOn")]
     [SerializeField] private LockOnDevice _lockOnDevice;
     [SerializeField] private bool _isLocking = false;
+
+    //
+ 
+
     //
     public void AddToNearbyWeapon(Weapon wp)
     {
@@ -72,13 +76,15 @@ public class Player : MonoBehaviour
         {
             var lcobj =_lockOnDevice.FindLockObject();
             if (lcobj != null)
-            {
-                 tweapon.ThrowingAttack(lcobj.transform.position);
-            }
-            else
-            {
                 tweapon.ThrowingAttack_Tracking(lcobj.transform);
-            }
+
+            //{
+            //    tweapon.ThrowingAttack(lcobj.transform.position);
+            //}
+            //else
+            //{
+            //    tweapon.ThrowingAttack_Tracking(lcobj.transform);
+            //}
 
         }
         else
@@ -122,7 +128,11 @@ public class Player : MonoBehaviour
 
     public void Aiming_Start()
     {
-        _combatInput.CombatBehavior.Set_IsAiming(true);
+        if (!_movementInput.MovementBehavior.isDodging && _hasWeapon)
+        {
+            _combatInput.CombatBehavior.Set_IsAiming(true);
+            _movementInput.MovementBehavior.isReadyToDodge = false;
+        }
  
     }
 
@@ -130,7 +140,9 @@ public class Player : MonoBehaviour
     {
         _combatInput.CombatBehavior.Set_IsAiming(false);
         _lockOnDevice.StopLockOn();
-     }
+        _movementInput.MovementBehavior.isReadyToDodge = true;
+
+    }
 
 
     #region OnEnable/OnDisable/Awake

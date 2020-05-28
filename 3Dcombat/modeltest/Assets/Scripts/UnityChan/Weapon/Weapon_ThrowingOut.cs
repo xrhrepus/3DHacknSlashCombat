@@ -167,6 +167,8 @@ public class Weapon_ThrowingOut : MonoBehaviour
         _isTraveling = false;
         _timerStart = false;
         _velocity = Vector3.zero;
+        _waitingForCall = true;
+
         yield return null;
     }
 
