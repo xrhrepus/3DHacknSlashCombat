@@ -44,8 +44,8 @@ public class AnimatorGUI : MonoBehaviour
 
         GUI.Label(new Rect(0, 210, 200, 20), "percent : " + percent);
 
-        Slider.maxValue = _animator.GetCurrentAnimatorStateInfo(0).length;
-        Slider.value = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
+        //Slider.maxValue = _animator.GetCurrentAnimatorStateInfo(0).length;
+        //Slider.value = _animator.GetCurrentAnimatorStateInfo(0).normalizedTime;
 
     }
 }
