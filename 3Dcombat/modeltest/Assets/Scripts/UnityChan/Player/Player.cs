@@ -77,6 +77,8 @@ public class Player : MonoBehaviour
             var lcobj =_lockOnDevice.FindLockObject();
             if (lcobj != null)
                 tweapon.ThrowingAttack_Tracking(lcobj.transform);
+            else
+                tweapon.ThrowingAttack(transform.position + transform.forward * 20.0f);
 
             //{
             //    tweapon.ThrowingAttack(lcobj.transform.position);
