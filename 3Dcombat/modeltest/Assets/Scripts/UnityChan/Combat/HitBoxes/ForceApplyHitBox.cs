@@ -8,6 +8,8 @@ public class ForceApplyHitBox : MonoBehaviour
     public Vector3 forceDir = Vector3.up;
     public ForceMode forceMode = ForceMode.Force;
 
+    public float damage;
+
     public void SetForce(float mag,Vector3 fDir,ForceMode fmode)
     {
         forceMag = mag;
@@ -22,7 +24,11 @@ public class ForceApplyHitBox : MonoBehaviour
             Debug.Log("FHN" + gameObject.name);
             //forceDir = transform.forward;
             other.GetComponent<Rigidbody>().AddForce(forceDir * forceMag, forceMode);
-            
+
+            var e = other.GetComponent<EnemyCtrl>();
+            e.ReceiveDamage(damage);
+            e.ReceiveImpact();
+
         }
 
     }
