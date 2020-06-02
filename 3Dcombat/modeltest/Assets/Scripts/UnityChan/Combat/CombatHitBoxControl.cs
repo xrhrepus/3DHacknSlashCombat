@@ -13,7 +13,7 @@ public class CombatHitBoxControl : MonoBehaviour
     [SerializeField] private float lerpForwardUp_2HSA3 = 0.7f;
     [SerializeField] private Collider collider_2HSA4;
     [SerializeField] private float lerpForwardUp_2HSA4 = 0.6f;
-
+ 
     [Header("Fist Attack")]
     [SerializeField] private Collider collider_FA1;
     [SerializeField] private Collider collider_FA2;
@@ -37,37 +37,38 @@ public class CombatHitBoxControl : MonoBehaviour
     public void TwoHandMelee_A1()
     {
         collider_2HSA1.enabled = true;
-        collider_2HSA1.GetComponent<ForceApplyHitBox>().forceDir = Vector3.Lerp(transform.forward, Vector3.up, lerpForwardUp_FA3);
+        collider_2HSA1.GetComponent<ForceApplyHitBox>().forceDir = Vector3.Lerp(transform.forward, Vector3.up, lerpForwardUp_2HSA1);
 
     }
     public void TwoHandMelee_A2()
     {
         collider_2HSA1.enabled = false;
         collider_2HSA2.enabled = true;
-        collider_2HSA2.GetComponent<ForceApplyHitBox>().forceDir = Vector3.Lerp(transform.forward, Vector3.up, lerpForwardUp_FA3);
+        collider_2HSA2.GetComponent<ForceApplyHitBox>().forceDir = Vector3.Lerp(transform.forward, Vector3.up, lerpForwardUp_2HSA2);
 
     }
     public void TwoHandMelee_A3()
     {
         collider_2HSA2.enabled = false;
         collider_2HSA3.enabled = true;
-        collider_2HSA3.GetComponent<ForceApplyHitBox>().forceDir = Vector3.Lerp(transform.forward, Vector3.up, lerpForwardUp_FA3);
+        collider_2HSA3.GetComponent<ForceApplyHitBox>().forceDir = Vector3.Lerp(transform.forward, Vector3.up, lerpForwardUp_2HSA3);
 
     }
     public void TwoHandMelee_A4()
     {
         collider_2HSA3.enabled = false;
         collider_2HSA4.enabled = true;
-        collider_2HSA4.GetComponent<ForceApplyHitBox>().forceDir = Vector3.Lerp(transform.forward, Vector3.up, lerpForwardUp_FA3);
+        collider_2HSA4.GetComponent<ForceApplyHitBox>().forceDir = Vector3.Lerp(transform.forward, Vector3.up, lerpForwardUp_2HSA4);
 
     }
+ 
     public void TwoHandMelee_All_Off()
     {
         collider_2HSA1.enabled = false;
         collider_2HSA2.enabled = false;
         collider_2HSA3.enabled = false;
         collider_2HSA4.enabled = false;
-
+ 
     }
     #endregion
 

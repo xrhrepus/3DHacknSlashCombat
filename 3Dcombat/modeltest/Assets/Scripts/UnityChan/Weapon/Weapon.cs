@@ -13,6 +13,7 @@ public class Weapon : MonoBehaviour
     }
     [SerializeField] private Weapon_PickUp _weapon_PickUp;
     [SerializeField] private Weapon_ThrowingOut _weapon_ThrowingOut;
+    public Weapon_ThrowingOut Weapon_ThrowingOut { get=> _weapon_ThrowingOut; }
     [SerializeField] private BoxCollider _collisionBoxCollider;
     [SerializeField] private WeaponType _type = WeaponType.none;
     public WeaponType Type { get => _type; }
@@ -33,7 +34,7 @@ public class Weapon : MonoBehaviour
 
     public void BackingToHand(Transform owner)
     {
-        _weapon_ThrowingOut.BackingToHand(owner);
+        _weapon_ThrowingOut.BackToHand(owner);
     }
 
     public void StopMoving()

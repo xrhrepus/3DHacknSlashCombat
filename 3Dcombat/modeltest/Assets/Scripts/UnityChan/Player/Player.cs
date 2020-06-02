@@ -43,7 +43,7 @@ public class Player : MonoBehaviour
 
     public void EquipWeapon()
     {
-        if (!_combatInput.CombatBehavior.isAttacking && _weaponNearby.Count > 0)
+        if (/*!_combatInput.CombatBehavior.isAttacking &&*/ _weaponNearby.Count > 0)
         {
             Weapon wp = _weaponNearby[0];
             _weapon = wp;

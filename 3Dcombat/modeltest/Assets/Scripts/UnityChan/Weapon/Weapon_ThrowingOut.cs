@@ -26,6 +26,9 @@ public class Weapon_ThrowingOut : MonoBehaviour
     [SerializeField] private Transform _ownerTransform;
     [SerializeField] private bool _waitingForCall = false;
     public bool WaitingForCall { get => _waitingForCall; }
+    [SerializeField] private bool _returningToHand = false;
+    public bool ReturningToHand { get => _returningToHand; }
+
     [Header("Tracking Target")]
     [SerializeField] private Transform _targetTransform;
 
@@ -37,6 +40,11 @@ public class Weapon_ThrowingOut : MonoBehaviour
     [SerializeField] private bool _isTraveling = false;
     public bool IsStop { get => _stop; }
     public bool IsTraveling { get => _isTraveling; }
+
+    [Header("Hit detect")]
+    [SerializeField] private BoxCollider _insertCollider;
+    [SerializeField] private BoxCollider _damageCollider;
+
 
     private void OnDrawGizmos()
     {
@@ -63,7 +71,7 @@ public class Weapon_ThrowingOut : MonoBehaviour
         _stop = false;
         
         _velocity = _initDir.transform.forward * _travelSpeed;
- 
+        _damageCollider.enabled = true;
         StartCoroutine(SteerTravel());
 
     }
@@ -73,19 +81,25 @@ public class Weapon_ThrowingOut : MonoBehaviour
         _stop = false;
 
         _velocity = _initDir.transform.forward * _travelSpeed;
+        _damageCollider.enabled = true;
 
         StartCoroutine(SteerTravel_Tracking());
 
     }
 
-    public void BackingToHand(Transform owner)
+    public void BackToHand(Transform owner)
     {
         if (!_isTraveling && _stop && _waitingForCall)
         {
+            //gameObject.transform.SetParent(null);
+            gameObject.transform.parent = null;
+
             _ownerTransform = owner;
             SetDestination(owner.position);
             _stop = false;
             _waitingForCall = false;
+            _damageCollider.enabled = true;
+            _returningToHand = true;
             _velocity = _initDir.transform.forward * _travelSpeed;
             StartCoroutine(SteerTravelBack());
 
@@ -138,6 +152,9 @@ public class Weapon_ThrowingOut : MonoBehaviour
         _timerStart = false;
         _velocity = Vector3.zero;
         _waitingForCall = true;
+        _damageCollider.enabled = false;
+
+
         yield return null;
     }
     IEnumerator SteerTravel_Tracking()
@@ -168,6 +185,7 @@ public class Weapon_ThrowingOut : MonoBehaviour
         _timerStart = false;
         _velocity = Vector3.zero;
         _waitingForCall = true;
+        _damageCollider.enabled = false;
 
         yield return null;
     }
@@ -199,8 +217,11 @@ public class Weapon_ThrowingOut : MonoBehaviour
         }
         _stop = true;
         _isTraveling = false;
+        _damageCollider.enabled = false;
         _timerStart = false;
         _velocity = Vector3.zero;
+        _returningToHand = false;
+
         yield return null;
     }
 

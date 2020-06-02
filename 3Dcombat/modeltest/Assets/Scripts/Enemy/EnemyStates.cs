@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class EnemyStates : MonoBehaviour
 {
+    private EnemyCtrl _enemyCtrl;
+
     public float _hp;
     public float _maxHp = 100.0f;
 
@@ -24,6 +26,7 @@ public class EnemyStates : MonoBehaviour
     private void Awake()
     {
         _hp = _maxHp;
+        _enemyCtrl = GetComponent<EnemyCtrl>();
     }
     private void Update()
     {
@@ -47,12 +50,15 @@ public class EnemyStates : MonoBehaviour
         if (_knockedBack && _knockedBackRecvTimer < _knockedBackRecvTime)
         {
             _knockedBackRecvTimer += Time.deltaTime;
+            _enemyCtrl._enemyNavigation.NavMeshAgent.isStopped = true;
+
         }
         if (_knockedBackRecvTimer >= _knockedBackRecvTime)
         {
             _knockedBack = false;
             _readyToMove = true;
             _knockedBackRecvTimer = 0.0f;
+            _enemyCtrl.RecoverFromImpact();
         }
 
     }
