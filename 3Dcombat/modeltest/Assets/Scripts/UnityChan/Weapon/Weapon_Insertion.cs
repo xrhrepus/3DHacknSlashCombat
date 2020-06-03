@@ -8,11 +8,12 @@ public class Weapon_Insertion : MonoBehaviour
     public Transform _weaponInsertPlace;
     private void OnTriggerEnter(Collider other)
     {
-        
 
         if (other.gameObject.layer == 12)
         {
-             Weapon wp = other.transform.parent.GetComponent<Weapon>();
+            Debug.Log("ins " + gameObject.name);
+
+            Weapon wp = other.transform.parent.GetComponent<Weapon>();
             if (!wp.Weapon_ThrowingOut.ReturningToHand && wp.Weapon_ThrowingOut.IsTraveling)
             {
                 wp.StopMoving();
