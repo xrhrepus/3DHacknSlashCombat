@@ -60,7 +60,7 @@ public class EnemyCtrl : MonoBehaviour
             _enemyNavigation.NavMeshAgent.isStopped = false;
             return;
         }
-        Debug.Log("atk");
+        //Debug.Log("atk");
         _animator.SetTrigger("attack");
         _enemyStates._readyToAttack = false;
     }
@@ -79,6 +79,7 @@ public class EnemyCtrl : MonoBehaviour
             else
             {
                 _enemyNavigation.NavMeshAgent.isStopped = true;
+                _enemyNavigation.NavMeshAgent.velocity = Vector3.zero;
                 _enemyStates._moving = false;
                 _enemyStates._attacking = true;
             }

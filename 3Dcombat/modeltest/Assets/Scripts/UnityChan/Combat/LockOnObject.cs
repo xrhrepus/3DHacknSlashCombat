@@ -14,7 +14,7 @@ public class LockOnObject : MonoBehaviour
     {
         if (!_isLockedOn)
         {
-            Debug.Log(name + " locked");
+            //Debug.Log(name + " locked");
             _isLockedOn = true;
             ParticleSystem.Play();
         }
@@ -23,7 +23,7 @@ public class LockOnObject : MonoBehaviour
     {
         if (_isLockedOn)
         {
-            Debug.Log(name + " not locked");
+            //Debug.Log(name + " not locked");
             _isLockedOn = false;
             ParticleSystem.Stop();
             ParticleSystem.Clear();
