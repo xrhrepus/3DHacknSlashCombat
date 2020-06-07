@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - PickUp
+  - FxTemporaire
+  - SphereMask
   layers:
   - Default
   - TransparentFX
@@ -20,7 +22,7 @@ TagManager:
   - Destroyable
   - WeaponProjectile
   - EnvHitByWeapon
-  - 
+  - Wall
   - 
   - 
   - 
