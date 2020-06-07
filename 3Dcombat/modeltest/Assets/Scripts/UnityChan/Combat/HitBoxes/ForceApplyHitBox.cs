@@ -17,16 +17,17 @@ public class ForceApplyHitBox : MonoBehaviour
         forceDir = fDir;
         forceMode = fmode;
     }
+
     private void OnTriggerEnter(Collider other)
     {
+        foreach (var ps in _particleSystems)
+        {
+            ps.Play();
+        }
 
         if (other.gameObject.layer == 10)
         {
             Debug.Log("FHN" + gameObject.name);
-            foreach (var ps in _particleSystems)
-            {
-                ps.Play();
-            }
 
             //forceDir = transform.forward;
             other.GetComponent<Rigidbody>().AddForce(forceDir * forceMag, forceMode);

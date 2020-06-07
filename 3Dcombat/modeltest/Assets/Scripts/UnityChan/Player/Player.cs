@@ -57,7 +57,7 @@ public class Player : MonoBehaviour
     }
     public void DropWeapon()// can only have one weapon
     {
-        if (!_combatInput.CombatBehavior.isAttacking)
+        if (!_combatInput.CombatBehavior.isAttacking && !_combatInput.CombatBehavior.IsAiming)
         {
             DetachWeapon();
             //_weapon.gameObject.transform.parent = null;

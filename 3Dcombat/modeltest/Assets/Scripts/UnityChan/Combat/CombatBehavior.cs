@@ -63,6 +63,18 @@ public class CombatBehavior : MonoBehaviour
     [SerializeField]
     private float airbornePlaybackSpd_rise = 0.3f;
 
+    [Header("Fist combat combo VFX")]
+    [SerializeField]
+    private Combat_VFXControl _VFXControl_f1;
+    [SerializeField]
+    private Combat_VFXControl _VFXControl_f2;
+    [SerializeField]
+    private Combat_VFXControl _VFXControl_f3;
+    [SerializeField]
+    private Combat_VFXControl _VFXControl_f4;
+    [SerializeField]
+    private Combat_VFXControl _VFXControl_f5;
+
     #endregion
 
 
@@ -94,6 +106,22 @@ public class CombatBehavior : MonoBehaviour
     private float leapForce = 7.0f;
     [SerializeField]
     private float airborneLandingForce = 7.0f;
+
+    [Header("2 Hand weapon VFX")]
+    [SerializeField]
+    private Combat_VFXControl _VFXControl_2hw1;
+    [SerializeField]
+    private Combat_VFXControl _VFXControl_2hw2;
+    [SerializeField]
+    private Combat_VFXControl _VFXControl_2hw3;
+    [SerializeField]
+    private Combat_VFXControl _VFXControl_2hw4;
+    [SerializeField]
+    private Combat_VFXControl _VFXControl_2hw5;
+
+    [SerializeField]
+    private Combat_VFXControl _VFXControl_2hw6;
+
     #endregion
 
     [Header("Aiming")]
@@ -254,6 +282,7 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.isReadyToMove = false;
         _movementBehavior.ReadyToJump(false);
         NotReadyToAttack();
+        
     }
     public void UnsheathingWeapon()
     {
@@ -572,6 +601,7 @@ public class CombatBehavior : MonoBehaviour
     }
     public void TwoHandMelee_ATK_3_Phase2()
     {
+        _VFXControl_2hw3.PlayEffects();
         SpinAttack_Dash();
     }
     public void TwoHandMelee_ATK_3_Phase3()
