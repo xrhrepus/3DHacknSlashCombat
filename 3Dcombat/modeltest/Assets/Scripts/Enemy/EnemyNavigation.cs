@@ -18,6 +18,11 @@ public class EnemyNavigation : MonoBehaviour
         _navMeshAgent = GetComponent<NavMeshAgent>();
         //_navMeshAgent.isStopped = _stop;
     }
+    private void OnEnable()
+    {
+        _navMeshAgent.enabled = true;
+
+    }
     private void OnDisable()
     {
         _navMeshAgent.enabled = false;
