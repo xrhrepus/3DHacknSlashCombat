@@ -12,6 +12,10 @@ public class EnemyCtrl : MonoBehaviour
 
     public List<ParticleSystem> _getHitPS;
 
+    [Header("Attack")]
+    [SerializeField] private float _atkDamage = 10.0f;
+    [Header("Attack Hit Detection")]
+    [SerializeField] private Collider _HD_A1;
     //recv damage
     public void ReceiveImpact()
     {
@@ -61,10 +65,31 @@ public class EnemyCtrl : MonoBehaviour
             return;
         }
         //Debug.Log("atk");
+        InflictDamage(_atkDamage);
         _animator.SetTrigger("attack");
         _enemyStates._readyToAttack = false;
     }
+    public void Attack_A1_P1()
+    {
+         Attack_Start_Hit_Detect_A1();
+    }
+    public void Attack_A1_P2()
+    {
+         Attack_End_Hit_Detect_A1();
+    }
+    public void InflictDamage(float val)
+    {
+        _HD_A1.GetComponent<Enemy_AttackHitDetection>().damage = val;
+    }
 
+    public void Attack_Start_Hit_Detect_A1()
+    {
+        _HD_A1.enabled = true;
+    }
+    public void Attack_End_Hit_Detect_A1()
+    {
+        _HD_A1.enabled = false;
+    }
 
     //move
     public void Navigate()
