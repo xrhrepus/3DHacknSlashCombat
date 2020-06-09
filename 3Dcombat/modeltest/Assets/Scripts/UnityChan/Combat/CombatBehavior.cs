@@ -129,6 +129,13 @@ public class CombatBehavior : MonoBehaviour
     public bool IsAiming { get => _isAiming; }
 
 
+    [Header("Damaged")]
+    private bool _knockedBack = false;
+    public bool KnockedBack { get => _knockedBack; }
+
+    public float _impactRecvTime = 0.5f;
+    [SerializeField] private float _impactRecvTimer = 0.0f;
+
     #endregion
     #region Awake/FixedUpdate
     private void Awake()
@@ -145,6 +152,15 @@ public class CombatBehavior : MonoBehaviour
     private void Update()
     {
         _animator.SetBool("isAttacking", isAttacking);
+        _animator.SetBool("damaged", _knockedBack);
+        if (_knockedBack && _impactRecvTimer < _impactRecvTime)
+        {
+            _impactRecvTimer += Time.deltaTime;
+        }
+        if (_impactRecvTimer >= _impactRecvTime)
+        {
+            RecoverFromImpact();
+        }
     }
     #endregion
 
@@ -271,6 +287,34 @@ public class CombatBehavior : MonoBehaviour
         //_movementBehavior.RotateTowardDesireDirection();
         
 
+    }
+
+    #endregion
+
+    #region Receive damage
+    public void ReceiveDamage()
+    {
+
+    }
+    public void ReceiveImpact()
+    {
+        _knockedBack = true;
+        //
+        _movementBehavior.ReadyToJump(false);
+        ResetAttackTriggers();
+        _movementBehavior.SetHorizonSpeedZero();
+        _movementBehavior.isReadyToMove = false;
+        NotReadyToAttack();
+        //
+    }
+    public void RecoverFromImpact()
+    {
+        _knockedBack = false;
+        _impactRecvTimer = 0.0f;
+        //
+        _movementBehavior.SetHorizonSpeedZero();
+        _movementBehavior.isReadyToMove = true;
+        ReadyToAttack();
     }
 
     #endregion

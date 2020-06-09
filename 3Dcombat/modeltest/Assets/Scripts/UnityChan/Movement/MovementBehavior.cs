@@ -233,7 +233,7 @@ public class MovementBehavior : MonoBehaviour
     #region Move,Speed
     public void IdlePoseStart()
     {
-        Debug.Log("idle");
+        //Debug.Log("idle");
         SetHorizonSpeedZero();
         ReadyToJump(true);
         //isReadyToJump = true;
@@ -243,7 +243,7 @@ public class MovementBehavior : MonoBehaviour
     }
     public void RunPoseStart()
     {
-        Debug.Log("run");
+       // Debug.Log("run");
 
         ReadyToJump(true);
         isReadyToDodge = true;

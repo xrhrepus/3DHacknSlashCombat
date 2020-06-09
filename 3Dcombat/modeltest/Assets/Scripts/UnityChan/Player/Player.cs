@@ -29,7 +29,32 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _isLocking = false;
 
     //
- 
+    [Header("Animator")]
+    [SerializeField] private Animator _animator;
+    //
+    [Header("Attributes")]
+    [SerializeField] private Character_Attributes _attributes;
+    [SerializeField] private bool _isAlive = true;
+    public bool IsAlive { get => _isAlive; }
+
+    public void ReceiveDamage(float val)
+    {
+        //_animator.Play("Damage", 0);
+        _combatInput.CombatBehavior.ReceiveImpact();
+        _attributes.CurrentHp -= val;
+        if (_attributes.CurrentHp <= 0.0f )
+        {
+            _isAlive = false;
+            _animator.SetBool("die", !_isAlive);
+            this.enabled = false;
+            //_movementInput.MovementBehavior.isReadyToMove = false;
+            //_movementInput.MovementBehavior.isReadyToDodge = false;
+            //_movementInput.MovementBehavior.ReadyToJump(false);
+            //_combatInput.CombatBehavior.NotReadyToAttack();
+
+        }
+    }
+
 
     //
     public void AddToNearbyWeapon(Weapon wp)
