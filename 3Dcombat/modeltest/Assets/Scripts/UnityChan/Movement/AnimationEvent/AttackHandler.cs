@@ -84,7 +84,12 @@ public class AttackHandler : MonoBehaviour
 
     #endregion
 
-
+    #region Receive impact
+    public void Receive_Impact()
+    {
+        _combatBehavior.InfluencedByImpact();
+    }
+    #endregion
     //
     #region Fist attack
     #region Fist attack 1

@@ -303,6 +303,11 @@ public class CombatBehavior : MonoBehaviour
     public void ReceiveImpact()
     {
         _knockedBack = true;
+        
+    }
+
+    public void InfluencedByImpact()
+    {
         //
         _movementBehavior.ReadyToJump(false);
         ResetAttackTriggers();
@@ -311,6 +316,7 @@ public class CombatBehavior : MonoBehaviour
         NotReadyToAttack();
         //
     }
+
     public void RecoverFromImpact()
     {
         _knockedBack = false;
