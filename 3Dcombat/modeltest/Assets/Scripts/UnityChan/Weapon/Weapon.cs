@@ -21,6 +21,9 @@ public class Weapon : MonoBehaviour
     [SerializeField] private SFXGroup _SFX_Weapon;
     public SFXGroup SFX_Weapon { get=> _SFX_Weapon; }
 
+    [SerializeField]
+    private TrailRenderer _weaponTrail;
+    public TrailRenderer TrailRenderer { get => _weaponTrail; }
     private void Awake()
     {
         _weapon_PickUp.SetBelongingWeapon(this);

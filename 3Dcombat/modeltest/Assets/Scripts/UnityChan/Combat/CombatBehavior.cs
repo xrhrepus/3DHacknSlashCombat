@@ -165,6 +165,7 @@ public class CombatBehavior : MonoBehaviour
         {
             RecoverFromImpact();
         }
+ 
     }
     #endregion
 
@@ -590,7 +591,7 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.isReadyToMove = false;
         NotReadyToAttack();
         _ATK_SFX_Voice.PlaySFX("atk1");
-
+        _combatInput.Player.Weapon.TrailRenderer.enabled = true;
     }
     public void TwoHandMelee_ATK_1_Phase2()
     {
@@ -611,6 +612,8 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.SetHorizonSpeedZero();
         _movementBehavior.isReadyToMove = true;
         ReadyToAttack();
+        _combatInput.Player.Weapon.TrailRenderer.enabled = false;
+
     }
 
     #endregion
@@ -626,6 +629,7 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.isReadyToMove = false;
         NotReadyToAttack();
         _ATK_SFX_Voice.PlaySFX("atk1");
+        _combatInput.Player.Weapon.TrailRenderer.enabled = true;
     }
     public void TwoHandMelee_ATK_2_Phase2()
     {
@@ -647,7 +651,8 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.SetHorizonSpeedZero();
         _movementBehavior.isReadyToMove = true;
         ReadyToAttack();
- 
+        _combatInput.Player.Weapon.TrailRenderer.enabled = false;
+
     }
 
     #endregion
@@ -662,6 +667,7 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.isReadyToMove = false;
         NotReadyToAttack();
         _ATK_SFX_Voice.PlaySFX("atk2");
+        _combatInput.Player.Weapon.TrailRenderer.enabled = true;
     }
     public void TwoHandMelee_ATK_3_Phase2()
     {
@@ -689,7 +695,7 @@ public class CombatBehavior : MonoBehaviour
         ComboVisualHintOff();
 
         SpinAttack_Finish();
-        //ReadyToAttack();
+        _combatInput.Player.Weapon.TrailRenderer.enabled = false;
     }
 
     void SpinAttack_Dash()
@@ -727,6 +733,7 @@ public class CombatBehavior : MonoBehaviour
     public void TwoHandMelee_ATK_4_Phase3()
     {
         LeapAttack_Leap();
+        _combatInput.Player.Weapon.TrailRenderer.enabled = true;
     }
     public void TwoHandMelee_ATK_4_Phase4()
     {
@@ -749,7 +756,7 @@ public class CombatBehavior : MonoBehaviour
 
         LeapAttack_Finish();
         _combatHitBoxControl.TwoHandMelee_All_Off();
-        //ReadyToAttack();
+        _combatInput.Player.Weapon.TrailRenderer.enabled = false;
     }
 
     public void LeapAttack_Dash()
@@ -796,6 +803,7 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.isReadyToMove = false;
         _movementBehavior.isReadyToDodge = false;
         _ATK_SFX_Voice.PlaySFX("atk4");
+        _combatInput.Player.Weapon.TrailRenderer.enabled = true;
 
         //lock-on
     }
@@ -807,7 +815,7 @@ public class CombatBehavior : MonoBehaviour
         //ReadyToAttack();
         //SetAnimatorSpeed(comboIntervalSpeed_2hw2);
         //ComboVisualHintOn();
-
+ 
     }
 
     ////back to no weapon state (Fist)
@@ -831,6 +839,8 @@ public class CombatBehavior : MonoBehaviour
     public void TwoHandMelee_Weapon_Return()
     {
         _VFXControl_2hw_weaponReturn.PlayEffects();
+        _combatInput.Player.Weapon.TrailRenderer.enabled = false;
+
     }
     #endregion
 
@@ -849,6 +859,7 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.isReadyToMove = false;
         _movementBehavior.isReadyToDodge = false;
         _animator.SetLayerWeight(_animator.GetLayerIndex("RightArm"), 0.0f);
+        _combatInput.Player.Weapon.TrailRenderer.enabled = true;
 
         //lock-on
     }
@@ -885,7 +896,8 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.isReadyToMove = false;
         _movementBehavior.isReadyToDodge = false;
         _animator.SetLayerWeight(_animator.GetLayerIndex("RightArm"), 0.0f);
- 
+        _combatInput.Player.Weapon.TrailRenderer.enabled = true;
+
     }
 
     //throw out

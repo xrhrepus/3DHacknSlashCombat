@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class MovementBehavior : MonoBehaviour
 {
-    
+
     #region Fields
+    [SerializeField] private Player _player;
+    public Player Player { get => _player; }
+
     //private InputControl _inputActions;
     [SerializeField] private Vector2 _readMovVal;
 
@@ -396,6 +399,8 @@ public class MovementBehavior : MonoBehaviour
     public void DodgePerformed()
     {
  
+        _player.Weapon.TrailRenderer.enabled = false;
+
         if (isReadyToDodge)
         {
             isReadyToDodge = false;

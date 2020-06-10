@@ -17,7 +17,7 @@ public class Player : MonoBehaviour
 
     [Header("Weapon")]
     [SerializeField] private Weapon _weapon;
-
+    public Weapon Weapon { get=> _weapon; }
     [SerializeField] private Weapon _weaponCallingBack;
 
     public bool _hasWeapon { get; private set; }
