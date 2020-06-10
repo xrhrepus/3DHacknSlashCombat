@@ -144,6 +144,7 @@ public class EnemyCtrl : MonoBehaviour
             {
                 bc.enabled = false;
             }
+            transform.Find("WeaponThrowDest").gameObject.SetActive(false);
             _SFXGroup.PlaySFX("die");
 
             _enemyNavigation.enabled = false;
