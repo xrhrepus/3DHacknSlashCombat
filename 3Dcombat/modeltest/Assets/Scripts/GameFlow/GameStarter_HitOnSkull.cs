@@ -11,8 +11,8 @@ public class GameStarter_HitOnSkull : MonoBehaviour
         if (other.gameObject.layer == 12)
         {
             _gameStarter.GameStart();
-            GetComponent<BoxCollider>().enabled = false;
-            this.enabled = false;
+            //GetComponent<GameStarter_HitOnSkull>().enabled = false;
+            //this.enabled = false;
         }
 
     }

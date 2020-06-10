@@ -11,7 +11,7 @@ public class GameStarter : MonoBehaviour
     [SerializeField] private GameStarter_HitOnSkull _gameStarter_HitOnSkull;
     [SerializeField] private AudioSource _bgm;
     [SerializeField] private SFXGroup _gameStartHint;
-
+    private bool _started = false;
     private void Awake()
     {
         foreach (var e in _enemies)
@@ -22,6 +22,11 @@ public class GameStarter : MonoBehaviour
 
     public void GameStart()
     {
+        if (_started)
+        {
+            return;
+        }
+        _started = true;
         foreach (var e in _enemies)
         {
             e.SetActive(true);
