@@ -122,6 +122,10 @@ public class CombatBehavior : MonoBehaviour
     [SerializeField]
     private Combat_VFXControl _VFXControl_2hw6;
 
+    [Header("Attack SFX")]
+    [SerializeField] private SFXGroup _ATK_SFX_Voice;
+    [SerializeField] private SFXGroup _ATK_SFX_Effect;
+
     #endregion
 
     [Header("Aiming")]
@@ -364,6 +368,8 @@ public class CombatBehavior : MonoBehaviour
         Rotate_ToCam();
 
         NotReadyToAttack();
+        _ATK_SFX_Voice.PlaySFX("atk3");
+
     }
     public void Fist_ATK_1_Phase2()
     {
@@ -399,6 +405,7 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.isReadyToMove = false;
         NotReadyToAttack();
         Rotate_ToCam();
+        _ATK_SFX_Voice.PlaySFX("atk2");
 
     }
     public void Fist_ATK_2_Phase2()
@@ -436,6 +443,7 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.isReadyToMove = false;
         NotReadyToAttack();
         Rotate_ToCam();
+        _ATK_SFX_Voice.PlaySFX("atk1");
 
     }
     public void Fist_ATK_3_Phase2()
@@ -471,9 +479,10 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.isReadyToMove = false;
         NotReadyToAttack();
         Rotate_ToCam();
+        _ATK_SFX_Voice.PlaySFX("atk2");
 
     }
- 
+
     public void Fist_ATK_4_Phase2()
     {
         _combatHitBoxControl.Fist_A4();
@@ -507,7 +516,8 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.isReadyToDodge = false;
         NotReadyToAttack();
         isCharging_f5 = true;
- 
+        _ATK_SFX_Voice.PlaySFX("charge");
+
     }
     private void Fist_ATK_5_ResetChargeTimer()
     {
@@ -519,6 +529,7 @@ public class CombatBehavior : MonoBehaviour
         Fist_ATK_5_Rise();
         Fist_ATK_5_ResetChargeTimer();
         _combatHitBoxControl.Fist_A5();
+        _ATK_SFX_Voice.PlaySFX("atk4");
 
     }
     public void Fist_ATK_5_Phase3()//floating
@@ -572,7 +583,8 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.SetHorizonSpeedZero();
         _movementBehavior.isReadyToMove = false;
         NotReadyToAttack();
- 
+        _ATK_SFX_Voice.PlaySFX("atk1");
+
     }
     public void TwoHandMelee_ATK_1_Phase2()
     {
@@ -580,7 +592,6 @@ public class CombatBehavior : MonoBehaviour
         SetAnimatorSpeed(comboIntervalSpeed_2hw1);
         ComboVisualHintOn();
         _combatHitBoxControl.TwoHandMelee_A1();
-
     }
     public void TwoHandMelee_ATK_1_Phase3()
     {
@@ -608,6 +619,7 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.SetHorizonSpeedZero();
         _movementBehavior.isReadyToMove = false;
         NotReadyToAttack();
+        _ATK_SFX_Voice.PlaySFX("atk1");
     }
     public void TwoHandMelee_ATK_2_Phase2()
     {
@@ -615,6 +627,7 @@ public class CombatBehavior : MonoBehaviour
         SetAnimatorSpeed(comboIntervalSpeed_2hw2);
         ComboVisualHintOn();
         _combatHitBoxControl.TwoHandMelee_A2();
+
     }
     public void TwoHandMelee_ATK_2_Phase3()
     {
@@ -642,11 +655,13 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.SetHorizonSpeedZero();
         _movementBehavior.isReadyToMove = false;
         NotReadyToAttack();
+        _ATK_SFX_Voice.PlaySFX("atk2");
     }
     public void TwoHandMelee_ATK_3_Phase2()
     {
         _VFXControl_2hw3.PlayEffects();
         SpinAttack_Dash();
+
     }
     public void TwoHandMelee_ATK_3_Phase3()
     {
@@ -701,6 +716,7 @@ public class CombatBehavior : MonoBehaviour
     public void TwoHandMelee_ATK_4_Phase2()
     {
         LeapAttack_Dash();
+        _ATK_SFX_Voice.PlaySFX("atk4");
     }
     public void TwoHandMelee_ATK_4_Phase3()
     {
@@ -772,6 +788,7 @@ public class CombatBehavior : MonoBehaviour
         _movementBehavior.ReadyToJump(false);
         _movementBehavior.isReadyToMove = false;
         _movementBehavior.isReadyToDodge = false;
+        _ATK_SFX_Voice.PlaySFX("atk4");
 
         //lock-on
     }
@@ -825,8 +842,10 @@ public class CombatBehavior : MonoBehaviour
     //throw out
     public void TwoHandMelee_ATK_6_Phase2()
     {
+
         _combatInput.Player.ThrowingWeaponAttack();
         Set_IsAiming(false);
+        _ATK_SFX_Voice.PlaySFX("atk1");
 
         //ReadyToAttack();
         //SetAnimatorSpeed(comboIntervalSpeed_2hw2);

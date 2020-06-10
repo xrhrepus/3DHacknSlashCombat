@@ -16,6 +16,9 @@ public class EnemyCtrl : MonoBehaviour
     [SerializeField] private float _atkDamage = 10.0f;
     [Header("Attack Hit Detection")]
     [SerializeField] private Collider _HD_A1;
+
+
+    [SerializeField] private SFXGroup _SFXGroup;
     //recv damage
     public void ReceiveImpact()
     {
@@ -30,6 +33,10 @@ public class EnemyCtrl : MonoBehaviour
             ps.Play();
         }
             _animator.Play("Damage", 0);
+        {
+            string dmgVoice = "dmg" + (int)Random.Range(1, 3);
+            _SFXGroup.PlaySFX(dmgVoice);
+        }
     }
 
     public void KnockBack()
@@ -67,6 +74,7 @@ public class EnemyCtrl : MonoBehaviour
         //Debug.Log("atk");
         InflictDamage(_atkDamage);
         _animator.SetTrigger("attack");
+        _SFXGroup.PlaySFX("atk1");
         _enemyStates._readyToAttack = false;
     }
     public void Attack_A1_P1()
@@ -136,6 +144,8 @@ public class EnemyCtrl : MonoBehaviour
             {
                 bc.enabled = false;
             }
+            _SFXGroup.PlaySFX("die");
+
             _enemyNavigation.enabled = false;
             _enemyStates.enabled = false;
             //_rigidbody.useGravity = false;

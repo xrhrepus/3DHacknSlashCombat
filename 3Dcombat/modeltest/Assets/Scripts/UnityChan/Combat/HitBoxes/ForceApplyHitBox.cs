@@ -10,6 +10,7 @@ public class ForceApplyHitBox : MonoBehaviour
     public float damage;
 
     public List<ParticleSystem> _particleSystems;
+    public List<AudioSource> audioSources;
 
     public void SetForce(float mag,Vector3 fDir,ForceMode fmode)
     {
@@ -20,19 +21,33 @@ public class ForceApplyHitBox : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        foreach (var ps in _particleSystems)
-        {
-            ps.Play();
-        }
+
 
         if (other.gameObject.layer == 10)
         {
             Debug.Log("FHN" + gameObject.name);
-
+            foreach (var ps in _particleSystems)
+            {
+                ps.Play();
+            }
+            foreach (var au in audioSources)
+            {
+                au.Play();
+            }
             //forceDir = transform.forward;
-            other.GetComponent<Rigidbody>().AddForce(forceDir * forceMag, forceMode);
+            if (other.gameObject.GetComponent<Rigidbody>() == null)
+            {
+                Debug.Log("R err  " + other.name);
 
+            }
+
+            other.gameObject.GetComponent<Rigidbody>().AddForce(forceDir * forceMag, forceMode);
             var e = other.GetComponent<EnemyCtrl>();
+            if (e == null)
+            {
+                Debug.Log("err  " + other.name);
+            }
+
             e.ReceiveDamage(damage);
             e.ReceiveImpact();
 

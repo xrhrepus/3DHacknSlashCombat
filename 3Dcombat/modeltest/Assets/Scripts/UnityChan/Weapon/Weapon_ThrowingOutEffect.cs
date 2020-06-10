@@ -22,6 +22,8 @@ public class Weapon_ThrowingOutEffect : MonoBehaviour
                 {
                     ps.Play();
                 }
+                string hitSFXName = "hit" + Random.Range(1, 3);
+                _weapon.SFX_Weapon.PlaySFX(hitSFXName);
             }
         }
 

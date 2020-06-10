@@ -18,6 +18,9 @@ public class Weapon : MonoBehaviour
     [SerializeField] private WeaponType _type = WeaponType.none;
     public WeaponType Type { get => _type; }
 
+    [SerializeField] private SFXGroup _SFX_Weapon;
+    public SFXGroup SFX_Weapon { get=> _SFX_Weapon; }
+
     private void Awake()
     {
         _weapon_PickUp.SetBelongingWeapon(this);

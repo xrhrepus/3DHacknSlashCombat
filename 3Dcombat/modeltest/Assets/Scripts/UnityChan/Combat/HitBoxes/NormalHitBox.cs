@@ -7,6 +7,7 @@ public class NormalHitBox : MonoBehaviour
     public float damage;
     public float impact;
     public List<ParticleSystem> _particleSystems;
+    public List<AudioSource> audioSources;
 
 
     private void OnTriggerEnter(Collider other)
@@ -19,8 +20,15 @@ public class NormalHitBox : MonoBehaviour
             {
                 ps.Play();
             }
-            
-            var e = other.GetComponent<EnemyCtrl>();
+            foreach (var au in audioSources)
+            {
+                au.Play();
+            }
+            var e = other.gameObject.GetComponent<EnemyCtrl>();
+            if (e == null)
+            {
+                Debug.Log("err  " + other.name);
+            }
             e.ReceiveDamage(damage);
             e.ReceiveImpact();
 

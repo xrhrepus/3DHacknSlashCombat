@@ -37,15 +37,31 @@ public class Player : MonoBehaviour
     [SerializeField] private bool _isAlive = true;
     public bool IsAlive { get => _isAlive; }
 
+    [Header("Attack SFX")]
+    [SerializeField] private SFXGroup _ATK_SFX_Voice;
+
+
+    public void SFX_Play_Damaged()
+    {
+        {
+            string dmgVoice = "dmg" + (int)Random.Range(1, 3);
+            _ATK_SFX_Voice.PlaySFX(dmgVoice);
+        }
+    }
     public void ReceiveDamage(float val)
     {
         //_animator.Play("Damage", 0);
+
+        SFX_Play_Damaged();
         _combatInput.CombatBehavior.ReceiveImpact();
         _attributes.CurrentHp -= val;
         if (_attributes.CurrentHp <= 0.0f )
         {
             _isAlive = false;
+            _movementInput.MovementBehavior.SetHorizonSpeedZero();
             _animator.SetBool("die", !_isAlive);
+            _animator.speed = 1.0f;
+            _animator.Play("Die", 0);
             this.enabled = false;
             //_movementInput.MovementBehavior.isReadyToMove = false;
             //_movementInput.MovementBehavior.isReadyToDodge = false;
@@ -78,6 +94,7 @@ public class Player : MonoBehaviour
             _weapon.StopMoving();
             _hasWeapon = true;
             _weaponCallingBack = _weapon;
+            _ATK_SFX_Voice.PlaySFX("weaponReturn");
         }
     }
     public void DropWeapon()// can only have one weapon
