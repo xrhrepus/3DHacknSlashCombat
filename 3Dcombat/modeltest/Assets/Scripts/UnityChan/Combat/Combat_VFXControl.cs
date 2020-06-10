@@ -12,4 +12,20 @@ public class Combat_VFXControl : MonoBehaviour
             ps.Play();
         }
     }
+    public void PlayEffect(string name)
+    {
+        
+        foreach (var ps in _particleSystems)
+        {
+            if (ps.name == name)
+            {
+                ps.Play();
+            }
+        }
+    }
+    public void PlayEffect(int index)
+    {
+        _particleSystems[index].Play();
+    }
+
 }

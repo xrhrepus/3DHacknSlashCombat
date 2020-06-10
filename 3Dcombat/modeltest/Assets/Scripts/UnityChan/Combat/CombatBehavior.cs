@@ -120,7 +120,7 @@ public class CombatBehavior : MonoBehaviour
     private Combat_VFXControl _VFXControl_2hw5;
 
     [SerializeField]
-    private Combat_VFXControl _VFXControl_2hw6;
+    private Combat_VFXControl _VFXControl_2hw_weaponReturn;
 
     [Header("Attack SFX")]
     [SerializeField] private SFXGroup _ATK_SFX_Voice;
@@ -731,10 +731,11 @@ public class CombatBehavior : MonoBehaviour
     {
         LeapAttack_Landing();
         _combatHitBoxControl.TwoHandMelee_A4();
-
     }
     public void TwoHandMelee_ATK_4_Phase6()
     {
+        _VFXControl_2hw4.PlayEffects();
+        _ATK_SFX_Effect.PlaySFX("slash5");
 
         SetAnimatorSpeed(normalPlaybackSpeed);
         NotReadyToAttack();
@@ -820,6 +821,13 @@ public class CombatBehavior : MonoBehaviour
     //}
 
     #endregion
+    #region Catch Return Weapon
+    public void TwoHandMelee_Weapon_Return()
+    {
+        _VFXControl_2hw_weaponReturn.PlayEffects();
+    }
+    #endregion
+
     #region TwoHandMelee_ATK_6(Aim Throw)
     //2-hand melee Atk5
 
@@ -856,6 +864,39 @@ public class CombatBehavior : MonoBehaviour
     {
         _animator.SetLayerWeight(_animator.GetLayerIndex("RightArm"), 1.0f);
  
+    }
+
+
+    #endregion
+    #region TwoHandMelee_ATK_7(Air aim Throw)
+ 
+    public void TwoHandMelee_ATK_7_Phase1()
+    {
+        isAttacking = true;
+        //Rotate_ToCam();
+        ResetAttackTriggers();
+        _movementBehavior.ReadyToJump(false);
+        _movementBehavior.isReadyToMove = false;
+        _movementBehavior.isReadyToDodge = false;
+        _animator.SetLayerWeight(_animator.GetLayerIndex("RightArm"), 0.0f);
+ 
+    }
+
+    //throw out
+    public void TwoHandMelee_ATK_7_Phase2()
+    {
+
+        _combatInput.Player.ThrowingWeaponAttack();
+        Set_IsAiming(false);
+        _ATK_SFX_Voice.PlaySFX("atk4");
+
+ 
+
+    }
+    public void TwoHandMelee_ATK_7_Phase3()
+    {
+        _animator.SetLayerWeight(_animator.GetLayerIndex("RightArm"), 1.0f);
+
     }
 
 

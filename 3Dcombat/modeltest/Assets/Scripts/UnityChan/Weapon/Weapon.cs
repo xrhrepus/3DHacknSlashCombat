@@ -34,6 +34,10 @@ public class Weapon : MonoBehaviour
     {
         _weapon_ThrowingOut.ThrowingAttack_Tracking(targetTF);
     }
+    public void ThrowingAttack_StraightTracking(Transform targetTF,float speedMtpl)
+    {
+        _weapon_ThrowingOut.ThrowingAttack_StraightTracking(targetTF, speedMtpl);
+    }
 
     public void BackingToHand(Transform owner)
     {

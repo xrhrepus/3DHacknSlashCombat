@@ -81,6 +81,10 @@ public class Player : MonoBehaviour
     {
         _weaponNearby.Remove(wp);
     }
+    public void CatchReturnWeapon_Effect()
+    {
+        _combatInput.CombatBehavior.TwoHandMelee_Weapon_Return();
+    }
 
     public void EquipWeapon()
     {
@@ -118,7 +122,17 @@ public class Player : MonoBehaviour
         {
             var lcobj =_lockOnDevice.FindLockObject();
             if (lcobj != null)
-                tweapon.ThrowingAttack_Tracking(lcobj.transform);
+            {
+                if (!_movementInput.MovementBehavior.isGrounded)
+                {
+ 
+                    tweapon.ThrowingAttack_StraightTracking(lcobj.transform,5.0f);
+                }
+                else
+                {
+                    tweapon.ThrowingAttack_Tracking(lcobj.transform);
+                }
+            }
             else
                 tweapon.ThrowingAttack(transform.position + transform.forward * 20.0f);
 
