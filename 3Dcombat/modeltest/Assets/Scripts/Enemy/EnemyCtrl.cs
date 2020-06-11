@@ -26,6 +26,7 @@ public class EnemyCtrl : MonoBehaviour
         {
             _enemyStates._readyToMove = false;
             _enemyStates._knockedBack = true;
+ 
             //_animator.SetTrigger("damaged");
         }
         foreach (var ps in _getHitPS)
@@ -53,7 +54,7 @@ public class EnemyCtrl : MonoBehaviour
     public void RecoverFromImpact()
     {
         _enemyStates._readyToMove = true;
-        _enemyNavigation.NavMeshAgent.isStopped = false;
+         _enemyNavigation.NavMeshAgent.isStopped = false;
 
 
     }
