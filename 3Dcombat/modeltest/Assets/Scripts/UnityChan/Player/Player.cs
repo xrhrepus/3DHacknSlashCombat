@@ -39,7 +39,8 @@ public class Player : MonoBehaviour
 
     [Header("Attack SFX")]
     [SerializeField] private SFXGroup _ATK_SFX_Voice;
-
+    [Header("Receive Damage VFX")]
+    [SerializeField] private Combat_VFXControl _getHit_VFX;
 
     public void SFX_Play_Damaged()
     {
@@ -51,7 +52,7 @@ public class Player : MonoBehaviour
     public void ReceiveDamage(float val)
     {
         //_animator.Play("Damage", 0);
-
+        _getHit_VFX.PlayEffects();
         SFX_Play_Damaged();
         _combatInput.CombatBehavior.ReceiveImpact();
         _attributes.CurrentHp -= val;
