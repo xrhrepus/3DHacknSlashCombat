@@ -7,6 +7,12 @@ public class T_InGame : MonoBehaviour
     [SerializeField] private GameObject _helpPanel;
     [SerializeField] private GameStarter gameStarter;
 
+    private bool paused = false;
+    public void Button_Click_Pause()
+    {
+        Time.timeScale = paused ? 1.0f : 0.0f;
+        paused = !paused;
+    }
     public void Button_Click_Help()
     {
         _helpPanel.SetActive(_helpPanel.activeInHierarchy? false:true);

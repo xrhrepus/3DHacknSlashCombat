@@ -26,6 +26,7 @@ public class GameStarter : MonoBehaviour
         {
             return;
         }
+        _canvas.gameObject.SetActive(false);
         _started = true;
         foreach (var e in _enemies)
         {
