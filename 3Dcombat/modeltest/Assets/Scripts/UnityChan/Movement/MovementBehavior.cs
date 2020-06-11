@@ -398,8 +398,11 @@ public class MovementBehavior : MonoBehaviour
     #region Dodge
     public void DodgePerformed()
     {
+        if (_player._hasWeapon)
+        {
+            _player.Weapon.TrailRenderer.emitting = false;
+        }
  
-        _player.Weapon.TrailRenderer.enabled = false;
 
         if (isReadyToDodge)
         {
