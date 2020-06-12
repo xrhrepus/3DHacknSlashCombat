@@ -197,12 +197,12 @@ public class CombatBehavior : MonoBehaviour
 
     public void ComboVisualHintOn()
     {
-        _particleSystem.Play();
+        //_particleSystem.Play();
     }
     public void ComboVisualHintOff()
     {
-        _particleSystem.Clear();
-        _particleSystem.Stop();
+       // _particleSystem.Clear();
+       // _particleSystem.Stop();
     }
     public void SetAnimator_WeaponType(int type)
     {

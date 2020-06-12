@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class Character_Attributes : MonoBehaviour
 {
-    [SerializeField] private Slider _hpBar;
+    [SerializeField] private Image _hpBar;
 
     [SerializeField] public float _maxHp = 100.0f;
     [SerializeField] private float _currentHp = 0.0f;
@@ -19,7 +19,8 @@ public class Character_Attributes : MonoBehaviour
 
     private void UpdateHPBar()
     {
-        _hpBar.value = _currentHp / _maxHp;
+        
+        _hpBar.fillAmount = _currentHp / _maxHp;
     }
 
     private void Update()
