@@ -19,10 +19,14 @@ public class T_InGame : MonoBehaviour
     }
     public void Button_Click_Restart()
     {
+        paused = false;
+        Time.timeScale = 1.0f;
         gameStarter.Restart();
     }
     public void Button_Click_Quit()
     {
+        paused = false;
+        Time.timeScale = 1.0f;
         gameStarter.BackToMenu();
     }
 
