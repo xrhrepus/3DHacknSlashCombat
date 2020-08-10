@@ -1,0 +1,39 @@
+{
+    "name": "InputCtrl",
+    "maps": [
+        {
+            "name": "Player",
+            "id": "03bceb67-e1fd-43e2-878c-eeaf7bb1913e",
+            "actions": [
+                {
+                    "name": "Attack",
+                    "type": "Button",
+                    "id": "43aed3f0-656f-472b-830f-65d64ea84b6f",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": ""
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "96a5e12e-b294-4302-a1bd-b0edc6c301fb",
+                    "path": "<Keyboard>/j",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Mouse/Keyboard",
+                    "action": "Attack",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": [
+        {
+            "name": "Mouse/Keyboard",
+            "bindingGroup": "Mouse/Keyboard",
+            "devices": []
+        }
+    ]
+}
