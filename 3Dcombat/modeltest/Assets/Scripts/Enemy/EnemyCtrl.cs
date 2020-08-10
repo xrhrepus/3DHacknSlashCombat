@@ -24,7 +24,9 @@ public class EnemyCtrl : MonoBehaviour
     {
         if (!_enemyStates._knockedBack)
         {
+
             _enemyStates._readyToMove = false;
+            //_enemyStates._moving = false;
             _enemyStates._knockedBack = true;
  
             //_animator.SetTrigger("damaged");
