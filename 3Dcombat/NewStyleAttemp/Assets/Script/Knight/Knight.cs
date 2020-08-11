@@ -5,8 +5,8 @@ using UnityEngine;
 public class Knight : MonoBehaviour
 {
     [SerializeField]
-    private KnightCtrl _knightCtrl;
-    public KnightCtrl KnightCtrl { get=> _knightCtrl;}
+    private Knight_Input _knightInput;
+    public Knight_Input KnightInput { get=> _knightInput; }
     [SerializeField]
     private Knight_Transform _knightTransform;
     public Knight_Transform KnightTransform { get => _knightTransform; }
