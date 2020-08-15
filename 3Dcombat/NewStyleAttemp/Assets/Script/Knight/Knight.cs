@@ -14,17 +14,11 @@ public class Knight : MonoBehaviour
     private Knight_Animation _knightAnimation;
     public Knight_Animation KnightAnimation { get => _knightAnimation; }
     [SerializeField]
-    private Knight_Ability _knightAbility;
-    public Knight_Ability KnightAbility { get => _knightAbility; }
-    
+    private Knight_AbilityList _knightAbilityList;
+    public Knight_AbilityList KnightAbilityList { get => _knightAbilityList; }
 
-    void Start()
-    {
-        
-    }
-
-     void Update()
-    {
-        
-    }
+    [SerializeField]
+    private ThirdPersonOrbitCamBasic _camera;
+    public ThirdPersonOrbitCamBasic Camera { get=> _camera; }
+ 
 }

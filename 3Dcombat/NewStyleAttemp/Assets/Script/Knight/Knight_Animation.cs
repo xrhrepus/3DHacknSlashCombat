@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class Knight_Animation : MonoBehaviour
 {
+    [SerializeField]
+    private Animator _animator;
+    public Animator Animator { get => _animator; }
+
     // Start is called before the first frame update
     void Start()
     {
