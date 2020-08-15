@@ -12,7 +12,7 @@ public class Knight_Input : MonoBehaviour
     [SerializeField]
     private Vector2 _inputDirection;
     public Vector2 InputDirection { get => _inputDirection; }
-
+    public Vector3 InputDirctionVector3 { get => new Vector3(_inputDirection.x, 0.0f, _inputDirection.y); }
     [SerializeField]
     private bool _inputAttack = false;
     public bool InputAttack { get => _inputAttack; }
