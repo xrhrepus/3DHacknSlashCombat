@@ -9,11 +9,11 @@ public class Knight_Input : MonoBehaviour
     private PlayerInput _playerInput;
     public InputCtrl.PlayerActions KnightInputCtrl { get => _playerInput.InputCtrl.Player; }
     //
-    [SerializeField]
+    [SerializeField][ReadOnly]
     private Vector2 _inputDirection;
     public Vector2 InputDirection { get => _inputDirection; }
     public Vector3 InputDirctionVector3 { get => new Vector3(_inputDirection.x, 0.0f, _inputDirection.y); }
-    [SerializeField]
+    [SerializeField][ReadOnly]
     private bool _inputAttack = false;
     public bool InputAttack { get => _inputAttack; }
 
