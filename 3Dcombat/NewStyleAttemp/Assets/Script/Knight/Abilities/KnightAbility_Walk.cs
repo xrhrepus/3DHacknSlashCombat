@@ -14,7 +14,7 @@ public class KnightAbility_Walk : KnightAbility
     // OnStateUpdate is called on each Update frame between OnStateEnter and OnStateExit callbacks
     override public void OnStateUpdate(Animator animator, AnimatorStateInfo stateInfo, int layerIndex)
     {
-        Knight.KnightTransform.RotateCharacter();
+        Knight.KnightTransform.TurningTowardCameraLookAt();
         Knight.KnightTransform.MoveCharacter();
     }
 

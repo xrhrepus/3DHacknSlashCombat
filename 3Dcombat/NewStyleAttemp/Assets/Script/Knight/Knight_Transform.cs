@@ -22,27 +22,26 @@ public class Knight_Transform : MonoBehaviour
     [SerializeField]
     private float _speed = 0.0f;
     public float Speed { get => _speed; }
-
-    [SerializeField]
-    private Vector3 _velocity;
-    public Vector3 Velocity { get => _velocity; }
-
-    [SerializeField]
-    private Vector3 _direction = Vector3.forward;
-    public Vector3 Direction {  get => _direction; /*private set => _direction = value;*/  }
-
     [SerializeField]
     private float _turningSpeed;
     public float TurningSpeed { get => _turningSpeed; }
-    
+
+    [SerializeField][ReadOnly]
+    private Vector3 _velocity;
+    public Vector3 Velocity { get => _velocity; }
+
+    [SerializeField][ReadOnly]
+    private Vector3 _direction = Vector3.forward;
+    public Vector3 Direction {  get => _direction; /*private set => _direction = value;*/  }
+
+
     //
 
     //
-    public void MoveCharacter()
-    {
-        Rigidbody.MovePosition(Transform.position + Transform.forward * Speed * Time.fixedDeltaTime);
-    }
-    public void RotateCharacter()
+    /// <summary>
+    /// use for normal walking running
+    /// </summary>
+    public void TurningTowardCameraLookAt()
     {
         Vector3 camForward = Knight.Camera.transform.TransformDirection(Vector3.forward);
         camForward.y = 0.0f;
@@ -52,7 +51,7 @@ public class Knight_Transform : MonoBehaviour
         Vector3 right = new Vector3(camForward.z, 0, -camForward.x);
         Vector2 inputDir = Knight.KnightInput.InputDirection;
         Vector3 targetDirection = camForward * inputDir.y + right * inputDir.x;
-        
+
 
 
 
@@ -65,6 +64,17 @@ public class Knight_Transform : MonoBehaviour
             _direction = Transform.forward;
             //Rigidbody.MoveRotation(dest);
         }
+
+    }
+    /// <summary>
+    /// move character position by rigidbody moveposition
+    /// </summary>
+    public void MoveCharacter()
+    {
+        Rigidbody.MovePosition(Transform.position + Transform.forward * Speed * Time.fixedDeltaTime);
+    }
+    public void RotateCharacter()
+    {
     }
 
 }
