@@ -67,12 +67,20 @@ public class Knight_Transform : MonoBehaviour
 
     }
     /// <summary>
-    /// move character position by rigidbody moveposition
+    /// move character by rigidbody moveposition use character forward and speed
     /// </summary>
     public void MoveCharacter()
     {
         Rigidbody.MovePosition(Transform.position + Transform.forward * Speed * Time.fixedDeltaTime);
     }
+    /// <summary>
+    /// move character position by rigidbody moveposition
+    /// </summary>
+    public void MoveCharacter(Vector3 dir,float spd)
+    {
+        Rigidbody.MovePosition(Transform.position + dir * spd * Time.fixedDeltaTime);
+    }
+
     public void RotateCharacter()
     {
     }

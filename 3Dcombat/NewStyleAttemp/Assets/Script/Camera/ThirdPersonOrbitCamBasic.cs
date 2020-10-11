@@ -5,6 +5,9 @@
 // This class corresponds to the 3rd person camera features.
 public class ThirdPersonOrbitCamBasic : MonoBehaviour 
 {
+    //
+    private Knight_Input _knight_Input;
+    //
 	public Transform player;                                           // Player's reference.
 	public Vector3 pivotOffset = new Vector3(0.0f, 1.0f,  0.0f);       // Offset to repoint the camera.
 	public Vector3 camOffset   = new Vector3(0.4f, 0.5f, -2.0f);       // Offset to relocate the camera related to the player position.
@@ -54,20 +57,24 @@ public class ThirdPersonOrbitCamBasic : MonoBehaviour
 		ResetTargetOffsets ();
 		ResetFOV ();
 		ResetMaxVerticalAngle();
+
+        //
+        _knight_Input = player.GetComponent<Knight_Input>();
 	}
 
 	void Update()
 	{
 		// Get mouse movement to orbit the camera.
 		// Mouse:
-		angleH += Mathf.Clamp(Input.GetAxis("Mouse X"), -1, 1) * horizontalAimingSpeed;
-		angleV += Mathf.Clamp(Input.GetAxis("Mouse Y"), -1, 1) * verticalAimingSpeed;
-		// Joystick:
-		//angleH += Mathf.Clamp(Input.GetAxis(XAxis), -1, 1) * 60 * horizontalAimingSpeed * Time.deltaTime;
-		//angleV += Mathf.Clamp(Input.GetAxis(YAxis), -1, 1) * 60 * verticalAimingSpeed * Time.deltaTime;
+		angleH += _knight_Input.MouseDelta.x * horizontalAimingSpeed;
+		angleV += _knight_Input.MouseDelta.y * verticalAimingSpeed;
+        
+        // Joystick:
+        //angleH += Mathf.Clamp(Input.GetAxis(XAxis), -1, 1) * 60 * horizontalAimingSpeed * Time.deltaTime;
+        //angleV += Mathf.Clamp(Input.GetAxis(YAxis), -1, 1) * 60 * verticalAimingSpeed * Time.deltaTime;
 
-		// Set vertical movement limit.
-		angleV = Mathf.Clamp(angleV, minVerticalAngle, targetMaxVerticalAngle);
+        // Set vertical movement limit.
+        angleV = Mathf.Clamp(angleV, minVerticalAngle, targetMaxVerticalAngle);
 
 		// Set camera orientation.
 		Quaternion camYRotation = Quaternion.Euler(0, angleH, 0);
