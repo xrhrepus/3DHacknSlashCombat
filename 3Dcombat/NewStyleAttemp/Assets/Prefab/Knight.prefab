@@ -191,7 +191,7 @@ MonoBehaviour:
   _knightInput: {fileID: 7522925614276781520}
   _knightTransform: {fileID: 4460632891367732009}
   _knightAnimation: {fileID: 451863081982026682}
-  _knightAbilityList: {fileID: 0}
+  _knightAbilityList: {fileID: 5298935401367738639}
   _camera: {fileID: 963194229}
 --- !u!114 &7522925614276781520
 MonoBehaviour:
@@ -223,10 +223,10 @@ MonoBehaviour:
   _knight: {fileID: 1911737797266101448}
   _transform: {fileID: 1113310190267482600}
   _rigidbody: {fileID: 4260455041565955645}
-  _speed: 5
+  _speed: 2
+  _turningSpeed: 3
   _velocity: {x: 0, y: 0, z: 0}
   _direction: {x: 0, y: 0, z: 0}
-  _turningSpeed: 20
 --- !u!114 &451863081982026682
 MonoBehaviour:
   m_ObjectHideFlags: 0
