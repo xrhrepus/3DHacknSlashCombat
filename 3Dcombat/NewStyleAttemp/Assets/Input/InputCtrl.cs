@@ -33,6 +33,14 @@ public class @InputCtrl : IInputActionCollection, IDisposable
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""View"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""27f071cf-3827-4c87-a3ab-86e2ce1f2bdb"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -40,6 +48,17 @@ public class @InputCtrl : IInputActionCollection, IDisposable
                     ""name"": """",
                     ""id"": ""96a5e12e-b294-4302-a1bd-b0edc6c301fb"",
                     ""path"": ""<Keyboard>/j"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""Attack"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b3138067-f057-4ced-8f7d-1a6add3e536a"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard"",
@@ -101,6 +120,17 @@ public class @InputCtrl : IInputActionCollection, IDisposable
                     ""action"": ""Move"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""25633915-d6ab-4b63-94b2-3277cbcbaec7"",
+                    ""path"": ""<Mouse>/delta"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard"",
+                    ""action"": ""View"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -117,6 +147,7 @@ public class @InputCtrl : IInputActionCollection, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
+        m_Player_View = m_Player.FindAction("View", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -168,12 +199,14 @@ public class @InputCtrl : IInputActionCollection, IDisposable
     private IPlayerActions m_PlayerActionsCallbackInterface;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Move;
+    private readonly InputAction m_Player_View;
     public struct PlayerActions
     {
         private @InputCtrl m_Wrapper;
         public PlayerActions(@InputCtrl wrapper) { m_Wrapper = wrapper; }
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         public InputAction @Move => m_Wrapper.m_Player_Move;
+        public InputAction @View => m_Wrapper.m_Player_View;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -189,6 +222,9 @@ public class @InputCtrl : IInputActionCollection, IDisposable
                 @Move.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
                 @Move.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnMove;
+                @View.started -= m_Wrapper.m_PlayerActionsCallbackInterface.OnView;
+                @View.performed -= m_Wrapper.m_PlayerActionsCallbackInterface.OnView;
+                @View.canceled -= m_Wrapper.m_PlayerActionsCallbackInterface.OnView;
             }
             m_Wrapper.m_PlayerActionsCallbackInterface = instance;
             if (instance != null)
@@ -199,6 +235,9 @@ public class @InputCtrl : IInputActionCollection, IDisposable
                 @Move.started += instance.OnMove;
                 @Move.performed += instance.OnMove;
                 @Move.canceled += instance.OnMove;
+                @View.started += instance.OnView;
+                @View.performed += instance.OnView;
+                @View.canceled += instance.OnView;
             }
         }
     }
@@ -216,5 +255,6 @@ public class @InputCtrl : IInputActionCollection, IDisposable
     {
         void OnAttack(InputAction.CallbackContext context);
         void OnMove(InputAction.CallbackContext context);
+        void OnView(InputAction.CallbackContext context);
     }
 }
