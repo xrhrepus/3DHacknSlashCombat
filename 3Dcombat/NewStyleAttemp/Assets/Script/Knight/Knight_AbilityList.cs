@@ -8,10 +8,12 @@ public class Knight_AbilityList : MonoBehaviour
     private Knight _knight;
     public Knight Knight { get => _knight; }
 
+    private KnightAbility[] abilityBehaviours;
+
     private void Awake()
     {
-        var abilityBehaviour = Knight.KnightAnimation.Animator.GetBehaviours<KnightAbility>();
-        foreach (var ab in abilityBehaviour)
+        abilityBehaviours = Knight.KnightAnimation.Animator.GetBehaviours<KnightAbility>();
+        foreach (var ab in abilityBehaviours)
         {
             ab.Knight = Knight;
         }

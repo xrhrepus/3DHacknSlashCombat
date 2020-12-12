@@ -5,6 +5,7 @@ using System;
 [Serializable]
 public class Knight_AbilityState
 {
+    //bool
     [SerializeField]
     private bool isIdling = false;
     public bool IsIdling { get => isIdling; set => isIdling = value; }
@@ -25,4 +26,6 @@ public class Knight_AbilityState
     public bool CanAttack { get; set; }
     public bool CanMove { get; set; }
     public bool CanJump { get; set; }
+
+
 }

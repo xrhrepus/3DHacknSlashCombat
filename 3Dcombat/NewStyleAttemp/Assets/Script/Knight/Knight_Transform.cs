@@ -49,15 +49,15 @@ public class Knight_Transform : MonoBehaviour
 
         // Calculate target direction based on camera forward and direction key.
         Vector3 right = new Vector3(camForward.z, 0, -camForward.x);
-        Vector2 inputDir = Knight.KnightInput.InputDirection;
-        Vector3 targetDirection = camForward * inputDir.y + right * inputDir.x;
+        Vector3 inputDir = Knight.KnightInput.InputDirectionVector3;
+        Vector3 targetDirection = camForward * inputDir.z + right * inputDir.x;
 
 
 
 
         //_direction = Knight.KnightInput.InputDirctionVector3;
         //Vector3 desireDir = GetDesiredCurrHorizonDirection();
-        if (targetDirection != Vector3.zero)
+        if (targetDirection.sqrMagnitude >= 0.01f)
         {
             Quaternion dest = Quaternion.LookRotation(targetDirection).normalized;
             Transform.rotation = Quaternion.RotateTowards(Transform.rotation, dest, TurningSpeed);
